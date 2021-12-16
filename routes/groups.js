@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import * as profilesCtrl from '../controllers/profiles.js'
+import * as groupCtrl from '../controllers/groups.js'
 import { decodeUserFromToken, checkAuth } from '../middleware/auth.js'
 
 const router = Router()
@@ -9,7 +9,6 @@ const router = Router()
 
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
-router.get('/', checkAuth, profilesCtrl.index)
-router.put('/:id', profilesCtrl.update)
+router.post('/', groupCtrl.create)
 
 export { router }
