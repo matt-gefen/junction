@@ -1,5 +1,6 @@
 import { Group } from '../models/group.js'
 import { Profile } from '../models/profile.js'
+import { Post } from '../models/post.js'
 
 const index = async (req, res) => {
   try {
@@ -57,4 +58,25 @@ const deleteGroup = async (req, res) => {
   }
 }
 
-export { index, create, update, deleteGroup as delete }
+const createPost = async (req, res) => {
+
+  try {
+
+    req.body.owner = req.user.profile
+    const newPost = await new Post(req.body)
+    await newPost.save()
+    await Profile.updateOne(
+      { _id: req.user.profile },
+      { $push: { posts: newPost } }
+    )
+    await Group.updateOne(
+      { _id: req.params.id },
+      { $push: { posts: newPost } }
+    )
+    return res.status(201).json(newPost)
+  } catch (error) {
+    return res.status(500).json(error)
+  }
+}
+
+export { index, create, update, deleteGroup as delete, createPost, }
