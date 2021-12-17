@@ -10,5 +10,6 @@ const router = Router()
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
 router.post('/', checkAuth, groupCtrl.create)
+router.post('/:id', checkAuth, groupCtrl.update)
 
 export { router }
