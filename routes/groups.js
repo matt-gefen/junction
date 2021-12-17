@@ -9,12 +9,13 @@ router.get('/', groupCtrl.index)
 
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
-router.post('/', checkAuth, groupCtrl.create)
-router.post('/:id', checkAuth, groupCtrl.update)
 router.get('/:id', checkAuth, groupCtrl.show)
+router.post('/', checkAuth, groupCtrl.create)
 router.post('/:id/posts', checkAuth, groupCtrl.createPost)
+router.post('/:id/posts/:postId/comments', checkAuth, groupCtrl.createComment)
+router.post('/:id', checkAuth, groupCtrl.update)
 router.post('/:id/posts/:postId', checkAuth, groupCtrl.updatePost)
-router.delete('/:id/posts/:postId', checkAuth, groupCtrl.deletePost)
 router.delete('/:id', checkAuth, groupCtrl.delete)
+router.delete('/:id/posts/:postId', checkAuth, groupCtrl.deletePost)
 
 export { router }
