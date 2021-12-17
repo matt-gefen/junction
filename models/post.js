@@ -8,7 +8,10 @@ const commentSchema = new Schema(
       type: String,
       required: true,
     },
-    commenter: { type: mongoose.Schema.Types.ObjectId, ref: "Profile" },
+    owner: { 
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: "Profile" 
+    },
   },
   { timestamps: true }
 );
