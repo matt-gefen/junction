@@ -34,4 +34,16 @@ const update = async (req, res) => {
   }
 }
 
-export { create, update }
+const deleteGroup = async (req, res) => {
+  try {
+    await Group.findByIdAndDelete(req.params.id)
+    const profile = await Profile.findById(req.user.profile)
+    profile.groups.remove({_id: req.params.id})
+    await profile.save()
+    return res.status(204).end()
+  } catch(error) {
+    return res.status(500).json(error)
+  }
+}
+
+export { create, update, deleteGroup as delete }
