@@ -91,7 +91,6 @@ const show = async (req, res) => {
 }
 
 const updatePost = async (req, res) => {
-  console.log('Update Post!')
   try {
     const updatedPost = await Post.findByIdAndUpdate(
       req.params.postId,
@@ -135,4 +134,16 @@ const createComment = async (req, res) => {
   }
 }
 
-export { index, create, update, deleteGroup as delete, createPost, show, updatePost, deletePost, createComment }
+const updateComment = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.postId)
+    const updatedComment = await post.comments.find((comment) => (comment._id.equals(req.params.commentId)))
+    updatedComment.comment_content = req.body.comment_content
+    await post.save()
+    return res.status(200).json(updatedComment)
+  } catch(error) {
+    return res.status(500).json(error)
+  }
+}
+
+export { index, create, update, deleteGroup as delete, createPost, show, updatePost, deletePost, createComment, updateComment }
