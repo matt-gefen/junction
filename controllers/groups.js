@@ -20,4 +20,18 @@ const create = async (req, res) => {
   }
 }
 
-export { create }
+const update = async (req, res) => {
+  console.log('Update Group!')
+  try {
+    const updatedGroup = await Group.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {new: true}
+      )
+    return res.status(200).json(updatedGroup)
+  } catch(error) {
+    return res.status(500).json(error)
+  }
+}
+
+export { create, update }
