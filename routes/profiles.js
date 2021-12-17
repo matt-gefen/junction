@@ -12,4 +12,5 @@ router.use(decodeUserFromToken)
 router.get('/', checkAuth, profilesCtrl.index)
 router.put('/:id', profilesCtrl.update)
 
+
 export { router }
