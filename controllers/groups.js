@@ -13,7 +13,6 @@ const index = async (req, res) => {
 
 const create = async (req, res) => {
   console.log('Create a new group')
-  // console.log('Req body:', req.body)
   try {
     console.log('Enter try block')
     console.log('Owner:', req)
