@@ -31,7 +31,7 @@ const profileSchema = new mongoose.Schema(
         ref: "Post",
       },
     ],
-    category_prefs: String,
+    category_prefs: Array,
     location: String,
     registered_events: [
       {
