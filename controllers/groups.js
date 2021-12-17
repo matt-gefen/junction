@@ -90,4 +90,18 @@ const show = async (req, res) => {
   }
 }
 
-export { index, create, update, deleteGroup as delete, createPost, show }
+const updatePost = async (req, res) => {
+  console.log('Update Post!')
+  try {
+    const updatedPost = await Post.findByIdAndUpdate(
+      req.params.postId,
+      req.body,
+      { new: true }
+      )
+    return res.status(200).json(updatedPost)
+  } catch(error) {
+    return res.status(500).json(error)
+  }
+}
+
+export { index, create, update, deleteGroup as delete, createPost, show, updatePost }
