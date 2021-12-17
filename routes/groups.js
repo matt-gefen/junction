@@ -14,6 +14,7 @@ router.post('/:id', checkAuth, groupCtrl.update)
 router.get('/:id', checkAuth, groupCtrl.show)
 router.post('/:id/posts', checkAuth, groupCtrl.createPost)
 router.post('/:id/posts/:postId', checkAuth, groupCtrl.updatePost)
+router.delete('/:id/posts/:postId', checkAuth, groupCtrl.deletePost)
 router.delete('/:id', checkAuth, groupCtrl.delete)
 
 export { router }
