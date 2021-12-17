@@ -104,4 +104,19 @@ const updatePost = async (req, res) => {
   }
 }
 
-export { index, create, update, deleteGroup as delete, createPost, show, updatePost }
+const deletePost = async (req, res) => {
+  try {
+    await Post.findByIdAndDelete(req.params.postId)
+    const profile = await Profile.findById(req.user.profile)
+    profile.posts.remove({_id: req.params.postId})
+    const group = await Group.findById(req.params.id)
+    group.posts.remove({_id: req.params.postId})
+    await profile.save()
+    await group.save()
+    return res.status(204).end()
+  } catch(error) {
+    return res.status(500).json(error)
+  }
+}
+
+export { index, create, update, deleteGroup as delete, createPost, show, updatePost, deletePost }
