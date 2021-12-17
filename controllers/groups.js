@@ -1,13 +1,25 @@
 import { Group } from '../models/group.js'
 import { Profile } from '../models/profile.js'
 
+const index = async (req, res) => {
+  try {
+    const groups = await Group.find({}).populate('members')
+    return res.status(200).json(groups)
+    
+  } catch(error) {
+    return res.status(500).json(error)
+  }
+}
+
 const create = async (req, res) => {
   console.log('Create a new group')
-  console.log('Req body:', req.body)
+  // console.log('Req body:', req.body)
   try {
     console.log('Enter try block')
     console.log('Owner:', req)
     req.body.owner = req.user.profile
+    req.body.members = req.user.profile
+    req.body.admin = req.user.profile
     const newGroup = await new Group(req.body)
     await newGroup.save()
     await Profile.updateOne(
@@ -46,4 +58,4 @@ const deleteGroup = async (req, res) => {
   }
 }
 
-export { create, update, deleteGroup as delete }
+export { index, create, update, deleteGroup as delete }
