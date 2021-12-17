@@ -79,4 +79,15 @@ const createPost = async (req, res) => {
   }
 }
 
-export { index, create, update, deleteGroup as delete, createPost, }
+const show = async (req, res) => {
+  try {
+    const group = await Group.findById(req.params.id)
+      .populate('members')
+      .populate('posts')
+    return res.status(200).json(group)
+  } catch (err) {
+    return res.status(500).json(err)
+  }
+}
+
+export { index, create, update, deleteGroup as delete, createPost, show }
