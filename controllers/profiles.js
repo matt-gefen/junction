@@ -22,4 +22,18 @@ const update = async (req, res) => {
   }
 };
 
-export { index, update };
+const show = async (req, res) => {
+  try {
+    const profile = await Profile.findById(req.params.id)
+      .populate('joined_groups')
+      .populate('favorited_posts')
+      .populate('registered_events')
+      .populate('groups')
+      .populate('posts')
+    return res.status(200).json(profile)
+  } catch (err) {
+    return res.status(500).json(err)
+  }
+}
+
+export { index, update, show };
