@@ -146,4 +146,15 @@ const updateComment = async (req, res) => {
   }
 }
 
-export { index, create, update, deleteGroup as delete, createPost, show, updatePost, deletePost, createComment, updateComment }
+const deleteComment = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.postId)
+    post.comments.remove({ _id: req.params.commentId })
+    await post.save()
+    return res.status(204).end()
+  } catch(error) {
+    return res.status(500).json(error)
+  }
+}
+
+export { index, create, update, deleteGroup as delete, createPost, show, updatePost, deletePost, createComment, updateComment, deleteComment }
