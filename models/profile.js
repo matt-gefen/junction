@@ -3,9 +3,9 @@ import mongoose from "mongoose";
 const profileSchema = new mongoose.Schema(
   {
     email: { type: String, required: true, lowercase: true, unique: true },
-    name: String,
-    first_name: { type: String, required: true },
-    last_name: { type: String, required: true },
+    name: { type: String, required: true },
+    first_name: { type: String },
+    last_name: { type: String },
     avatar: { type: String, required: true },
     posts: [
       {
@@ -32,7 +32,7 @@ const profileSchema = new mongoose.Schema(
       },
     ],
     category_prefs: Array,
-    location: String,
+    location:{ type: String, required: true },
     registered_events: [
       {
         type: mongoose.Schema.Types.ObjectId,
