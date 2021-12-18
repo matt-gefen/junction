@@ -7,6 +7,7 @@ const groupSchema = new Schema(
     title: { type: String, required: true, unique: true },
     category: String,
     avatar: { type: String, required: true },
+    location: { type: String },
     members: [
       {
         type: mongoose.Schema.Types.ObjectId,

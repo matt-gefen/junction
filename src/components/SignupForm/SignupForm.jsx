@@ -2,10 +2,8 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styles from './SignupForm.module.css'
 import * as authService from '../../services/authService'
-import { useEffect } from 'react/cjs/react.development'
 
 const SignupForm = props => {
-  console.log(props.avatar)
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
     name: '',
@@ -17,7 +15,6 @@ const SignupForm = props => {
   })
 
   const handleChange = e => {
-    console.log("handle change", e.target.value)
     props.updateMessage('')
     setFormData({
       ...formData,
@@ -36,13 +33,11 @@ const SignupForm = props => {
     }
   }
 
-  let { name, email, password, passwordConf, avatar, location } = formData
+  const { name, email, password, passwordConf, avatar, location } = formData
 
   const isFormInvalid = () => {
     return !(name && email && password && password === passwordConf && avatar && location)
   }
-
-  console.log(formData)
 
   return (
     <form
