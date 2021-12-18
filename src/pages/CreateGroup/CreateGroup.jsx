@@ -5,6 +5,10 @@ import styles from './CreateGroup.module.css'
 const CreateGroup = props => {
   const [message, setMessage] = useState([''])
 
+  const updateMessage = msg => {
+    setMessage(msg)
+  }
+
   return (
     <main className={styles.container}>
       <h1>Create Group</h1>
