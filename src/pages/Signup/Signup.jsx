@@ -4,7 +4,7 @@ import styles from './Signup.module.css'
 
 const Signup = props => {
   const [message, setMessage] = useState([''])
-  const [avatar, setAvatar] = useState(`https://avatars.dicebear.com/api/personas/${props.randomSeed()}.svg`)
+  const [avatar, setAvatar] = useState(`https://avatars.dicebear.com/api/bottts/${props.randomSeed()}.svg`)
 
   const updateMessage = msg => {
     setMessage(msg)
@@ -14,7 +14,7 @@ const Signup = props => {
     console.log('old', avatar)
     let newSeed = props.randomSeed()
     console.log(newSeed)
-    setAvatar(`https://avatars.dicebear.com/api/personas/${newSeed}.svg`)
+    setAvatar(`https://avatars.dicebear.com/api/bottts/${newSeed}.svg`)
     console.log('new', avatar)
   }
   console.log('newest', avatar)

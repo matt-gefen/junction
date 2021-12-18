@@ -97,6 +97,17 @@ const SignupForm = props => {
         />
       </div>
       <div className={styles.inputContainer}>
+        <label htmlFor="location" className={styles.label}>Location</label>
+        <input
+          type="text"
+          autoComplete="off"
+          id="location"
+          value={location}
+          name="location"
+          onChange={handleChange}
+        />
+      </div>
+      <div className={styles.inputContainer}>
         <img src={props.avatar} alt="dicebears avatar" style={{width: "150px"}}/>
         <button name="avatar" type="button" value={props.avatar} onClick={(e) => {
           props.resetSeed() 
