@@ -18,3 +18,13 @@ export const createGroup= async (group) => {
     throw error
   }
 }
+
+export const getGroupById = async (groupId) => {
+  try {
+    const res = await fetch(`${BASE_URL}${groupId}`)
+    const data = await res.json()
+    return data
+  } catch (error) {
+    throw error
+  }
+}
