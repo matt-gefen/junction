@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styles from './GroupForm.module.css'
-import * as authService from '../../services/authService'
+import { createGroup } from '../../services/groupService'
 
 const GroupForm = props => {
   const navigate = useNavigate()
@@ -13,9 +13,11 @@ const GroupForm = props => {
   })
 
   const handleChange = e => {
+    console.log(e.target.name)
     props.updateMessage('')
     setFormData({
       ...formData,
+      'avatar': `https://avatars.dicebear.com/api/initials/${title}.svg`,
       [e.target.name]: e.target.value,
     })
   }
@@ -23,8 +25,8 @@ const GroupForm = props => {
   const handleSubmit = async e => {
     e.preventDefault()
     try {
-      await authService.signup(formData)
-      props.handleSignupOrLogin()
+      await createGroup(formData)
+      // change to Group Details
       navigate('/')
     } catch (err) {
       props.updateMessage(err.message)
@@ -36,6 +38,8 @@ const GroupForm = props => {
   const isFormInvalid = () => {
     return !(title && category && avatar)
   }
+
+  console.log(formData)
 
   return (
     <form
@@ -77,11 +81,14 @@ const GroupForm = props => {
         />
       </div>
       <div className={styles.inputContainer}>
-        <img src={props.avatar} alt="initials avatar" style={{width: "150px"}}/>
+        <img 
+        src={`https://avatars.dicebear.com/api/initials/${title}.svg`} 
+        alt="initials avatar" style={{width: "150px"}} 
+        />
       </div>
       <div className={styles.inputContainer}>
         <button disabled={isFormInvalid()} className={styles.button}>
-          Sign Up
+          Create Group
         </button>
         <Link to="/">
           <button>Cancel</button>
