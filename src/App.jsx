@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom'
 import NavBar from './components/NavBar/NavBar'
 import Signup from './pages/Signup/Signup'
@@ -10,6 +10,10 @@ import * as authService from './services/authService'
 const App = () => {
   const [user, setUser] = useState(authService.getUser())
   const navigate = useNavigate()
+
+  const randomSeed = () => {
+    return Math.floor(Math.random() * 9999999999)
+  }
 
   const handleLogout = () => {
     authService.logout()
@@ -28,7 +32,7 @@ const App = () => {
         <Route path="/" element={<Landing user={user} />} />
         <Route
           path="/signup"
-          element={<Signup handleSignupOrLogin={handleSignupOrLogin} />}
+          element={<Signup handleSignupOrLogin={handleSignupOrLogin} randomSeed={randomSeed}/>}
         />
         <Route
           path="/login"
