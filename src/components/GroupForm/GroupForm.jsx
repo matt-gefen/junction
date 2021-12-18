@@ -1,13 +1,17 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styles from './GroupForm.module.css'
+
+import GroupCategories from '../GroupCategories/GroupCategories'
+
 import { createGroup } from '../../services/groupService'
 
 const GroupForm = props => {
   const navigate = useNavigate()
+  const [groupCategory, setGroupCategory] = useState('Family')
   const [formData, setFormData] = useState({
     title: '',
-    category: '',
+    category: 'Family',
     avatar: '',
     location: '',
   })
@@ -18,6 +22,7 @@ const GroupForm = props => {
     setFormData({
       ...formData,
       'avatar': `https://avatars.dicebear.com/api/initials/${title}.svg`,
+      'category': groupCategory,
       [e.target.name]: e.target.value,
     })
   }
@@ -60,14 +65,7 @@ const GroupForm = props => {
       </div>
       <div className={styles.inputContainer}>
         <label htmlFor="category" className={styles.label}>Category</label>
-        <input
-          type="text"
-          autoComplete="off"
-          id="category"
-          value={category}
-          name="category"
-          onChange={handleChange}
-        />
+        <GroupCategories setGroupCategory={setGroupCategory} handleChange={handleChange}/>
       </div>
       <div className={styles.inputContainer}>
         <label htmlFor="location" className={styles.label}>Location</label>
