@@ -11,7 +11,6 @@ const Group = (props) => {
   const navigate = useNavigate();
   const [group, setGroup] = useState();
 
- console.log("id:",id) 
   useEffect(() => {
     const fetchGroup = async () => {
       try {
@@ -28,8 +27,13 @@ const Group = (props) => {
   return (
     <div className="layout">
       <div className="group-details">
-        <h1>help?</h1>
-        {/* <img src={group.avatar} alt="" /> */}
+      {group &&
+          <>
+            <img src={group.avatar} alt="" style={{width:"150px"}}/>
+            <h2>{group.title}</h2>
+            <h4>{group.location}</h4>
+          </>
+        }
       </div>
     </div>
   );
