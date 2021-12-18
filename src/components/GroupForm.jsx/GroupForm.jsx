@@ -91,4 +91,4 @@ const GroupForm = props => {
   )
 }
 
-export default SignupForm
+export default GroupForm
