@@ -6,9 +6,11 @@ const GroupCategories = (props) => {
 let categoryOptions = []
 
 categories.forEach((element, index) =>{
-  categoryOptions.push(
-    <option key={index}>{element}</option>
-  )
+  if (element !== props.groupCategory) {  
+    categoryOptions.push(
+      <option key={index}>{element}</option>
+    )
+  }
 })
 
   return (
@@ -17,6 +19,7 @@ categories.forEach((element, index) =>{
       props.setGroupCategory(e.target.value) 
       props.handleChange(e)
       }}> 
+          <option>{props.groupCategory}</option>
           {categoryOptions}
     </select>
   )

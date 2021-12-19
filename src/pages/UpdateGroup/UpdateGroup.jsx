@@ -13,7 +13,7 @@ const UpdateGroup = (props) => {
 
   return (
     <main className={styles.container}>
-      <h1>Update Group</h1>
+      <h1>Edit Group</h1>
       <p>{message}</p>
       <GroupUpdateForm {...props} updateMessage={updateMessage} groupId={id}/>
     </main>
