@@ -6,6 +6,7 @@ import CommentForm from "../../components/Comment/CommentForm"
 import { getPostById } from "../../services/groupService"
 
 // Components
+import Comment from '../../components/Comment/Comment'
 
 const PostDetails = props => {
   const { id, postId } = useParams()
@@ -20,7 +21,7 @@ const PostDetails = props => {
     location: '',
     date: '',
     register: '',
-    comments: ''
+    comments: []
   })
 
   useEffect(() => {
@@ -33,7 +34,7 @@ const PostDetails = props => {
       }
     }
     fetchGroup()
-  }, [])
+  }, [id, postId])
 
   let date = new Date(post.createdAt)
 
@@ -43,7 +44,7 @@ const PostDetails = props => {
         <h1>Post Details</h1>
         <h1>{post.title}</h1>
         <div className="post-date">
-          {`${date.toLocaleDateString()} at ${date.getHours()}:${date.getMinutes()}${date.getHours() > 12 ? "pm" : "am"}`}
+          {`${date.toLocaleDateString()} at ${date.getHours() > 12 ? date.getHours() - 12 : date.getHours()}:${date.getMinutes()}${date.getHours() > 12 ? "pm" : "am"}`}
         </div>
         <div className="post-owner-container">
           <h3>Post Owner</h3>
@@ -77,7 +78,9 @@ const PostDetails = props => {
         <div className="post-comments-container">
           <h3>Post Comments</h3>
           <CommentForm user={props.user}/>
-          {post.comments}
+          {post.comments?.map((comment) => (
+            <Comment user={props.user} comment={comment} key={comment._id}/>
+          ))}
         </div>
       </div>
     </div>

@@ -6,6 +6,12 @@
   margin-bottom: 50px;
 }
 
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
 .image {
-  width: 150px;
+  width: 50px;
 }

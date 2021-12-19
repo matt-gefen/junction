@@ -7,23 +7,10 @@ import { createComment } from '../../services/groupService'
 
 const CommentForm = props => {
   const { id, postId } = useParams()
+  const [avatar, setAvatar] = useState('')
   const [comment, setComment] = useState({
-    owner: '',
-    content: ''
+    comment_content: ''
   })
-
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const profile = await getProfileById(props.user.profile)
-        comment.owner = profile.avatar
-        setComment(comment)
-      } catch (error) {
-        throw error
-      }
-    }
-    fetchProfile()
-  }, [])
 
   const handleChange = e => {
     setComment({
@@ -35,20 +22,33 @@ const CommentForm = props => {
   const handleSubmit = async e => {
     e.preventDefault()
     try {
-      console.log('Submit the comment')
-      // await createComment(id, postId, props.postId, comment)
+      await createComment(id, postId, comment)
+      // Need to empty comment_content input
+      // Update state
+      // comment.comment_content = ''
+      // setComment(comment)
     } catch (err) {
       throw err
     }
   }
 
-  const { owner, content } = comment
+  const { comment_content } = comment
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const profile = await getProfileById(props.user.profile)
+        setAvatar(profile.avatar)
+      } catch (error) {
+        throw error
+      }
+    }
+    fetchProfile()
+  }, [props.user.profile])
 
   const isFormInvalid = () => {
-    return !(content)
+    return !(comment_content)
   }
-
-  console.log('Comment:', comment)
 
   return (
     <form
@@ -56,15 +56,15 @@ const CommentForm = props => {
       onSubmit={handleSubmit}
       className={styles.container}
     >
-      <img className={styles.image} src={comment.owner} alt="" />
-      <h2>Add a Comment</h2>
+      <img className={styles.image} src={avatar} alt="" />
+      <h2 style={{color: 'black'}}>Add a Comment</h2>
       <div className={styles.inputContainer}>
         <input
           type="text"
           autoComplete="off"
-          id="content"
-          value={content}
-          name="content"
+          id="comment_content"
+          value={comment_content}
+          name="comment_content"
           onChange={handleChange}
         />
       </div>
