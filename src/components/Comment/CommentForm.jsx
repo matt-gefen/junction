@@ -32,6 +32,7 @@ const CommentForm = props => {
     return !(content)
   }
 
+  console.log('Comment User:', props.user)
 
   return (
     <form
@@ -39,8 +40,9 @@ const CommentForm = props => {
       onSubmit={handleSubmit}
       className={styles.container}
     >
+      <img src="" alt="" />
+      <h2>Add a Comment</h2>
       <div className={styles.inputContainer}>
-        <label htmlFor="title" className={styles.label}>Title</label>
         <input
           type="text"
           autoComplete="off"

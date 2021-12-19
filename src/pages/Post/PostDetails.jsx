@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
+import CommentForm from "../../components/Comment/CommentForm"
 
 // Services
 import { getPostById } from "../../services/groupService"
 
 // Components
 
-const PostDetails = () => {
+const PostDetails = props => {
   const { id, postId } = useParams()
   const [post, setPost] = useState({
     group: '',
@@ -76,6 +77,7 @@ const PostDetails = () => {
         </div>
         <div className="post-comments-container">
           <h3>Post Comments</h3>
+          <CommentForm user={props.user}/>
           {post.comments}
         </div>
       </div>
