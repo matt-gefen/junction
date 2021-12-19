@@ -65,7 +65,7 @@ const GroupForm = props => {
       </div>
       <div className={styles.inputContainer}>
         <label htmlFor="category" className={styles.label}>Category</label>
-        <GroupCategories setGroupCategory={setGroupCategory} handleChange={handleChange}/>
+        <GroupCategories setGroupCategory={setGroupCategory} groupCategory={groupCategory} handleChange={handleChange}/>
       </div>
       <div className={styles.inputContainer}>
         <label htmlFor="location" className={styles.label}>Location</label>
