@@ -7,6 +7,7 @@ import Landing from './pages/Landing/Landing'
 import CreateGroup from './pages/CreateGroup/CreateGroup'
 import Group from './pages/Group/Group'
 import CreatePost from './pages/CreatePost/CreatePost'
+import PostDetails from './pages/PostDetails/PostDetails'
 import * as authService from './services/authService'
 
 const App = () => {
@@ -51,6 +52,10 @@ const App = () => {
         <Route
           path="/groups/:id/posts"
           element={user ? <CreatePost /> : <Navigate to="/login" />}
+        />
+        <Route 
+          path="/groups/:id/posts/:postId"
+          element={<PostDetails />}
         />
       </Routes>
     </>

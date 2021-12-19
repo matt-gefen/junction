@@ -50,3 +50,18 @@ export const createPost= async (groupId, post) => {
     throw error
   }
 }
+
+export const getPostById = async (groupId, postId) => {
+  try {
+    const res = await fetch(`${BASE_URL}${groupId}/posts/${postId}`,
+    {
+      headers: {
+        'Authorization': `Bearer ${tokenService.getToken()}`
+    }})
+    const data = await res.json()
+    console.log('Post Data:', data)
+    return data
+  } catch (error) {
+    throw error
+  }
+}
