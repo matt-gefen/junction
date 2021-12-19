@@ -60,3 +60,14 @@ export const getAllGroups = async () => {
     throw error
   }
 }
+
+export const deleteGroup = async (groupId) => {
+  try {
+    await fetch(`${BASE_URL}${groupId}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': 'Bearer ' + tokenService.getToken() }
+    })
+  } catch (error) {
+    throw error
+  }
+}

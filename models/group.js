@@ -14,12 +14,12 @@ const groupSchema = new Schema(
         ref: "Profile",
       },
     ],
-    owner: [
+    owner:
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Profile",
       },
-    ],
+    ,
     posts: [
       {
         type: mongoose.Schema.Types.ObjectId,

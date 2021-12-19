@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 // Services
-import { getAllGroups } from '../../services/groupService'
+import { getAllGroups, deleteGroup } from '../../services/groupService'
 
 // Components 
 import GroupCard from '../../components/GroupCard/GroupCard'

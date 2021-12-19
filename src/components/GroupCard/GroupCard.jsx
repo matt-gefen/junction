@@ -5,6 +5,7 @@ import './Card.css' // <= Card Styling
 import GroupActions from './GroupActions'
 
 const GroupCard = (props) => {
+  console.log(props)
   return (
     <div className="group-card">
 
@@ -13,17 +14,17 @@ const GroupCard = (props) => {
       </div>
 
       <div className="group-title">
-        <h2>{props.title}</h2>
+        <h2>{props.group.title}</h2>
       </div>
 
       <div className="group-avatar">
-        {props.avatar}
+        <img src={props.group.avatar}/>
       </div>
 
       <div className="group-members">
 
       </div>
-        {props.members}
+        {/* {props.group.members} */}
     </div>
   )
 }
