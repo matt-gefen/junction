@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 // Services
 import { getGroupById } from "../../services/groupService";
 
 // Components
+import UpdateGroup from "../UpdateGroup/UpdateGroup";
 
 const Group = (props) => {
   const { id } = useParams();
@@ -43,6 +44,9 @@ const Group = (props) => {
             <h4>{group.location}</h4>
           </>
         }
+        <>
+          <Link to={`/groups/${id}/edit`}>Edit Group</Link>
+        </>
       </div>
     </div>
   );
