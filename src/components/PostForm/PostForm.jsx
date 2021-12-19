@@ -1,14 +1,15 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import styles from './PostForm.module.css'
 
 import { createPost } from '../../services/groupService'
 
 const PostForm = props => {
+  const { id } = useParams()
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
     title: '',
-    thumbnail: '',
+    thumbnail: 'https://i.imgur.com/izJwDia.png',
     location: '',
     // group: '',
     date: ''
@@ -23,11 +24,14 @@ const PostForm = props => {
     })
   }
 
+
   const handleSubmit = async e => {
-    console.log('eventData', e)
+  
+
+    
     e.preventDefault()
     try {
-      await createPost(formData)
+      await createPost( id, formData)
       navigate('/')
     } catch (err) {
       props.updateMessage(err.message)

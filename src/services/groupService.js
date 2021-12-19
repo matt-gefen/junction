@@ -35,6 +35,7 @@ export const getGroupById = async (groupId) => {
 
 export const createPost= async (groupId, post) => {
   try {
+    console.log(groupId)
     const res = await fetch(`${BASE_URL}${groupId}/posts/`, {
       method: 'POST',
       headers: {
