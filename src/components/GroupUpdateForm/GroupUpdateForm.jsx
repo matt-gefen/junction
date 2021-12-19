@@ -53,9 +53,9 @@ const GroupUpdateForm = props => {
   const handleSubmit = async e => {
     e.preventDefault()
     try {
-      await updateGroup(formData)
-      // change to Group Details
-      navigate('/')
+      const updatedGroup = await updateGroup(props.groupId,formData)
+      setGroup(updatedGroup)
+      navigate(`/groups/${props.groupId}`)
     } catch (err) {
       props.updateMessage(err.message)
     }

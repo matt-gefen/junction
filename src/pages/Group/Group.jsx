@@ -30,7 +30,8 @@ const Group = (props) => {
       {group &&
           <>
             <img src={group.avatar} alt="" style={{width:"150px"}}/>
-            <h2>{group.title}</h2>
+            <h2 style={{color:"black"}}>{group.title}</h2>
+            <h3>{group.category}</h3>
             <h4>{group.location}</h4>
           </>
         }

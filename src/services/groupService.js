@@ -61,14 +61,15 @@ export const getAllGroups = async () => {
   }
 }
 
-export const updateGroup = async (groupId) => {
+export const updateGroup = async (groupId, group) => {
   try {
     const res = await fetch(`${BASE_URL}${groupId}`, {
-      method: "PUT",
+      method: 'PUT',
       headers: {
         'content-type': 'application/json',
-        'Authorization': 'Bearer ' + tokenService.getToken()
-      }
+        'Authorization': `Bearer ${tokenService.getToken()}`
+      },
+      body: JSON.stringify(group)
     })
     const data = await res.json()
     return data
