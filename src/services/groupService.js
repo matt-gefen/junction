@@ -76,7 +76,6 @@ export const getPostById = async (groupId, postId) => {
 }
 
 export const createComment= async (groupId, postId, comment) => {
-  console.log('Creating comment')
   try {
     const res = await fetch(`${BASE_URL}${groupId}/posts/${postId}/comments`, {
       method: 'POST',
