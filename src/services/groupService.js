@@ -32,3 +32,21 @@ export const getGroupById = async (groupId) => {
     throw error
   }
 }
+
+export const createPost= async (groupId, post) => {
+  try {
+    console.log(groupId)
+    const res = await fetch(`${BASE_URL}${groupId}/posts/`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': `Bearer ${tokenService.getToken()}`
+      },
+      body: JSON.stringify(post)
+    })
+    const data = await res.json()
+    return data
+  } catch (error) {
+    throw error
+  }
+}
