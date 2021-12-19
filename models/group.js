@@ -19,7 +19,6 @@ const groupSchema = new Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: "Profile",
       },
-    ,
     posts: [
       {
         type: mongoose.Schema.Types.ObjectId,
