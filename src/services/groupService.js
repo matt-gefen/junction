@@ -75,6 +75,24 @@ export const getPostById = async (groupId, postId) => {
   }
 }
 
+export const createComment= async (groupId, postId, comment) => {
+  console.log('Creating comment')
+  try {
+    const res = await fetch(`${BASE_URL}${groupId}/posts/${postId}/comments`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': `Bearer ${tokenService.getToken()}`
+      },
+      body: JSON.stringify(comment)
+    })
+    const data = await res.json()
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
 export const deleteGroup = async (groupId) => {
   try {
     await fetch(`${BASE_URL}${groupId}`, {
@@ -85,3 +103,4 @@ export const deleteGroup = async (groupId) => {
     throw error
   }
 }
+
