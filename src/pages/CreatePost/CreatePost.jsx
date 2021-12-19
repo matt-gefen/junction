@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import PostForm from '../../components/PostForm/PostForm'
-import styles from './CreateGroup.module.css'
+import styles from './CreatePost.module.css'
 
 const CreatePost = props => {
   const [message, setMessage] = useState([''])

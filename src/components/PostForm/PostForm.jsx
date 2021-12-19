@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import styles from './GroupForm.module.css'
+import styles from './PostForm.module.css'
 
 import { createPost } from '../../services/groupService'
 
