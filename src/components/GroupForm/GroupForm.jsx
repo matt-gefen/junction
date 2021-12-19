@@ -15,6 +15,7 @@ const GroupForm = props => {
     avatar: '',
     location: '',
   })
+  
 
   const handleChange = e => {
     console.log(e.target.name)

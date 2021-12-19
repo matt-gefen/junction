@@ -24,6 +24,15 @@ const Group = (props) => {
     fetchGroup();
   }, [id]);
 
+  const updateGroup = async (groupId) => {
+    try {
+      const updatedGroup = await updateGroup(groupId)
+      setGroup(updatedGroup)
+    } catch (error) {
+      throw error
+    }
+  }
+
   return (
     <div className="layout">
       <div className="group-details">

@@ -33,6 +33,22 @@ export const getGroupById = async (groupId) => {
   }
 }
 
+export const updateGroup = async (groupId) => {
+  try {
+    const res = await fetch(`${BASE_URL}${groupId}`, {
+      method: "PUT",
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': 'Bearer ' + tokenService.getToken()
+      }
+    })
+    const data = await res.json()
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
 export const createPost= async (groupId, post) => {
   try {
     console.log(groupId)
@@ -50,3 +66,4 @@ export const createPost= async (groupId, post) => {
     throw error
   }
 }
+
