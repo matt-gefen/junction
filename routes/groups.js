@@ -10,6 +10,7 @@ router.get('/', groupCtrl.index)
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
 router.get('/:id', checkAuth, groupCtrl.show)
+router.get('/:id/posts/:postId', checkAuth, groupCtrl.showPost)
 router.post('/', checkAuth, groupCtrl.create)
 router.post('/:id/posts', checkAuth, groupCtrl.createPost)
 router.post('/:id/posts/:postId/comments', checkAuth, groupCtrl.createComment)
