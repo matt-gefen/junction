@@ -29,8 +29,7 @@ const postSchema = new Schema(
     owner: { type: mongoose.Schema.Types.ObjectId, ref: "Profile" },
     link: String,
     thumbnail: {
-      type: String,
-      required: true,
+      type: String
     },
     description: String,
     register: { type: mongoose.Schema.Types.ObjectId, ref: "Profile" },
