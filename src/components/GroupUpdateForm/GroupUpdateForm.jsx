@@ -9,13 +9,27 @@ import { getGroupById, updateGroup } from '../../services/groupService'
 const GroupUpdateForm = props => {
   const navigate = useNavigate()
   const [group, setGroup] = useState();
+  const [groupCategory, setGroupCategory] = useState('')
+  const [formData, setFormData] = useState({
+    title: '',
+    category: '',
+    avatar: '',
+    location: '',
+  })
 
   useEffect(() => {
     const fetchGroup = async () => {
       try {
         const groupData = await getGroupById(props.groupId);
         console.log("Group Details Data:", groupData);
-        setGroup(groupData);
+        setGroup(groupData)
+        setFormData({
+          title: groupData.title,
+          category: groupData.category,
+          avatar: groupData.avatar,
+          location: groupData.location,
+        })
+        setGroupCategory(groupData.category);
       } catch (error) {
         throw error;
       }
@@ -24,14 +38,6 @@ const GroupUpdateForm = props => {
   }, [props.groupId]);
 
 
-
-  const [groupCategory, setGroupCategory] = useState('Family')
-  const [formData, setFormData] = useState({
-    title: '',
-    category: 'Family',
-    avatar: '',
-    location: '',
-  })
 
   const handleChange = e => {
     console.log(e.target.name)
