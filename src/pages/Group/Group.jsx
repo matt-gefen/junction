@@ -5,7 +5,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { getGroupById } from "../../services/groupService";
 
 // Components
-import UpdateGroup from "../UpdateGroup/UpdateGroup";
+
 
 const Group = (props) => {
   const { id } = useParams();
@@ -25,15 +25,6 @@ const Group = (props) => {
     fetchGroup();
   }, [id]);
 
-  const updateGroup = async (groupId) => {
-    try {
-      const updatedGroup = await updateGroup(groupId)
-      setGroup(updatedGroup)
-    } catch (error) {
-      throw error
-    }
-  }
-
   return (
     <div className="layout">
       <div className="group-details">
@@ -45,7 +36,8 @@ const Group = (props) => {
           </>
         }
         <>
-          <Link to={`/groups/${id}/edit`}>Edit Group</Link>
+          <Link 
+            to={`/groups/${id}/edit`}>Edit Group</Link>
         </>
       </div>
     </div>

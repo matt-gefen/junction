@@ -1,22 +1,37 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import styles from './GroupForm.module.css'
 
 import GroupCategories from '../GroupCategories/GroupCategories'
 
-import { createGroup } from '../../services/groupService'
+import { createGroup, getGroupById } from '../../services/groupService'
 
 const GroupForm = props => {
   const navigate = useNavigate()
-  const [groupCategory, setGroupCategory] = useState('Family')
+  const [group, setGroup] = useState();
+  const { id } = useParams();
+
+  useEffect(() => {
+    const fetchGroup = async () => {
+      try {
+        const groupData = await getGroupById(id);
+        console.log("Group Details Data:", groupData);
+        setGroup(groupData);
+      } catch (error) {
+        throw error;
+      }
+    };
+    fetchGroup();
+  }, [id]);
+
+  const [groupCategory, setGroupCategory] = useState(group ? group.category : 'Family')
   const [formData, setFormData] = useState({
-    title: '',
-    category: 'Family',
-    avatar: '',
-    location: '',
+    title: group.title ? group.title : '',
+    category: groupCategory,
+    avatar: group.avatar ? group.avatar : '',
+    location: group.location ? group.location : '',
   })
   
-
   const handleChange = e => {
     console.log(e.target.name)
     props.updateMessage('')
@@ -40,6 +55,8 @@ const GroupForm = props => {
   }
 
   const { title, category, avatar, location } = formData
+
+  console.log(formData)
 
   const isFormInvalid = () => {
     return !(title && category && avatar)
