@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
+import { useParams } from "react-router-dom"
 import styles from './Comment.module.css'
 
 import { getProfileById } from '../../services/profileService'
 import { createComment } from '../../services/groupService'
 
 const CommentForm = props => {
+  const { id, postId } = useParams()
   const [comment, setComment] = useState({
     owner: '',
     content: ''
@@ -21,7 +23,7 @@ const CommentForm = props => {
       }
     }
     fetchProfile()
-  }, [props.user.profile])
+  }, [])
 
   const handleChange = e => {
     setComment({
@@ -33,7 +35,8 @@ const CommentForm = props => {
   const handleSubmit = async e => {
     e.preventDefault()
     try {
-      await createComment(props.groupId, props.postId, comment)
+      console.log('Submit the comment')
+      // await createComment(id, postId, props.postId, comment)
     } catch (err) {
       throw err
     }
