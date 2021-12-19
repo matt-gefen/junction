@@ -54,6 +54,8 @@ export const createPost= async (groupId, post) => {
 export const getAllGroups = async () => {
   try {
     const res = await fetch(`${BASE_URL}`)
+    const data = await res.json()
+    return data
    } catch (error) {
     throw error
   }
