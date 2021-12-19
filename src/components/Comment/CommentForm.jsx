@@ -24,6 +24,7 @@ const CommentForm = props => {
     try {
       await createComment(id, postId, comment)
       // Need to empty comment_content input
+      // Update state
       // comment.comment_content = ''
       // setComment(comment)
     } catch (err) {
