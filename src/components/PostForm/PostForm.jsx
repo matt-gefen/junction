@@ -11,7 +11,9 @@ const PostForm = props => {
     title: '',
     thumbnail: 'https://i.imgur.com/izJwDia.png',
     location: '',
-    // group: '',
+    link: '',
+    description: '',
+    // register: '',
     date: ''
   })
 
@@ -20,6 +22,7 @@ const PostForm = props => {
     props.updateMessage('')
     setFormData({
       ...formData,
+      thumbnail: `https://avatars.dicebear.com/api/croodles-neutral/${title}.svg`,
       [e.target.name]: e.target.value,
     })
   }
@@ -38,10 +41,10 @@ const PostForm = props => {
     }
   }
 
-  const { title, thumbnail, group, location, date } = formData
+  const { title, thumbnail, group, location, date, link, description, register } = formData
 
   const isFormInvalid = () => {
-    return !(title)
+    return !(title && description)
   }
 
   console.log(formData)
@@ -74,12 +77,65 @@ const PostForm = props => {
           onChange={handleChange}
         />
       </div>
+
+      <div className={styles.inputContainer}>
+        <label htmlFor="date" className={styles.label}>Event Date</label>
+        <input
+          type="datetime"
+          autoComplete="off"
+          id="date"
+          value={date}
+          name="date"
+          onChange={handleChange}
+        />
+      </div>
+
+      <div className={styles.inputContainer}>
+        <label htmlFor="link" className={styles.label}>Link</label>
+        <input
+          type="text"
+          autoComplete="off"
+          id="link"
+          value={link}
+          name="link"
+          onChange={handleChange}
+        />
+      </div>
+
+      <div className={styles.inputContainer}>
+        <label htmlFor="description" className={styles.label}>Description</label>
+        <textarea
+          rows = "6"
+          columns = "10"
+
+          autoComplete="off"
+          id="description"
+          value={description}
+          name="description"
+          onChange={handleChange}
+        />
+      </div>
+
       {/* <div className={styles.inputContainer}>
-        <img 
-        src={`https://avatars.dicebear.com/api/initials/${title}.svg`} 
-        alt="initials avatar" style={{width: "150px"}} 
+        <label htmlFor="register" className={styles.label}>Register for event</label>
+        <input
+          type="checkbox"
+          autoComplete="off"
+          id="register"
+          value={register}
+          name="register"
+          onChange={handleChange}
         />
       </div> */}
+
+
+      <div className={styles.inputContainer}>
+        <img 
+        src={`https://avatars.dicebear.com/api/croodles-neutral/${title}.svg`} 
+        alt="initials avatar" style={{width: "150px"}} 
+        />
+      </div>
+
       <div className={styles.inputContainer}>
         <button disabled={isFormInvalid()} className={styles.button}>
           Post
