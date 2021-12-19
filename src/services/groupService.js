@@ -51,6 +51,16 @@ export const createPost= async (groupId, post) => {
   }
 }
 
+export const getAllGroups = async () => {
+  try {
+    const res = await fetch(`${BASE_URL}`)
+    const data = await res.json()
+    return data
+   } catch (error) {
+    throw error
+  }
+}
+
 export const getPostById = async (groupId, postId) => {
   try {
     const res = await fetch(`${BASE_URL}${groupId}/posts/${postId}`,
@@ -82,3 +92,15 @@ export const createComment= async (groupId, postId, comment) => {
     throw error
   }
 }
+
+export const deleteGroup = async (groupId) => {
+  try {
+    await fetch(`${BASE_URL}${groupId}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': 'Bearer ' + tokenService.getToken() }
+    })
+  } catch (error) {
+    throw error
+  }
+}
+
