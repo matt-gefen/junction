@@ -35,7 +35,7 @@ export const getGroupById = async (groupId) => {
 
 export const createPost= async (groupId, post) => {
   try {
-    const res = await fetch(`${BASE_URL}${groupId}/posts/new`, {
+    const res = await fetch(`${BASE_URL}${groupId}/posts/`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',

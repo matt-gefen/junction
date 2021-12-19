@@ -10,7 +10,7 @@ const PostForm = props => {
     title: '',
     thumbnail: '',
     location: '',
-    group: '',
+    // group: '',
     date: ''
   })
 
@@ -24,6 +24,7 @@ const PostForm = props => {
   }
 
   const handleSubmit = async e => {
+    console.log('eventData', e)
     e.preventDefault()
     try {
       await createPost(formData)
@@ -36,7 +37,7 @@ const PostForm = props => {
   const { title, thumbnail, group, location, date } = formData
 
   const isFormInvalid = () => {
-    return !(title && thumbnail && group)
+    return !(title)
   }
 
   console.log(formData)
