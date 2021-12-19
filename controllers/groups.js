@@ -90,6 +90,16 @@ const show = async (req, res) => {
   }
 }
 
+const showPost = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.postId)
+      .populate('comments')
+    return res.status(200).json(post)
+  } catch (err) {
+    return res.status(500).json(err)
+  }
+}
+
 const updatePost = async (req, res) => {
   try {
     const updatedPost = await Post.findByIdAndUpdate(
@@ -157,4 +167,4 @@ const deleteComment = async (req, res) => {
   }
 }
 
-export { index, create, update, deleteGroup as delete, createPost, show, updatePost, deletePost, createComment, updateComment, deleteComment }
+export { index, create, update, deleteGroup as delete, createPost, show, showPost, updatePost, deletePost, createComment, updateComment, deleteComment }
