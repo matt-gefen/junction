@@ -1,38 +1,31 @@
 import React from 'react'
-import '../../styles/Card.css' // <= Card Styling
-
-import { Link } from 'react-router-dom'
+import './Card.css' // <= Card Styling
 
 // Components
-import PostActions from './PostActions'
-import UserCard from '../misc/UserCard'
-import Codeblock from '../Code/Codeblock'
+import GroupActions from './GroupActions'
 
-const PostCard = (props) => {
+const GroupCard = (props) => {
   return (
-    <div className="post-card">
+    <div className="group-card">
 
       <div className="card-header">
-        <UserCard profile={props.post.added_by} />
-        <PostActions {...props} />
+        <GroupActions {...props} />
       </div>
 
-      <div className="question-container">
-        <p> {props.post.is_resolved && '[RESOLVED]'} {props.post.question}</p>
+      <div className="group-title">
+        <h2>{props.title}</h2>
       </div>
 
-      <div className="code-container">
-        {props.post.codeblock &&
-          <Codeblock codeblock={props.post.codeblock} />
-        }
+      <div className="group-avatar">
+        {props.avatar}
       </div>
 
-      <div className="comment-link">
-        <Link to={`/posts/${props.post._id}`}>View Comments</Link>
-      </div>
+      <div className="group-members">
 
+      </div>
+        {props.members}
     </div>
   )
 }
 
-export default PostCard
+export default GroupCard

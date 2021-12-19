@@ -1,0 +1,100 @@
+/* CARD CSS */
+
+.post-list {
+  background: #0b0b12;
+  padding: 0px 10px 0px 10px;
+}
+
+.post-card {
+  background: #12121b;
+  border: 1px solid #292934;
+  margin-top: 10px;
+  border-radius: 8px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  padding: 5px 0px 0px 5px;
+}
+
+.question-container {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  padding: 15px 0px 6px 13px;
+}
+
+.question-container p {
+  width: 95%;
+  margin: 0;
+  text-align: left;
+  line-height: 1.4;
+  font-size: 16px;
+  color: rgb(200, 200, 200);
+}
+
+.code-container {
+  padding: 0px 10px 12px 10px;
+}
+
+.comment-link {
+  border-top: 1px solid #292934;
+  padding: 8px 8px 11px 8px;
+}
+
+.comment-link a {
+  color: rgb(190, 190, 190);
+  font-weight: medium;
+  font-size: 14px;
+}
+
+.resolution-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.interactions {
+  margin-left: auto; 
+  display: flex;
+  padding-right: 10px;
+}
+
+.interactions button {
+  border: none;
+  font-size: 13px;
+  background: none;
+  border-radius: 8px;
+  margin: 0px 0px 0px 10px ;
+  border: 1px solid #363642;
+  color: rgb(190, 190, 190);
+  padding: 7px 14px 7px 14px;
+}
+
+.comment-section {
+  margin-top: 10px;
+}
+
+.comment-list {
+  height: 100%;
+  margin-top: 50px;
+  background: #0b0b12;
+  padding: 10px 10px 0px 10px;
+}
+
+.comment-card {
+  margin-top: 10px;
+  border-radius: 8px;
+  background: #12121b;
+  border: 1px solid #292934;
+  padding-bottom: 16px;
+}
+
+.comment-link {
+  display: flex;
+  justify-content: center;
+}
+
+.comment-link a {
+  text-decoration: none;
+}
