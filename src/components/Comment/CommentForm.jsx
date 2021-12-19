@@ -1,16 +1,29 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import styles from './Comment.module.css'
 
+import { getProfileById } from '../../services/profileService'
 import { createComment } from '../../services/groupService'
 
 const CommentForm = props => {
   const [comment, setComment] = useState({
-    owner: props.user._id,
+    owner: '',
     content: ''
   })
 
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const profile = await getProfileById(props.user.profile)
+        comment.owner = profile.avatar
+        setComment(comment)
+      } catch (error) {
+        throw error
+      }
+    }
+    fetchProfile()
+  }, [props.user.profile])
+
   const handleChange = e => {
-    props.updateMessage('')
     setComment({
       ...comment,
       [e.target.name]: e.target.value,
@@ -22,7 +35,7 @@ const CommentForm = props => {
     try {
       await createComment(props.groupId, props.postId, comment)
     } catch (err) {
-      props.updateMessage(err.message)
+      throw err
     }
   }
 
@@ -32,7 +45,7 @@ const CommentForm = props => {
     return !(content)
   }
 
-  console.log('Comment User:', props.user)
+  console.log('Comment:', comment)
 
   return (
     <form
@@ -40,7 +53,7 @@ const CommentForm = props => {
       onSubmit={handleSubmit}
       className={styles.container}
     >
-      <img src="" alt="" />
+      <img className={styles.image} src={comment.owner} alt="" />
       <h2>Add a Comment</h2>
       <div className={styles.inputContainer}>
         <input
