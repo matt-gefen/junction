@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-// Services
-// import { getGroupById } from "../../services/groupService";
+import { getGroupById } from "../../services/groupService";
 
-// Components
-
-const Group = (props) => {
+const UpdateGroup = (props) => {
   const [group, setGroup] = useState();
+  const { id } = useParams();
 
   useEffect(() => {
     const fetchGroup = async () => {
       try {
-        const groupData = await getGroupById(props.id);
+        const groupData = await getGroupById(id);
         console.log("Group Details Data:", groupData);
         setGroup(groupData);
       } catch (error) {
@@ -24,14 +22,8 @@ const Group = (props) => {
 
   return (
     <div className="layout">
-      <div className="group-details">
-      {group &&
-          <>
-            <img src={group.avatar} alt="" style={{width:"150px"}}/>
-            <h2>{group.title}</h2>
-            <h4>{group.location}</h4>
-          </>
-        }
+      <div>
+        <h1>Test</h1>
       </div>
     </div>
   );
