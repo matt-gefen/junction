@@ -1,0 +1,61 @@
+/* CARD CSS */
+
+h2 {
+  color: white;
+}
+
+.group-avatar{
+  width: 150px;
+}
+.group-list {
+  background: #0b0b12;
+  padding: 0px 10px 0px 10px;
+  width: 300px;
+}
+
+.group-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #727171;
+  border: 1px solid #292934;
+  margin-top: 10px;
+  border-radius: 8px;
+  width: 300px;
+  padding-bottom: 15px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  padding: 5px 0px 0px 5px;
+}
+
+.comment-link {
+  border-top: 1px solid #292934;
+  padding: 8px 8px 11px 8px;
+}
+
+.comment-link a {
+  color: rgb(190, 190, 190);
+  font-weight: medium;
+  font-size: 14px;
+}
+
+.interactions {
+  margin-left: auto; 
+  display: flex;
+  padding-right: 10px;
+}
+
+.interactions button {
+  border: none;
+  font-size: 13px;
+  background: none;
+  border-radius: 8px;
+  margin: 0px 0px 0px 10px ;
+  border: 1px solid #363642;
+  color: rgb(190, 190, 190);
+  padding: 7px 14px 7px 14px;
+}

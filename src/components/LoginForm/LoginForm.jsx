@@ -20,7 +20,7 @@ const LoginForm = props => {
     try {
       await authService.login(formData)
       props.handleSignupOrLogin()
-      navigate('/')
+      navigate('/groups')
     } catch (err) {
       props.updateMessage(err.message)
     }
@@ -56,7 +56,7 @@ const LoginForm = props => {
       </div>
       <div>
         <button className={styles.button}>Log In</button>
-        <Link to="/">
+        <Link to="/groups">
           <button>Cancel</button>
         </Link>
       </div>

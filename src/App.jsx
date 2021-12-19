@@ -3,12 +3,13 @@ import { Routes, Route, useNavigate, Navigate } from 'react-router-dom'
 import NavBar from './components/NavBar/NavBar'
 import Signup from './pages/Signup/Signup'
 import Login from './pages/Login/Login'
-import Landing from './pages/Landing/Landing'
+// import Landing from './pages/Landing/Landing'
 import CreateGroup from './pages/CreateGroup/CreateGroup'
 import Group from './pages/Group/Group'
 import CreatePost from './pages/CreatePost/CreatePost'
 import PostDetails from './pages/PostDetails/PostDetails'
 import * as authService from './services/authService'
+import GroupIndex from './pages/GroupIndex/GroupIndex'
 
 const App = () => {
   const [user, setUser] = useState(authService.getUser())
@@ -32,7 +33,7 @@ const App = () => {
     <>
       <NavBar user={user} handleLogout={handleLogout} />
       <Routes>
-        <Route path="/" element={<Landing user={user} />} />
+        <Route path="groups/" element={<GroupIndex user={user} />} />
         <Route
           path="/signup"
           element={<Signup handleSignupOrLogin={handleSignupOrLogin} randomSeed={randomSeed}/>}
