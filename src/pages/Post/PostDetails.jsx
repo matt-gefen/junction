@@ -35,7 +35,6 @@ const PostDetails = props => {
     fetchGroup()
   }, [])
 
-  console.log('Post:', post)
   let date = new Date(post.createdAt)
 
   return (
