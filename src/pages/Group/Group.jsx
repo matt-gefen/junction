@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 // Services
 import { getGroupById } from "../../services/groupService";
@@ -30,10 +30,14 @@ const Group = (props) => {
       {group &&
           <>
             <img src={group.avatar} alt="" style={{width:"150px"}}/>
-            <h2>{group.title}</h2>
+            <h2 style={{color:"black"}}>{group.title}</h2>
+            <h3>{group.category}</h3>
             <h4>{group.location}</h4>
           </>
         }
+          <>
+            <Link to={`/groups/${id}/edit`}>Edit Group</Link>
+          </>
       </div>
     </div>
   );

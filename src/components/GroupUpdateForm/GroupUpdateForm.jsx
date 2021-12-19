@@ -1,20 +1,43 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import styles from './GroupForm.module.css'
+import styles from './GroupUpdateForm.module.css'
 
 import GroupCategories from '../GroupCategories/GroupCategories'
 
-import { createGroup } from '../../services/groupService'
+import { getGroupById, updateGroup } from '../../services/groupService'
 
-const GroupForm = props => {
+const GroupUpdateForm = props => {
   const navigate = useNavigate()
-  const [groupCategory, setGroupCategory] = useState('Family')
+  const [group, setGroup] = useState();
+  const [groupCategory, setGroupCategory] = useState('')
   const [formData, setFormData] = useState({
     title: '',
-    category: 'Family',
+    category: '',
     avatar: '',
     location: '',
   })
+
+  useEffect(() => {
+    const fetchGroup = async () => {
+      try {
+        const groupData = await getGroupById(props.groupId);
+        console.log("Group Details Data:", groupData);
+        setGroup(groupData)
+        setFormData({
+          title: groupData.title,
+          category: groupData.category,
+          avatar: groupData.avatar,
+          location: groupData.location,
+        })
+        setGroupCategory(groupData.category);
+      } catch (error) {
+        throw error;
+      }
+    };
+    fetchGroup();
+  }, [props.groupId]);
+
+
 
   const handleChange = e => {
     console.log(e.target.name)
@@ -30,9 +53,9 @@ const GroupForm = props => {
   const handleSubmit = async e => {
     e.preventDefault()
     try {
-      await createGroup(formData)
-      // change to Group Details
-      navigate('/')
+      const updatedGroup = await updateGroup(props.groupId,formData)
+      setGroup(updatedGroup)
+      navigate(`/groups/${props.groupId}`)
     } catch (err) {
       props.updateMessage(err.message)
     }
@@ -65,7 +88,7 @@ const GroupForm = props => {
       </div>
       <div className={styles.inputContainer}>
         <label htmlFor="category" className={styles.label}>Category</label>
-        <GroupCategories setGroupCategory={setGroupCategory} groupCategory={groupCategory} handleChange={handleChange}/>
+        <GroupCategories setGroupCategory={setGroupCategory} groupCategory={groupCategory}handleChange={handleChange}/>
       </div>
       <div className={styles.inputContainer}>
         <label htmlFor="location" className={styles.label}>Location</label>
@@ -86,7 +109,7 @@ const GroupForm = props => {
       </div>
       <div className={styles.inputContainer}>
         <button disabled={isFormInvalid()} className={styles.button}>
-          Create Group
+          Update Group
         </button>
         <Link to="/">
           <button>Cancel</button>
@@ -96,4 +119,4 @@ const GroupForm = props => {
   )
 }
 
-export default GroupForm
+export default GroupUpdateForm
