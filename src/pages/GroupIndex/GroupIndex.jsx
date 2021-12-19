@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 
 // Services
-import { getAllGroups, updateGroup, deleteGroup } from '../services/postService'
+import { getAllGroups } from '../../services/groupService'
 
 // Components 
-import GroupCard from '../components/GroupCard/GroupCard'
+import GroupCard from '../../components/GroupCard/GroupCard'
 
 const GroupList = (props) => {
   const [groups, setGroups] = useState([])
