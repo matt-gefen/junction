@@ -1,13 +1,30 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import styles from './GroupForm.module.css'
+import styles from './GroupUpdateForm.module.css'
 
 import GroupCategories from '../GroupCategories/GroupCategories'
 
-import { createGroup } from '../../services/groupService'
+import { getGroupById, updateGroup } from '../../services/groupService'
 
-const GroupForm = props => {
+const GroupUpdateForm = props => {
   const navigate = useNavigate()
+  const [group, setGroup] = useState();
+
+  useEffect(() => {
+    const fetchGroup = async () => {
+      try {
+        const groupData = await getGroupById(props.groupId);
+        console.log("Group Details Data:", groupData);
+        setGroup(groupData);
+      } catch (error) {
+        throw error;
+      }
+    };
+    fetchGroup();
+  }, [props.groupId]);
+
+
+
   const [groupCategory, setGroupCategory] = useState('Family')
   const [formData, setFormData] = useState({
     title: '',
@@ -30,7 +47,7 @@ const GroupForm = props => {
   const handleSubmit = async e => {
     e.preventDefault()
     try {
-      await createGroup(formData)
+      await updateGroup(formData)
       // change to Group Details
       navigate('/')
     } catch (err) {
@@ -86,7 +103,7 @@ const GroupForm = props => {
       </div>
       <div className={styles.inputContainer}>
         <button disabled={isFormInvalid()} className={styles.button}>
-          Create Group
+          Update Group
         </button>
         <Link to="/">
           <button>Cancel</button>
@@ -96,4 +113,4 @@ const GroupForm = props => {
   )
 }
 
-export default GroupForm
+export default GroupUpdateForm
