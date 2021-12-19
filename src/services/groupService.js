@@ -59,7 +59,6 @@ export const getPostById = async (groupId, postId) => {
         'Authorization': `Bearer ${tokenService.getToken()}`
     }})
     const data = await res.json()
-    console.log('Post Data:', data)
     return data
   } catch (error) {
     throw error
