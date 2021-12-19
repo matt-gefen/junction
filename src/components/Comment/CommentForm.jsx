@@ -23,6 +23,9 @@ const CommentForm = props => {
     e.preventDefault()
     try {
       await createComment(id, postId, comment)
+      // Need to empty comment_content input
+      // comment.comment_content = ''
+      // setComment(comment)
     } catch (err) {
       throw err
     }
@@ -40,7 +43,7 @@ const CommentForm = props => {
       }
     }
     fetchProfile()
-  }, [])
+  }, [props.user.profile])
 
   const isFormInvalid = () => {
     return !(comment_content)
