@@ -1,0 +1,13 @@
+.categorySelection {
+ display:flex;
+ flex-direction: row;
+gap: 10px;
+}
+
+.categoryName {
+  background-color: beige;
+  border-radius: 20px;
+  padding: 4px;
+  padding-left: 7px;
+  padding-right: 7px;
+}

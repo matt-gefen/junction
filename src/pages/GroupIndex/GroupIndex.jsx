@@ -31,7 +31,7 @@ const GroupList = (props) => {
 
   return (
     <div className='layout'>
-    <div className="category-selection">
+    <div >
       <CategoryMenu />
     </div>
       {groups?.map((group) => (
