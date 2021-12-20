@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
+import styles from './Group.module.css'
 
 // Services
 import { getGroupById } from "../../services/groupService";
@@ -52,9 +53,11 @@ const Group = (props) => {
             <h2 style={{color:"black"}}>{group.title}</h2>
             <h3>{group.category}</h3>
             <h4>{group.location}</h4>
-            {group.posts?.map(post => (
-              <PostCard post={post}/>
-            ))}
+            <section className={styles.container}>
+              {group.posts?.map(post => (
+                <PostCard post={post}/>
+              ))}
+            </section>
           </>
         }
         {isOwner &&

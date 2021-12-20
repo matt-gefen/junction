@@ -8,7 +8,7 @@ const PostDetails = ({ post }) => {
   let date = new Date(post.createdAt)
 
   return (
-    <div className={styles.container}>
+    <div className={styles.card}>
       <div className="post-details">
         <h1>{post.title}</h1>
         <div className={styles.container}>
