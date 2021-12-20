@@ -4,7 +4,7 @@ import styles from './PostDetails.module.css'
 import CommentForm from "../../components/Comment/CommentForm"
 
 // Services
-import { getPostById, updatePost } from "../../services/groupService"
+import { getPostById } from "../../services/groupService"
 
 import { updateProfile, getProfileById } from "../../services/profileService";
 
@@ -28,24 +28,19 @@ const PostDetails = props => {
   })
   const [profile, setProfile] = useState()
   const [isOwner, setIsOwner] = useState(false)
-
+  const [isFavorite, setIsFavorite] = useState(false)
   const navigate = useNavigate()
 
   function handleClick() {
     navigate(`/groups/${id}/posts/${postId}/edit`)
   }
 
-  // function handleJoinGroup() {
-  //   updateGroup(group._id, {
-  //     ...group,
-  //     members: [...group.members, profile]
-  //   })
-  //   updateProfile(profile._id, {
-  //     ...profile,
-  //     joined_groups: [...profile.joined_groups, group._id]
-  //   })
-  //   setIsMember(true)
-  // }
+  function handleFavoritePost() {
+    updateProfile(profile._id, {
+      ...profile,
+      favorited_posts: [...profile.favorited_posts, post._id]
+    })
+  }
 
   // function handleLeaveGroup() {
   //   let newMembers = []
@@ -80,6 +75,10 @@ const PostDetails = props => {
         setPost(postData)
         setProfile(profileData)
         setIsOwner(props.user.profile === postData.owner)
+        let favorites = profileData.favorited_posts.map((element) => {
+          return element._id
+        })
+        setIsFavorite(favorites.includes(postData._id))
       } catch (error) {
         throw error
       }
@@ -94,7 +93,12 @@ const PostDetails = props => {
       {isOwner &&
         <button onClick={handleClick}>Edit Post</button>
       }
-      <button>Favorite Post</button>
+      { !isFavorite &&
+        <button onClick={handleFavoritePost}>Favorite Post</button>
+      }
+      { isFavorite &&
+        <button onClick={handleFavoritePost}>Unfavorite Post</button>
+      }
       <div className="post-details">
         <h1>Post Details</h1>
         <h1>{post.title}</h1>
