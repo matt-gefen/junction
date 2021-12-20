@@ -50,9 +50,14 @@ const Group = (props) => {
             <h4>{group.location}</h4>
           </>
         }
+        <div>
+          <button>Join Group</button>
+        </div>
+
+
         {isOwner &&
           <>
-            <Link to={`/groups/${id}/edit`}>Edit Group</Link>
+            <button><Link to={`/groups/${id}/edit`}>Edit Group</Link></button>
           </>
         }
       </div>
