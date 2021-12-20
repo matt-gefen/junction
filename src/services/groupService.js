@@ -120,4 +120,3 @@ export const deleteGroup = async (groupId) => {
     throw error
   }
 }
-

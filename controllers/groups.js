@@ -129,6 +129,7 @@ const deletePost = async (req, res) => {
 }
 
 const createComment = async (req, res) => {
+  console.log('Create comment body:', req.body)
   try {
     req.body.owner = req.user.profile
     const post = await Post.findById(req.params.postId)
