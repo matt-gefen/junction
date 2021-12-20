@@ -3,11 +3,10 @@ import React, {useState} from 'react';
 import styles from "./CategoryNav.module.css"
 
 const CategoryFilter = (props) => {
-  console.log(props)
-  const [clicked, setClicked] = useState(false)
+  const [clicked, setClicked] = useState(props.beenClicked)
   function handleClick() {
     if (clicked) {
-      
+      props.handleRemoveCategory(props.category)
     } else {
       props.handleAddCategory(props.category)
     }
