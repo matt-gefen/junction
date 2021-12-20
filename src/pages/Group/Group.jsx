@@ -5,6 +5,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { getGroupById } from "../../services/groupService";
 
 // Components
+import PostCard from "../../components/PostCard/PostCard";
 
 const Group = (props) => {
   const { id } = useParams();
@@ -34,6 +35,14 @@ const Group = (props) => {
     fetchGroup();
   }, [id, isOwner, ownerId]);
 
+  // console.log('Group data:', group?.posts)
+
+  // const posts = group?.posts.map(post => (
+  //   <PostCard post={post}/>
+  // ))
+
+  // console.log(posts)
+
   return (
     <div className="layout">
       <div className="group-details">
@@ -43,6 +52,9 @@ const Group = (props) => {
             <h2 style={{color:"black"}}>{group.title}</h2>
             <h3>{group.category}</h3>
             <h4>{group.location}</h4>
+            {group.posts?.map(post => (
+              <PostCard post={post}/>
+            ))}
           </>
         }
         {isOwner &&
