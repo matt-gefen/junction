@@ -62,7 +62,7 @@ const GroupActions = (props) => {
         <button onClick={handleJoinGroup}>Join Group</button>
       </div>
     }
-    {isMember &&
+    {isMember && !isOwner &&
       <div>
         <button onClick={handleLeaveGroup}>Leave Group</button>
       </div>
