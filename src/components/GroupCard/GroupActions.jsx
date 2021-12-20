@@ -10,7 +10,7 @@ const GroupActions = (props) => {
     return member._id
   })
   const [isMember, setIsMember] = useState(members.includes(props.profile._id))
-  console.log(props)
+
   const ownerId = props.group.owner
   const isOwner = props.user?.profile === ownerId
   
