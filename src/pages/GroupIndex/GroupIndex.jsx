@@ -7,6 +7,7 @@ import { getProfileById } from '../../services/profileService'
 
 // Components 
 import GroupCard from '../../components/GroupCard/GroupCard'
+import CategoryMenu from '../../components/CategoryNav/CategoryMenu'
 
 const GroupList = (props) => {
   const [groups, setGroups] = useState([])
@@ -34,6 +35,7 @@ const GroupList = (props) => {
 
   return (
     <div className='layout'>
+      <CategoryMenu user={props.user}/>
       { profile && groups?.map((group) => (
         <GroupCard
           group={group}

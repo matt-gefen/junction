@@ -4,12 +4,13 @@ import styles from './PostDetails.module.css'
 import CommentForm from "../../components/Comment/CommentForm"
 
 // Services
-import { getPostById } from "../../services/groupService"
+import { getPostById, deletePost } from "../../services/groupService"
 
 import { updateProfile, getProfileById } from "../../services/profileService";
 
 // Components
 import Comment from '../../components/Comment/Comment'
+import AlertDialog from "../../components/MaterialUI/AlertDialogue"
 
 const PostDetails = props => {
   const { id, postId } = useParams()
@@ -31,7 +32,7 @@ const PostDetails = props => {
   const [isFavorite, setIsFavorite] = useState(false)
   const navigate = useNavigate()
 
-  function handleClick() {
+  function routeToEditPost() {
     navigate(`/groups/${id}/posts/${postId}/edit`)
   }
 
@@ -61,6 +62,11 @@ const PostDetails = props => {
   setIsFavorite(false)
 }
 
+  function confirmDeletePost() {
+    deletePost(id, postId)
+    navigate(-1)
+  }
+  
   useEffect(() => {
     const fetchPost = async () => {
       try {
@@ -85,7 +91,16 @@ const PostDetails = props => {
   return (
     <div className="layout">
       {isOwner &&
-        <button onClick={handleClick}>Edit Post</button>
+        <>
+          <button onClick={routeToEditPost}>Edit Post</button>
+          <AlertDialog 
+            handleConfirm={confirmDeletePost}
+            buttonText="Delete Post"
+            content="Are you sure you want to delete this post? This action cannot be undone!"
+            confirmOption="Delete Post"
+            cancelOption="Cancel"
+          />
+        </>
       }
       { !isFavorite &&
         <button onClick={handleFavoritePost}>Favorite Post</button>

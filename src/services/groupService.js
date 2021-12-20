@@ -121,9 +121,9 @@ export const deleteGroup = async (groupId) => {
   }
 }
 
-export const updatePost = async (id, postId, post) => {
+export const updatePost = async (groupId, postId, post) => {
   try {
-    const res = await fetch(`${BASE_URL}${id}/posts/${postId}`, {
+    const res = await fetch(`${BASE_URL}${groupId}/posts/${postId}`, {
       method: 'PUT',
       headers: {
         'content-type': 'application/json',
@@ -133,6 +133,17 @@ export const updatePost = async (id, postId, post) => {
     })
     const data = await res.json()
     return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const deletePost = async (groupId, postId) => {
+  try {
+    await fetch(`${BASE_URL}${groupId}/posts/${postId}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': 'Bearer ' + tokenService.getToken() }
+    })
   } catch (error) {
     throw error
   }
