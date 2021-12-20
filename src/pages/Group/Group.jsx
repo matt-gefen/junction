@@ -66,10 +66,11 @@ const Group = (props) => {
             <h4>{group.location}</h4>
           </>
         }
+      {!isMember &&
         <div>
-          <button>Join Group</button>
+          <button onClick={handleJoinGroup}>Join Group</button>
         </div>
-
+      }
 
         {isOwner &&
           <>
