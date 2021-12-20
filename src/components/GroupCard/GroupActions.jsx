@@ -6,9 +6,7 @@ const GroupActions = (props) => {
   console.log(props)
   const ownerId = props.group.owner
   const isOwner = props.user?.profile === ownerId
-  console.log(isOwner)
-  console.log("userId ",props.user._id)
-  console.log("ownerId",ownerId)
+  
   return (
     isOwner &&
     <div className="interactions">
