@@ -40,33 +40,26 @@ const PostDetails = props => {
       ...profile,
       favorited_posts: [...profile.favorited_posts, post._id]
     })
-    setIsFavorite(true)
+  
+    if (isFavorite === false) {
+      setIsFavorite(true)
+    }
   }
 
-  // function handleLeaveGroup() {
-  //   let newMembers = []
-  //   group.members.forEach((element) => {
-  //     if(element._id !== profile._id) {
-  //       newMembers.push(element)
-  //     }
-  //   })
+  function handleUnfavorite() {
+    let newFavorites = []
+    profile.favorited_posts.forEach((element) => {
+      if(element._id !== post._id) {
+        newFavorites.push(element)
+      }
+    })
 
-  //   let newGroups = []
-  //   profile.joined_groups.forEach((element) => {
-  //     if(element._id !== group._id) {
-  //       newGroups.push(element)
-  //     }
-  //   })
-//   updateGroup(group._id, {
-//     ...group,
-//     members: newMembers
-//   })
-//   updateProfile(profile._id, {
-//     ...profile,
-//     joined_groups: newGroups
-//   })
-//   setIsMember(false)
-// }
+  updateProfile(profile._id, {
+    ...profile,
+    favorited_posts: newFavorites
+  })
+  setIsFavorite(false)
+}
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -98,7 +91,7 @@ const PostDetails = props => {
         <button onClick={handleFavoritePost}>Favorite Post</button>
       }
       { isFavorite &&
-        <button onClick={handleFavoritePost}>Unfavorite Post</button>
+        <button onClick={handleUnfavorite}>Unfavorite Post</button>
       }
       <div className="post-details">
         <h1>Post Details</h1>

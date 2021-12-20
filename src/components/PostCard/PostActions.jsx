@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom'
 import './Card.css'
 
 import { updateGroup } from "../../services/groupService";
-import { updateProfile} from "../../services/profileService";
+import { updateProfile } from "../../services/profileService";
 
-const GroupActions = (props) => {
+const PostActions = (props) => {
   let  members = props.group.members.map((member) => {
     return member._id
   })
@@ -69,12 +69,9 @@ const GroupActions = (props) => {
     }
 
     {isOwner &&
-    <>
-      <button><Link to={`/groups/${props.group._id}/edit`}>Edit</Link></button>
-      <button onClick={() => props.handleDeleteGroup(props.group._id)}>Delete</button>
-    </ >}
+
     </div>
   )
 }
 
-export default GroupActions
+export default PostActions
