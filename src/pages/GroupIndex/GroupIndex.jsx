@@ -5,6 +5,7 @@ import { getAllGroups, deleteGroup } from '../../services/groupService'
 
 // Components 
 import GroupCard from '../../components/GroupCard/GroupCard'
+import CategoryMenu from '../../components/CategoryNav/CategoryMenu'
 
 const GroupList = (props) => {
   const [groups, setGroups] = useState([])
@@ -30,6 +31,9 @@ const GroupList = (props) => {
 
   return (
     <div className='layout'>
+    <div className="category-selection">
+      <CategoryMenu />
+    </div>
       {groups?.map((group) => (
         <GroupCard
           group={group}
