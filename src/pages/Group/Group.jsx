@@ -13,6 +13,7 @@ const Group = (props) => {
 
   const [ownerId, setOwnerId] = useState('') 
   const [isOwner, setIsOwner] = useState(false)
+  const [isMember, setIsMember] = useState(false)
 
   function handleClick() {
     navigate(`/groups/${id}/posts`)
@@ -26,7 +27,11 @@ const Group = (props) => {
         setGroup(groupData);
         setOwnerId(groupData.owner)
         setIsOwner(props.user.profile === ownerId)
-        console.log(isOwner)
+        let members = groupData.members.map((member) => {
+          return member._id
+        })
+        setIsMember(members.includes(props.user.profile))
+        console.log(isMember)
       } catch (error) {
         throw error;
       }
