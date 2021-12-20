@@ -35,6 +35,33 @@ const Group = (props) => {
     setIsMember(true)
   }
 
+  function handleLeaveGroup() {
+    let newMembers = []
+    group.members.forEach((element) => {
+      if(element._id !== profile._id) {
+        newMembers.push(element)
+      }
+    })
+
+    let newGroups = []
+    profile.joined_groups.forEach((element) => {
+      if(element._id !== group._id) {
+        newGroups.push(element)
+      }
+    })
+
+    updateGroup(group._id, {
+      ...group,
+      members: newMembers
+    })
+    updateProfile(profile._id, {
+      ...profile,
+      joined_groups: newGroups
+    })
+    setIsMember(false)
+  }
+
+
   useEffect(() => {
     const fetchGroup = async () => {
       try {
@@ -86,12 +113,17 @@ const Group = (props) => {
           <button onClick={handleJoinGroup}>Join Group</button>
         </div>
       }
+      {isMember &&
+        <div>
+          <button onClick={handleLeaveGroup}>Leave Group</button>
+        </div>
+      }
 
-        {isOwner &&
+      {isOwner &&
           <>
             <button><Link to={`/groups/${id}/edit`}>Edit Group</Link></button>
           </>
-        }
+      }
       </div>
       {isMember &&
         <>
