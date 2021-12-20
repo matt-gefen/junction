@@ -76,7 +76,6 @@ const Group = (props) => {
           return member._id
         })
         setIsMember(members.includes(props.user.profile))
-        console.log(isMember)
       } catch (error) {
         throw error;
       }

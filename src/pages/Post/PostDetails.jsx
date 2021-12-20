@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
+import styles from './PostDetails.module.css'
 import CommentForm from "../../components/Comment/CommentForm"
 
 // Services
-import { getPostById } from "../../services/groupService"
+import { getPostById, updatePost } from "../../services/groupService"
+
+import { updateProfile, getProfileById } from "../../services/profileService";
 
 // Components
 import Comment from '../../components/Comment/Comment'
@@ -23,6 +26,7 @@ const PostDetails = props => {
     register: '',
     comments: []
   })
+  const [profile, setProfile] = useState()
   const [isOwner, setIsOwner] = useState(false)
 
   const navigate = useNavigate()
@@ -31,18 +35,57 @@ const PostDetails = props => {
     navigate(`/groups/${id}/posts/${postId}/edit`)
   }
 
+  // function handleJoinGroup() {
+  //   updateGroup(group._id, {
+  //     ...group,
+  //     members: [...group.members, profile]
+  //   })
+  //   updateProfile(profile._id, {
+  //     ...profile,
+  //     joined_groups: [...profile.joined_groups, group._id]
+  //   })
+  //   setIsMember(true)
+  // }
+
+  // function handleLeaveGroup() {
+  //   let newMembers = []
+  //   group.members.forEach((element) => {
+  //     if(element._id !== profile._id) {
+  //       newMembers.push(element)
+  //     }
+  //   })
+
+  //   let newGroups = []
+  //   profile.joined_groups.forEach((element) => {
+  //     if(element._id !== group._id) {
+  //       newGroups.push(element)
+  //     }
+  //   })
+//   updateGroup(group._id, {
+//     ...group,
+//     members: newMembers
+//   })
+//   updateProfile(profile._id, {
+//     ...profile,
+//     joined_groups: newGroups
+//   })
+//   setIsMember(false)
+// }
+
   useEffect(() => {
     const fetchPost = async () => {
       try {
         const postData = await getPostById(id, postId)
+        const profileData = await getProfileById(props.user.profile)
         setPost(postData)
+        setProfile(profileData)
         setIsOwner(props.user.profile === postData.owner)
       } catch (error) {
         throw error
       }
     }
     fetchPost()
-  }, [id, postId])
+  }, [props.user.profile, id, postId])
 
   let date = new Date(post.createdAt)
 
@@ -51,6 +94,7 @@ const PostDetails = props => {
       {isOwner &&
         <button onClick={handleClick}>Edit Post</button>
       }
+      <button>Favorite Post</button>
       <div className="post-details">
         <h1>Post Details</h1>
         <h1>{post.title}</h1>
@@ -62,7 +106,7 @@ const PostDetails = props => {
           <div className="post-owner"></div>
         </div>
         <div className="post-thumbnail">
-          <img src={post.thumbnail} alt="Post thumbnail" />
+          <img className={styles.thumbnail} src={post.thumbnail} alt="Post thumbnail" />
         </div>
         <div className="post-description-container">
           <h3>Post Description</h3>
