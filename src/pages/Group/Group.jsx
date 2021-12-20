@@ -14,6 +14,10 @@ const Group = (props) => {
   const [ownerId, setOwnerId] = useState('') 
   const [isOwner, setIsOwner] = useState(false)
 
+  function handleClick() {
+    navigate(`/groups/${id}/posts`)
+  }
+
   useEffect(() => {
     const fetchGroup = async () => {
       try {
@@ -47,6 +51,7 @@ const Group = (props) => {
           </>
         }
       </div>
+      <button onClick={handleClick}>Create Post</button>
     </div>
   );
 };

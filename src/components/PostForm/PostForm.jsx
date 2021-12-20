@@ -29,13 +29,10 @@ const PostForm = props => {
 
 
   const handleSubmit = async e => {
-  
-
-    
     e.preventDefault()
     try {
       await createPost( id, formData)
-      navigate('/')
+      navigate(-1)
     } catch (err) {
       props.updateMessage(err.message)
     }
