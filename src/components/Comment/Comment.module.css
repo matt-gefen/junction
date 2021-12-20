@@ -15,3 +15,7 @@
 .image {
   width: 50px;
 }
+
+.textarea {
+  resize: none;
+}
