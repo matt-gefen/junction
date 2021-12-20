@@ -121,3 +121,19 @@ export const deleteGroup = async (groupId) => {
   }
 }
 
+export const updatePost = async (id, postId, post) => {
+  try {
+    const res = await fetch(`${BASE_URL}${id}/posts/${postId}`, {
+      method: 'PUT',
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': `Bearer ${tokenService.getToken()}`
+      },
+      body: JSON.stringify(post)
+    })
+    const data = await res.json()
+    return data
+  } catch (error) {
+    throw error
+  }
+}
