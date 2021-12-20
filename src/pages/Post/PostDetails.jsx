@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
+import styles from './PostDetails.module.css'
 import CommentForm from "../../components/Comment/CommentForm"
 
 // Services
 import { getPostById, deletePost } from "../../services/groupService"
+
+import { updateProfile, getProfileById } from "../../services/profileService";
 
 // Components
 import Comment from '../../components/Comment/Comment'
@@ -24,31 +27,64 @@ const PostDetails = props => {
     register: '',
     comments: []
   })
+  const [profile, setProfile] = useState()
   const [isOwner, setIsOwner] = useState(false)
-
+  const [isFavorite, setIsFavorite] = useState(false)
   const navigate = useNavigate()
 
   function routeToEditPost() {
     navigate(`/groups/${id}/posts/${postId}/edit`)
   }
 
+  function handleFavoritePost() {
+    updateProfile(profile._id, {
+      ...profile,
+      favorited_posts: [...profile.favorited_posts, post._id]
+    })
+  
+    if (isFavorite === false) {
+      setIsFavorite(true)
+    }
+  }
+
+  function handleUnfavorite() {
+    let newFavorites = []
+    profile.favorited_posts.forEach((element) => {
+      if(element._id !== post._id) {
+        newFavorites.push(element)
+      }
+    })
+
+  updateProfile(profile._id, {
+    ...profile,
+    favorited_posts: newFavorites
+  })
+  setIsFavorite(false)
+}
+
   function confirmDeletePost() {
     deletePost(id, postId)
     navigate(-1)
   }
-
+  
   useEffect(() => {
     const fetchPost = async () => {
       try {
         const postData = await getPostById(id, postId)
+        const profileData = await getProfileById(props.user.profile)
         setPost(postData)
+        setProfile(profileData)
         setIsOwner(props.user.profile === postData.owner)
+        let favorites = profileData.favorited_posts.map((element) => {
+          return element._id
+        })
+        setIsFavorite(favorites.includes(postData._id))
       } catch (error) {
         throw error
       }
     }
     fetchPost()
-  }, [id, postId])
+  }, [props.user.profile, id, postId])
 
   let date = new Date(post.createdAt)
 
@@ -66,6 +102,12 @@ const PostDetails = props => {
           />
         </>
       }
+      { !isFavorite &&
+        <button onClick={handleFavoritePost}>Favorite Post</button>
+      }
+      { isFavorite &&
+        <button onClick={handleUnfavorite}>Unfavorite Post</button>
+      }
       <div className="post-details">
         <h1>Post Details</h1>
         <h1>{post.title}</h1>
@@ -77,7 +119,7 @@ const PostDetails = props => {
           <div className="post-owner"></div>
         </div>
         <div className="post-thumbnail">
-          <img src={post.thumbnail} alt="Post thumbnail" />
+          <img className={styles.thumbnail} src={post.thumbnail} alt="Post thumbnail" />
         </div>
         <div className="post-description-container">
           <h3>Post Description</h3>

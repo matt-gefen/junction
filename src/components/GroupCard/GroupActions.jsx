@@ -2,15 +2,15 @@ import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
 import './Card.css'
 
-import { getGroupById, updateGroup } from "../../services/groupService";
-import { updateProfile, getProfileById } from "../../services/profileService";
+import { updateGroup } from "../../services/groupService";
+import { updateProfile} from "../../services/profileService";
 
 const GroupActions = (props) => {
   let  members = props.group.members.map((member) => {
     return member._id
   })
   const [isMember, setIsMember] = useState(members.includes(props.profile._id))
-  console.log(props)
+
   const ownerId = props.group.owner
   const isOwner = props.user?.profile === ownerId
   

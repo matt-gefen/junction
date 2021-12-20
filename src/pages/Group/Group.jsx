@@ -76,7 +76,6 @@ const Group = (props) => {
           return member._id
         })
         setIsMember(members.includes(props.user.profile))
-        console.log(isMember)
       } catch (error) {
         throw error;
       }
@@ -84,18 +83,11 @@ const Group = (props) => {
     fetchGroup();
   }, [props.user.profile, isMember, id, isOwner, ownerId]);
 
-  // console.log('Group data:', group?.posts)
-
-  // const posts = group?.posts.map(post => (
-  //   <PostCard post={post}/>
-  // ))
-
-  // console.log(posts)
 
   return (
     <div className="layout">
       <div className="group-details">
-      {group &&
+      {group && profile &&
           <>
             <img src={group.avatar} alt="" style={{width:"150px"}}/>
             <h2 style={{color:"black"}}>{group.title}</h2>
@@ -103,7 +95,7 @@ const Group = (props) => {
             <h4>{group.location}</h4>
             <section className={styles.container}>
               {group.posts?.map(post => (
-                <PostCard post={post}/>
+                <PostCard group={group} post={post} profile={profile}/>
               ))}
             </section>
           </>
