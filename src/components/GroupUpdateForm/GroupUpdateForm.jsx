@@ -111,7 +111,7 @@ const GroupUpdateForm = props => {
         <button disabled={isFormInvalid()} className={styles.button}>
           Update Group
         </button>
-        <Link to="/">
+        <Link to={`/groups/${props.groupId}`}>
           <button>Cancel</button>
         </Link>
       </div>

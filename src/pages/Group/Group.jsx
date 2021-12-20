@@ -11,18 +11,24 @@ const Group = (props) => {
   const navigate = useNavigate();
   const [group, setGroup] = useState();
 
+  const [ownerId, setOwnerId] = useState('') 
+  const [isOwner, setIsOwner] = useState(false)
+
   useEffect(() => {
     const fetchGroup = async () => {
       try {
         const groupData = await getGroupById(id);
         console.log("Group Details Data:", groupData);
         setGroup(groupData);
+        setOwnerId(groupData.owner)
+        setIsOwner(props.user.profile === ownerId)
+        console.log(isOwner)
       } catch (error) {
         throw error;
       }
     };
     fetchGroup();
-  }, [id]);
+  }, [id, isOwner, ownerId]);
 
   return (
     <div className="layout">
@@ -35,9 +41,11 @@ const Group = (props) => {
             <h4>{group.location}</h4>
           </>
         }
+        {isOwner &&
           <>
             <Link to={`/groups/${id}/edit`}>Edit Group</Link>
           </>
+        }
       </div>
     </div>
   );

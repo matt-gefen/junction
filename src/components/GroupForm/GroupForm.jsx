@@ -4,7 +4,7 @@ import styles from './GroupForm.module.css'
 
 import GroupCategories from '../GroupCategories/GroupCategories'
 
-import { createGroup } from '../../services/groupService'
+import { createGroup, getAllGroups } from '../../services/groupService'
 
 const GroupForm = props => {
   const navigate = useNavigate()
@@ -32,7 +32,9 @@ const GroupForm = props => {
     try {
       await createGroup(formData)
       // change to Group Details
-      navigate('/')
+      let allGroups = await getAllGroups()
+      let id = allGroups[allGroups.length - 1]._id
+      navigate(`/groups/${id}`)
     } catch (err) {
       props.updateMessage(err.message)
     }
@@ -88,7 +90,7 @@ const GroupForm = props => {
         <button disabled={isFormInvalid()} className={styles.button}>
           Create Group
         </button>
-        <Link to="/">
+        <Link to="/groups">
           <button>Cancel</button>
         </Link>
       </div>

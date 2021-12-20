@@ -49,7 +49,7 @@ const App = () => {
         />
         <Route
           path="/groups/:id"
-          element={user ? <Group /> : <Navigate to="/login" />}
+          element={user ? <Group user={user}/> : <Navigate to="/login" />}
         />
         <Route
           path="/groups/:id/edit"
