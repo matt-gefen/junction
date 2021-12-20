@@ -3,10 +3,11 @@ import { useParams, useNavigate } from "react-router-dom"
 import CommentForm from "../../components/Comment/CommentForm"
 
 // Services
-import { getPostById } from "../../services/groupService"
+import { getPostById, deletePost } from "../../services/groupService"
 
 // Components
 import Comment from '../../components/Comment/Comment'
+import AlertDialog from "../../components/MaterialUI/AlertDialogue"
 
 const PostDetails = props => {
   const { id, postId } = useParams()
@@ -27,8 +28,13 @@ const PostDetails = props => {
 
   const navigate = useNavigate()
 
-  function handleClick() {
+  function routeToEditPost() {
     navigate(`/groups/${id}/posts/${postId}/edit`)
+  }
+
+  function confirmDeletePost() {
+    deletePost(id, postId)
+    navigate(-1)
   }
 
   useEffect(() => {
@@ -49,7 +55,16 @@ const PostDetails = props => {
   return (
     <div className="layout">
       {isOwner &&
-        <button onClick={handleClick}>Edit Post</button>
+        <>
+          <button onClick={routeToEditPost}>Edit Post</button>
+          <AlertDialog 
+            handleConfirm={confirmDeletePost}
+            buttonText="Delete Post"
+            content="Are you sure you want to delete this post? This action cannot be undone!"
+            confirmOption="Delete Post"
+            cancelOption="Cancel"
+          />
+        </>
       }
       <div className="post-details">
         <h1>Post Details</h1>
