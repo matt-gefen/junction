@@ -12,6 +12,8 @@ import CategoryMenu from '../../components/CategoryNav/CategoryMenu'
 const GroupList = (props) => {
   const [groups, setGroups] = useState([])
   const [profile, setProfile] = useState()
+  const [catPrefs, setCatPrefs] = useState([])
+  const [userGroupPref, setUserGroupPref] = useState([])
 
   const handleDeleteGroup = async (groupId) => {
     try {
@@ -26,16 +28,39 @@ const GroupList = (props) => {
     const fetchAllGroups = async () => {
       const groupData = await getAllGroups()
       const profileData = await getProfileById(props.user.profile)
+      console.log(profileData)
+      console.log(groupData)
       setGroups(groupData)
       setProfile(profileData)
-    }
+      setCatPrefs(profileData.category_prefs)
+      const filteredGroups = (groupData.filter(element =>
+        {
+          console.log("element",element) 
+          return profileData.category_prefs.includes(element.category)
+        }))
+      console.log('before filter')
+      setUserGroupPref(filteredGroups)
+
+     }
     fetchAllGroups()
     return () => { setGroups([]) }
   }, [props.user.profile])
 
+  console.log("YOUR_PREFS",catPrefs)
+  console.log(userGroupPref)
+  console.log(groups)
   return (
     <div className='layout'>
       <CategoryMenu user={props.user}/>
+      { profile && userGroupPref?.map((userPref) => (
+        <GroupCard
+          group={userPref}
+          key={userPref._id}
+          user={props.user}
+          profile={profile}
+          handleDeleteGroup={handleDeleteGroup}
+        />
+      ))}
       { profile && groups?.map((group) => (
         <GroupCard
           group={group}
