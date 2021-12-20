@@ -32,7 +32,7 @@ const GroupList = (props) => {
   return (
     <div className='layout'>
     <div >
-      <CategoryMenu />
+      <CategoryMenu user={props.user}/>
     </div>
       {groups?.map((group) => (
         <GroupCard
