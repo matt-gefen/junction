@@ -3,8 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import styles from './PostForm.module.css'
 
 // Services
-import { createPost } from '../../services/groupService'
-import { getPostById } from "../../services/groupService"
+import { createPost, getPostById, updatePost } from '../../services/groupService'
 
 const PostForm = props => {
   const { id, postId } = useParams()
@@ -24,7 +23,11 @@ const PostForm = props => {
   const handleSubmit = async e => {
     e.preventDefault()
     try {
-      await createPost( id, formData)
+      if (props.editPost) {
+        await updatePost(id, postId, formData)
+      } else {
+        await createPost(id, formData)
+      }
       navigate(-1)
     } catch (err) {
       props.updateMessage(err.message)
@@ -152,9 +155,9 @@ const PostForm = props => {
 
       <div className={styles.inputContainer}>
         <button disabled={isFormInvalid()} className={styles.button}>
-          Post
+          {props.editPost ? "Update" : "Post"}
         </button>
-        <Link to="/">
+        <Link to={props.editPost ? `groups/${id}/posts/${postId}` : `groups/${id}`}>
           <button>Cancel</button>
         </Link>
       </div>
