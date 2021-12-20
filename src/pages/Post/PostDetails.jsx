@@ -40,6 +40,7 @@ const PostDetails = props => {
       ...profile,
       favorited_posts: [...profile.favorited_posts, post._id]
     })
+    setIsFavorite(true)
   }
 
   // function handleLeaveGroup() {
