@@ -17,7 +17,6 @@ const Group = (props) => {
   const [isOwner, setIsOwner] = useState(false)
   const [isMember, setIsMember] = useState(false)
 
-
   function handleClick() {
     navigate(`/groups/${id}/posts`)
   }
@@ -48,7 +47,7 @@ const Group = (props) => {
           return member._id
         })
         setIsMember(members.includes(props.user.profile))
-        
+        console.log(isMember)
       } catch (error) {
         throw error;
       }
@@ -67,11 +66,9 @@ const Group = (props) => {
             <h4>{group.location}</h4>
           </>
         }
-      {!isMember &&
         <div>
-          <button onClick={handleJoinGroup}>Join Group</button>
+          <button>Join Group</button>
         </div>
-      }
 
 
         {isOwner &&
