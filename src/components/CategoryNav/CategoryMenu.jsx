@@ -6,6 +6,7 @@ import styles from './CategoryNav.module.css'
 // Services
 import {updateProfile, getProfileById} from '../../services/profileService'
 
+import CategoryFilter from './CategoryFilter'
 
 const CategoryMenu = (props) => {
 
@@ -31,9 +32,9 @@ const CategoryMenu = (props) => {
       throw error
     }
   }
-groupCategories.forEach((element, index) =>{
+groupCategories.forEach((category, index) =>{
   categoryOptions.push(
-   <div onClick={() => handleAddCategory(element)} className={styles.categoryName} key={index}>{element}</div> 
+   <CategoryFilter handleAddCategory = {handleAddCategory} category={category} key={index}/>
   )
 })
 
