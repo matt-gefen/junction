@@ -10,23 +10,31 @@ import { updateComment } from '../../services/groupService'
 import TextField from '../../components/MaterialUI/TextField'
 
 const Comment = props => {
-  const { id, postId, commentId } = useParams()
+  const { id, postId } = useParams()
   const [owner, setOwner] = useState({
     avatar: '',
     name: ''
   })
   const [editable, setEditable] = useState(false)
   const [comment, setComment] = useState(props.comment)
+  const [commentDefault, setCommentDefault] = useState(props.comment.comment_content)
 
   let date = new Date(props.comment.createdAt)
 
-  function toggleEdit() {
+  function toggleEdit(submitted) {
+    if (editable) {
+      setComment({
+        ...comment,
+        'comment_content': submitted ? comment.comment_content: commentDefault
+      })
+    }
     setEditable(!editable)
   }
 
   function submitComment() {
     updateComment(id, postId, comment._id, comment)
-    toggleEdit()
+    setCommentDefault(comment.comment_content)
+    toggleEdit(true)
   }
 
   const handleChange = e => {
@@ -34,7 +42,6 @@ const Comment = props => {
       ...comment,
       [e.target.name]: e.target.value
     })
-    console.log('Comment:', comment)
   }
 
   useEffect(() => {
@@ -66,14 +73,14 @@ const Comment = props => {
         </div>
       </div>
       <div className={styles.container}>
-        <TextField defaultValue={props.comment.comment_content} editable={editable} name="comment_content" handleChange={handleChange}/>
+        <TextField value={comment.comment_content} editable={editable} name="comment_content" handleChange={handleChange}/>
         {!editable && 
             <button onClick={toggleEdit}>Edit Comment</button>
         }
         {editable && 
           <>
             <button onClick={submitComment}>Update Comment</button>
-            <button onClick={toggleEdit}>Cancel</button>
+            <button onClick={() => toggleEdit(false)}>Cancel</button>
           </>
         }
       </div>
