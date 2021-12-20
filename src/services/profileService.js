@@ -30,4 +30,21 @@ export const getProfileById = async (profileId) => {
   }
 }
 
+export const updateProfile = async (profileId, profile) => {
+  try {
+    const res = await fetch(`${BASE_URL}/${profileId}`, {
+      method: 'PUT',
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': `Bearer ${tokenService.getToken()}`
+      },
+      body: JSON.stringify(profile)
+    })
+    const data = await res.json()
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
 export { getAllProfiles, getProfile }
