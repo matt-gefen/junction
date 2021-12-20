@@ -25,7 +25,7 @@ const CategoryMenu = (props) => {
     try {
       updateProfile(profile._id, {
         ...profile,
-        category_prefs: [...profile.category_prefs, category],
+        category_prefs: [...profile.category_prefs, category]
       });
       setCategoryPref(profile.category_prefs);
     } catch (error) {
@@ -38,7 +38,7 @@ const CategoryMenu = (props) => {
       let newCategoryPref = categoryPref.filter((pref) => pref !== category);
       updateProfile(profile._id, {
         ...profile,
-        category_prefs: [newCategoryPref],
+        category_prefs: newCategoryPref,
       });
       setCategoryPref(newCategoryPref);
     } catch (error) {

@@ -6,7 +6,7 @@ import './Card.css' // <= Card Styling
 import GroupActions from './GroupActions'
 
 const GroupCard = (props) => {
-  console.log(props)
+console.log("GroupCardProps",props)
   return (
   <>
     <div className="group-card">
