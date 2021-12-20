@@ -1,0 +1,22 @@
+.card {
+  border: 2px solid black;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 80%;
+  margin-bottom: 16px;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 80%;
+}
+
+.thumbnail {
+  width: 100%;
+}

@@ -9,6 +9,7 @@ import Group from './pages/Group/Group'
 import UpdateGroup from './pages/UpdateGroup/UpdateGroup'
 import CreatePost from './pages/CreatePost/CreatePost'
 import PostDetails from './pages/Post/PostDetails'
+import EditPost from './pages/Post/EditPost'
 import * as authService from './services/authService'
 import GroupIndex from './pages/GroupIndex/GroupIndex'
 
@@ -62,6 +63,10 @@ const App = () => {
         <Route 
           path="/groups/:id/posts/:postId"
           element={<PostDetails user={user}/>}
+        />
+        <Route 
+          path="/groups/:id/posts/:postId/edit"
+          element={<EditPost user={user}/>}
         />
       </Routes>
     </>

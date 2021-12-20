@@ -1,21 +1,14 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import styles from './PostForm.module.css'
 
-import { createPost } from '../../services/groupService'
+// Services
+import { createPost, getPostById, updatePost } from '../../services/groupService'
 
 const PostForm = props => {
-  const { id } = useParams()
+  const { id, postId } = useParams()
   const navigate = useNavigate()
-  const [formData, setFormData] = useState({
-    title: '',
-    thumbnail: 'https://i.imgur.com/izJwDia.png',
-    location: '',
-    link: '',
-    description: '',
-    // register: '',
-    date: ''
-  })
+  const [formData, setFormData] = useState({})
 
   const handleChange = e => {
     console.log(e.target.name)
@@ -27,11 +20,14 @@ const PostForm = props => {
     })
   }
 
-
   const handleSubmit = async e => {
     e.preventDefault()
     try {
-      await createPost( id, formData)
+      if (props.editPost) {
+        await updatePost(id, postId, formData)
+      } else {
+        await createPost(id, formData)
+      }
       navigate(-1)
     } catch (err) {
       props.updateMessage(err.message)
@@ -44,7 +40,31 @@ const PostForm = props => {
     return !(title && description)
   }
 
-  console.log(formData)
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        if (props.editPost) {
+          const postData = await getPostById(id, postId)
+          setFormData({
+            title: postData.title,
+            thumbnail: postData.thumbnail,
+            location: postData.location,
+            link: postData.link,
+            description: postData.description,
+            // register: '',
+            date: postData.date
+          })
+        } else {
+          setFormData({
+            thumbnail: 'https://i.imgur.com/izJwDia.png'
+          })
+        }
+      } catch (error) {
+        throw error
+      }
+    }
+    fetchPost()
+  }, [])
 
   return (
     <form
@@ -128,16 +148,16 @@ const PostForm = props => {
 
       <div className={styles.inputContainer}>
         <img 
-        src={`https://avatars.dicebear.com/api/croodles-neutral/${title}.svg`} 
+        src={thumbnail} 
         alt="initials avatar" style={{width: "150px"}} 
         />
       </div>
 
       <div className={styles.inputContainer}>
         <button disabled={isFormInvalid()} className={styles.button}>
-          Post
+          {props.editPost ? "Update" : "Post"}
         </button>
-        <Link to="/">
+        <Link to={props.editPost ? `groups/${id}/posts/${postId}` : `groups/${id}`}>
           <button>Cancel</button>
         </Link>
       </div>

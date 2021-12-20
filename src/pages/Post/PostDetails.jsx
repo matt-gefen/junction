@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import CommentForm from "../../components/Comment/CommentForm"
 
 // Services
-import { getPostById } from "../../services/groupService"
+import { getPostById, deletePost } from "../../services/groupService"
 
 // Components
 import Comment from '../../components/Comment/Comment'
+import AlertDialog from "../../components/MaterialUI/AlertDialogue"
 
 const PostDetails = props => {
   const { id, postId } = useParams()
@@ -23,23 +24,48 @@ const PostDetails = props => {
     register: '',
     comments: []
   })
+  const [isOwner, setIsOwner] = useState(false)
+
+  const navigate = useNavigate()
+
+  function routeToEditPost() {
+    navigate(`/groups/${id}/posts/${postId}/edit`)
+  }
+
+  function confirmDeletePost() {
+    deletePost(id, postId)
+    navigate(-1)
+  }
 
   useEffect(() => {
-    const fetchGroup = async () => {
+    const fetchPost = async () => {
       try {
         const postData = await getPostById(id, postId)
         setPost(postData)
+        setIsOwner(props.user.profile === postData.owner)
       } catch (error) {
         throw error
       }
     }
-    fetchGroup()
+    fetchPost()
   }, [id, postId])
 
   let date = new Date(post.createdAt)
 
   return (
     <div className="layout">
+      {isOwner &&
+        <>
+          <button onClick={routeToEditPost}>Edit Post</button>
+          <AlertDialog 
+            handleConfirm={confirmDeletePost}
+            buttonText="Delete Post"
+            content="Are you sure you want to delete this post? This action cannot be undone!"
+            confirmOption="Delete Post"
+            cancelOption="Cancel"
+          />
+        </>
+      }
       <div className="post-details">
         <h1>Post Details</h1>
         <h1>{post.title}</h1>
