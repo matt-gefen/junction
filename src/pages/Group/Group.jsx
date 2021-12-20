@@ -37,7 +37,7 @@ const Group = (props) => {
       }
     };
     fetchGroup();
-  }, [id, isOwner, ownerId]);
+  }, [props.user.profile, isMember, id, isOwner, ownerId]);
 
   return (
     <div className="layout">
@@ -56,7 +56,12 @@ const Group = (props) => {
           </>
         }
       </div>
-      <button onClick={handleClick}>Create Post</button>
+      {isMember &&
+        <>
+          <button onClick={handleClick}>Create Post</button>
+        </>
+      }
+      
     </div>
   );
 };
