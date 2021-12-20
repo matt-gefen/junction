@@ -20,7 +20,9 @@ const GroupCard = (props) => {
       </div>
 
       <div className="group-avatar">
-      <Link to={`/groups/${props.group._id}`}><img src={props.group.avatar} alt="group avatar"/> </Link>
+        <Link to={`/groups/${props.group._id}`}>
+          <img src={props.group.avatar} alt="group avatar"/>
+        </Link>
       </div>
 
       <div className="group-members">
