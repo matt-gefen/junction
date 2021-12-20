@@ -9,7 +9,7 @@ import {updateProfile, getProfileById} from '../../services/profileService'
 
 const CategoryMenu = (props) => {
 
-  const [profile, setProfile] = useState()
+  const [profile, setProfile] = useState([])
   const [categoryPref, setCategoryPref ] = useState()
   
   let groupCategories = new Set(categories.map((element, index) => {
@@ -20,10 +20,13 @@ const CategoryMenu = (props) => {
   
   const handleAddCategory = async (category) => {
     try {
+      console.log(category)
       updateProfile(profile._id, {
         ...profile,
-        category_prefs: [...profile.category_prefs, category]
-      })
+        category_prefs: [...profile.category_prefs, category
+        ]}
+      )
+      setCategoryPref (profile.category_prefs)
     } catch (error) {
       throw error
     }
@@ -39,11 +42,11 @@ useEffect(() => {
     try {
       const profileData = await getProfileById(props.user.profile)
       setProfile(profileData)
-      let categoryPrefs = profile.category_prefs.map((category) => {
+      let categoryPrefsMap = profileData.category_prefs.map((category) => {
         return category
       })
-      setCategoryPref(categoryPrefs.includes(props.user.profile))
-      console.log(categoryPrefs)
+      setCategoryPref(categoryPrefsMap.includes(props.user.profile))
+      console.log(categoryPrefsMap)
     } catch (error) {
       throw error;
     }
