@@ -32,9 +32,23 @@ const CategoryMenu = (props) => {
       throw error
     }
   }
+
+const handleRemoveCategory = async (category) => {
+  try {
+    let newCategoryPref = categoryPref.filter((pref) => pref !== category)
+    updateProfile(profile._id, {
+      ...profile,
+      category_prefs: [newCategoryPref] 
+      })
+      setCategoryPref(newCategoryPref)
+  } catch (error) {
+    throw error
+  }
+}
+
 groupCategories.forEach((category, index) =>{
   categoryOptions.push(
-   <CategoryFilter handleAddCategory = {handleAddCategory} category={category} key={index}/>
+   <CategoryFilter handleAddCategory = {handleAddCategory} handleRemoveCategory = {handleRemoveCategory} category={category} key={index}/>
   )
 })
 
