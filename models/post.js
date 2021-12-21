@@ -12,6 +12,12 @@ const commentSchema = new Schema(
       type: mongoose.Schema.Types.ObjectId, 
       ref: "Profile" 
     },
+    avatar: {
+      type: String
+    },
+    name: {
+      type: String
+    }
   },
   { timestamps: true }
 );
