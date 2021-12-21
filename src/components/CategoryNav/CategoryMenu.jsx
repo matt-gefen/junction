@@ -6,71 +6,35 @@ import styles from "./CategoryNav.module.css";
 import { updateProfile, getProfileById } from "../../services/profileService";
 
 // Components
-import CategoryFilter from "./CategoryFilter";
+import ChipBar from "../MaterialUI/ChipBar";
+import ToggleChip from "../MaterialUI/ToggleChip";
+
 
 const CategoryMenu = (props) => {
-  const [profile, setProfile] = useState();
-  const [categoryPref, setCategoryPref] = useState([]);
-  const profileCategories = profile?.category_prefs
-  const handleAddCategory = async (category) => {
 
-    try {
-      updateProfile(profile._id, {
-        category_prefs: [...categoryPref, category],
-      });
-      setCategoryPref([...categoryPref, category]);
-    } catch (error) {
-      throw error;
-    }
-  };
-
-  const handleRemoveCategory = async (category) => {
-
-    try {
-      const newCategoryPref = categoryPref.filter((pref) => pref !== category);
-      updateProfile(profile._id, {
-        category_prefs: newCategoryPref,
-      });
-      setCategoryPref(newCategoryPref);
-    } catch (error) {
-      throw error;
-    }
-  };
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      
-      try {
-        const profileData = await getProfileById(props.user.profile);
-        setProfile(profileData);
-        setCategoryPref(profileData.category_prefs)
-      } catch (error) {
-        throw error;
-      }
-    };
-    fetchCategories();
-  }, [props.user.profile]);
-
-  const groupCategories = new Set(
-    categories.map((element, index) => (
-
-      <CategoryFilter
-      profileCategories={profileCategories}
-      handleAddCategory={handleAddCategory}
-      handleRemoveCategory={handleRemoveCategory}
-      category={element}
-      key={index}
-    />
+  const chipCategories = new Set(
+    categories.map((category, idx) => (
+      <ToggleChip 
+        addCategory={props.addCategory}
+        removeCategory={props.removeCategory}
+        handleAddCategory={props.handleAddCategory}
+        handleRemoveCategory={props.handleRemoveCategory}
+        select={props.profileCategories?.includes(category)}
+        label={category}
+        key={idx}
+      />
     ))
-  );
+  )
 
   return (
     <>
+      <ChipBar 
+        labels={chipCategories}
+      />
       <div className={styles.categorySelection}>
         <div onClick={props.usersJoinedGroups} className={styles.categoryName}>
           My Groups
         </div>
-        {groupCategories}
       </div>
     </>
   );
