@@ -17,6 +17,7 @@ const GroupList = (props) => {
   const [notUserGroupPref, setNotUserGroupPref] = useState([]);
   const [usersGroups, setUserGroups] = useState([]);
   const [userGroupFilter, setUserGroupFilter] = useState(false);
+  const [categories, setCategories] = useState([])
 
   const usersJoinedGroups = () => setUserGroupFilter(!userGroupFilter);
 
@@ -35,8 +36,6 @@ const GroupList = (props) => {
   };
 
   const profileCategories = profile?.category_prefs;
-
- 
 
   useEffect(() => {
     const fetchAllGroups = async () => {
@@ -89,7 +88,7 @@ const GroupList = (props) => {
     };
 
     fetchCategories();
-  }, [props.user?.profile]);
+  }, [categories]);
 
   const handleAddCategory = async (category) => {
     try {
@@ -98,6 +97,7 @@ const GroupList = (props) => {
         category_prefs: [...catPrefs, category],
       });
       setCatPrefs([...catPrefs, category]);
+      setCategories([...categories, category])
     } catch (error) {
       throw error;
     }
@@ -111,6 +111,7 @@ const GroupList = (props) => {
         category_prefs: newCategoryPref,
       });
       setCatPrefs(newCategoryPref);
+      setCategories(newCategoryPref)
     } catch (error) {
       throw error;
     }

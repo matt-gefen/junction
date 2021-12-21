@@ -6,30 +6,17 @@ import styles from "./CategoryNav.module.css";
 import { updateProfile, getProfileById } from "../../services/profileService";
 
 // Components
-import CategoryFilter from "./CategoryFilter";
 import ChipBar from "../MaterialUI/ChipBar";
 import ToggleChip from "../MaterialUI/ToggleChip";
 
 
 const CategoryMenu = (props) => {
-  console.log(props)
-
-  const groupCategories = new Set(
-    categories.map((element, index) => (
-
-      <CategoryFilter
-      profileCategories={props.profileCategories}
-      handleAddCategory={props.handleAddCategory}
-      handleRemoveCategory={props.handleRemoveCategory}
-      category={element}
-      key={index}
-    />
-    ))
-  );
 
   const chipCategories = new Set(
     categories.map((category, idx) => (
       <ToggleChip 
+        addCategory={props.addCategory}
+        removeCategory={props.removeCategory}
         handleAddCategory={props.handleAddCategory}
         handleRemoveCategory={props.handleRemoveCategory}
         select={props.profileCategories?.includes(category)}
@@ -48,7 +35,6 @@ const CategoryMenu = (props) => {
         <div onClick={props.usersJoinedGroups} className={styles.categoryName}>
           My Groups
         </div>
-        {groupCategories}
       </div>
     </>
   );
