@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styles from './SignupForm.module.css'
 import * as authService from '../../services/authService'
+import PasswordField from '../MaterialUI/PasswordField'
 
 const SignupForm = props => {
   const navigate = useNavigate()
@@ -68,28 +69,10 @@ const SignupForm = props => {
         />
       </div>
       <div className={styles.inputContainer}>
-        <label htmlFor="password" className={styles.label}>Password</label>
-        <input
-          type="password"
-          autoComplete="off"
-          id="password"
-          value={password}
-          name="password"
-          onChange={handleChange}
-        />
+        <PasswordField name="password" value={password} handleChange={handleChange}/>
       </div>
       <div className={styles.inputContainer}>
-        <label htmlFor="confirm" className={styles.label}>
-          Confirm Password
-        </label>
-        <input
-          type="password"
-          autoComplete="off"
-          id="confirm"
-          value={passwordConf}
-          name="passwordConf"
-          onChange={handleChange}
-        />
+        <PasswordField name="passwordConf" value={passwordConf} handleChange={handleChange}/>
       </div>
       <div className={styles.inputContainer}>
         <label htmlFor="location" className={styles.label}>Location</label>
