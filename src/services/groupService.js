@@ -165,3 +165,14 @@ export const updateComment = async (groupId, postId, commentId, comment) => {
     throw error
   }
 }
+
+export const deleteComment = async (groupId, postId, commentId) => {
+  try {
+    await fetch(`${BASE_URL}${groupId}/posts/${postId}/comments/${commentId}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': 'Bearer ' + tokenService.getToken() }
+    })
+  } catch (error) {
+    throw error
+  }
+}

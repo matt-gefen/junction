@@ -4,13 +4,13 @@ import styles from './PostDetails.module.css'
 import CommentForm from "../../components/Comment/CommentForm"
 
 // Services
-import { getPostById, deletePost } from "../../services/groupService"
+import { getPostById, deletePost, deleteComment } from "../../services/groupService"
+import { updateProfile, getProfileById } from "../../services/profileService"
 
-import { updateProfile, getProfileById } from "../../services/profileService";
 
 // Components
 import Comment from '../../components/Comment/Comment'
-import AlertDialog from "../../components/MaterialUI/AlertDialogue"
+import AlertDialogue from "../../components/MaterialUI/AlertDialogue"
 
 const PostDetails = props => {
   const { id, postId } = useParams()
@@ -30,6 +30,7 @@ const PostDetails = props => {
   const [profile, setProfile] = useState()
   const [isOwner, setIsOwner] = useState(false)
   const [isFavorite, setIsFavorite] = useState(false)
+  const [comments, setComments] = useState()
   const navigate = useNavigate()
 
   function routeToEditPost() {
@@ -54,17 +55,20 @@ const PostDetails = props => {
         newFavorites.push(element)
       }
     })
-
-  updateProfile(profile._id, {
-    ...profile,
-    favorited_posts: newFavorites
-  })
-  setIsFavorite(false)
-}
+    updateProfile(profile._id, {
+      ...profile,
+      favorited_posts: newFavorites
+    })
+    setIsFavorite(false)
+  }
 
   function confirmDeletePost() {
     deletePost(id, postId)
     navigate(-1)
+  }
+
+  function confirmDeleteComment(commentId) {
+    deleteComment(id, postId, commentId)
   }
   
   useEffect(() => {
@@ -93,7 +97,7 @@ const PostDetails = props => {
       {isOwner &&
         <>
           <button onClick={routeToEditPost}>Edit Post</button>
-          <AlertDialog 
+          <AlertDialogue 
             handleConfirm={confirmDeletePost}
             buttonText="Delete Post"
             content="Are you sure you want to delete this post? This action cannot be undone!"
@@ -147,7 +151,12 @@ const PostDetails = props => {
           <h3>Post Comments</h3>
           <CommentForm user={props.user}/>
           {post.comments?.map((comment) => (
-            <Comment user={props.user} comment={comment} key={comment._id}/>
+            <Comment
+              user={props.user} 
+              comment={comment} 
+              confirmDeleteComment={confirmDeleteComment}
+              key={comment._id}
+            />
           ))}
         </div>
       </div>

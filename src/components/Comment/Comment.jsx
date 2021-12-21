@@ -4,7 +4,7 @@ import styles from './Comment.module.css'
 
 // Services
 import { getProfileById } from '../../services/profileService'
-import { updateComment } from '../../services/groupService'
+import { updateComment, deleteComment } from '../../services/groupService'
 
 // Components
 import TextField from '../../components/MaterialUI/TextField'
@@ -75,7 +75,10 @@ const Comment = props => {
       <div className={styles.container}>
         <TextField value={comment.comment_content} editable={editable} name="comment_content" handleChange={handleChange}/>
         {!editable && 
+          <>
             <button onClick={toggleEdit}>Edit Comment</button>
+            <button onClick={() => props.confirmDeleteComment(comment._id)}>Delete Comment</button>
+          </>
         }
         {editable && 
           <>
