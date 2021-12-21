@@ -15,10 +15,6 @@ const GroupList = (props) => {
   const [catPrefs, setCatPrefs] = useState([]);
   const [userGroupPref, setUserGroupPref] = useState([]);
   const [notUserGroupPref, setNotUserGroupPref] = useState([]);
-  const [usersGroups, setUserGroups] = useState([]);
-  const [userGroupFilter, setUserGroupFilter] = useState(false);
-
-  const usersJoinedGroups = () => setUserGroupFilter(!userGroupFilter);
 
   const handleDeleteGroup = async (groupId) => {
     try {
@@ -36,49 +32,28 @@ const GroupList = (props) => {
       setGroups(groupData);
       setProfile(profileData);
       setCatPrefs(profileData.category_prefs);
-      const filteredGroups = [];
-      const remainingGroups = [];
+      const filteredGroups = []
+      const remainingGroups = []
       groupData.forEach((element) => {
-        if (profileData.category_prefs.includes(element.category)) {
-          filteredGroups.push(element);
-        } else {
-          remainingGroups.push(element);
-        }
-      });
-      setUserGroupPref(filteredGroups);
-      setNotUserGroupPref(remainingGroups);
-      const joinedGroups = [];
-      groupData.forEach((element) => {
-        element.members.forEach((member) => {
-          if (member._id === profileData._id) {
-            joinedGroups.push(element);
-          }
-        });
-        setUserGroups(joinedGroups);
-      });
+        if (profileData.category_prefs.includes(element.category)){
+    filteredGroups.push(element) } else { 
+      remainingGroups.push(element)
+    }})
+      setUserGroupPref(filteredGroups)
+      setNotUserGroupPref(remainingGroups)
     };
     fetchAllGroups();
     return () => {
       setGroups([]);
     };
   }, [props.user.profile]);
-  return !userGroupFilter ? (
+
+  console.log("YOUR_PREFS", catPrefs);
+  console.log(userGroupPref);
+  console.log(groups);
+  return (
     <div className="layout">
-      <CategoryMenu usersJoinedGroups={usersJoinedGroups} user={props.user} />
-      {profile &&
-        usersGroups?.map((joinedGroup) => (
-          <GroupCard
-            group={joinedGroup}
-            key={joinedGroup._id}
-            user={props.user}
-            profile={profile}
-            handleDeleteGroup={handleDeleteGroup}
-          />
-        ))}
-    </div>
-  ) : (
-    <div className="layout">
-      <CategoryMenu usersJoinedGroups={usersJoinedGroups} user={props.user} />
+      <CategoryMenu user={props.user} />
       {profile &&
         userGroupPref?.map((userPref) => (
           <GroupCard
