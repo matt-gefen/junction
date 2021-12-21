@@ -8,56 +8,62 @@ import { updateProfile, getProfileById } from "../../services/profileService";
 // Components
 import CategoryFilter from "./CategoryFilter";
 
+
 const CategoryMenu = (props) => {
-  const [profile, setProfile] = useState();
-  const [categoryPref, setCategoryPref] = useState([]);
-  const profileCategories = profile?.category_prefs
-  const handleAddCategory = async (category) => {
+  // const [profile, setProfile] = useState();
 
-    try {
-      updateProfile(profile._id, {
-        category_prefs: [...categoryPref, category],
-      });
-      setCategoryPref([...categoryPref, category]);
-    } catch (error) {
-      throw error;
-    }
-  };
+  //   const [categoriesPrefs, setCategoriesPrefs] = useState(props.profileCategories)
 
-  const handleRemoveCategory = async (category) => {
+  //   const handleAddCategory = async (category) => {
 
-    try {
-      const newCategoryPref = categoryPref.filter((pref) => pref !== category);
-      updateProfile(profile._id, {
-        category_prefs: newCategoryPref,
-      });
-      setCategoryPref(newCategoryPref);
-    } catch (error) {
-      throw error;
-    }
-  };
+  //     try {
+  //       updateProfile(profile._id, {
+  //         category_prefs: [...categoriesPrefs, category],
+  //       });
+  //       setCategoriesPrefs([...categoriesPrefs, category]);
+  //     } catch (error) {
+  //       throw error;
+  //     }
+  //   };
+  
+  //   const handleRemoveCategory = async (category) => {
+  
+  //     try {
+  //       const newCategoryPref = categoriesPrefs.filter((pref) => pref !== category);
+  //       updateProfile(profile._id, {
+  //         category_prefs: newCategoryPref,
+  //       });
+  //       setCategoriesPrefs(newCategoryPref);
+  //     } catch (error) {
+  //       throw error;
+  //     }
+  //   };
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      
-      try {
-        const profileData = await getProfileById(props.user.profile);
-        setProfile(profileData);
-        setCategoryPref(profileData.category_prefs)
-      } catch (error) {
-        throw error;
-      }
-    };
-    fetchCategories();
-  }, [props.user.profile]);
+  //   useEffect(() => {  
+  //   const fetchCategories = async () => {
+  //     const profileData = await getProfileById(props.user?.profile);
+  //     setProfile(profileData);
+  //     try {
+  //       const profileData = await getProfileById(props.user?.profile);
+  //       setCategoriesPrefs(profileData.category_prefs)
+  //     } catch (error) {
+  //       throw error;
+  //     }
+  //   };
+  //   fetchCategories()
+  // }, [props.profileCategories]);
+
+
+console.log(props)
+
 
   const groupCategories = new Set(
     categories.map((element, index) => (
 
       <CategoryFilter
-      profileCategories={profileCategories}
-      handleAddCategory={handleAddCategory}
-      handleRemoveCategory={handleRemoveCategory}
+      profileCategories={props.profileCategories}
+      handleAddCategory={props.handleAddCategory}
+      handleRemoveCategory={props.handleRemoveCategory}
       category={element}
       key={index}
     />
