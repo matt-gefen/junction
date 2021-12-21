@@ -35,7 +35,6 @@ const GroupList = (props) => {
       const profileData = await getProfileById(props.user.profile);
       setGroups(groupData);
       setProfile(profileData);
-      setCatPrefs(profileData.category_prefs);
       const filteredGroups = [];
       const remainingGroups = [];
       groupData.forEach((element) => {
@@ -61,7 +60,8 @@ const GroupList = (props) => {
     return () => {
       setGroups([]);
     };
-  }, [props.user.profile]);
+  }, [props.user.profile, ]);
+  console.log(catPrefs)
   return !userGroupFilter ? (
     <div className="layout">
       <CategoryMenu usersJoinedGroups={usersJoinedGroups} user={props.user} />

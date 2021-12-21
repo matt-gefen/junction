@@ -9,35 +9,26 @@ import { updateProfile, getProfileById } from "../../services/profileService";
 import CategoryFilter from "./CategoryFilter";
 
 const CategoryMenu = (props) => {
-  const [profile, setProfile] = useState([]);
+  const [profile, setProfile] = useState();
   const [categoryPref, setCategoryPref] = useState([]);
-
-  let groupCategories = new Set(
-    categories.map((element, index) => {
-      return element;
-    })
-  );
-
-  let categoryOptions = [];
-  let profilCategories = [];
-
+  const profileCategories = profile?.category_prefs
   const handleAddCategory = async (category) => {
+
     try {
       updateProfile(profile._id, {
-        ...profile,
-        category_prefs: [...profile.category_prefs, category],
+        category_prefs: [...categoryPref, category],
       });
-      setCategoryPref(profile.category_prefs);
+      setCategoryPref([...categoryPref, category]);
     } catch (error) {
       throw error;
     }
   };
 
   const handleRemoveCategory = async (category) => {
+
     try {
-      let newCategoryPref = categoryPref.filter((pref) => pref !== category);
+      const newCategoryPref = categoryPref.filter((pref) => pref !== category);
       updateProfile(profile._id, {
-        ...profile,
         category_prefs: newCategoryPref,
       });
       setCategoryPref(newCategoryPref);
@@ -48,28 +39,30 @@ const CategoryMenu = (props) => {
 
   useEffect(() => {
     const fetchCategories = async () => {
+      
       try {
         const profileData = await getProfileById(props.user.profile);
         setProfile(profileData);
-        profilCategories = profileData.category_prefs;
+        setCategoryPref(profileData.category_prefs)
       } catch (error) {
         throw error;
       }
     };
     fetchCategories();
-  }, [props.user.profile, categoryPref]);
+  }, [props.user.profile]);
 
-  groupCategories.forEach((category, index) => {
-    categoryOptions.push(
+  const groupCategories = new Set(
+    categories.map((element, index) => (
+
       <CategoryFilter
-        beenClicked={profilCategories.includes(category)}
-        handleAddCategory={handleAddCategory}
-        handleRemoveCategory={handleRemoveCategory}
-        category={category}
-        key={index}
-      />
-    );
-  });
+      profileCategories={profileCategories}
+      handleAddCategory={handleAddCategory}
+      handleRemoveCategory={handleRemoveCategory}
+      category={element}
+      key={index}
+    />
+    ))
+  );
 
   return (
     <>
@@ -77,7 +70,7 @@ const CategoryMenu = (props) => {
         <div onClick={props.usersJoinedGroups} className={styles.categoryName}>
           user groups
         </div>
-        {categoryOptions}
+        {groupCategories}
       </div>
     </>
   );
