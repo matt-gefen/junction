@@ -31,11 +31,11 @@ const PostActions = (props) => {
   }, [props.profile._id, ownerId])
 
   function routeToEditPost() {
-    navigate(`/groups/${props.group._id}/posts/${props.post._id}/edit`)
+    navigate(`/groups/${props.groupId}/posts/${props.post._id}/edit`)
   }
 
   function confirmDeletePost() {
-    deletePost(props.group._id, props.post._id)
+    deletePost(props.groupId, props.post._id)
     navigate(-1)
   }
   

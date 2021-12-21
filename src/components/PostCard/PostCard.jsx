@@ -12,7 +12,7 @@ const PostCard = (props) => {
   const navigate = useNavigate()
 
   function handleClick() {
-    navigate(`/groups/${id}/posts/${props.post._id}`)
+    navigate(`/groups/${props.groupId}/posts/${props.post._id}`)
   }
 
   let date = new Date(props.post.createdAt)
@@ -20,7 +20,7 @@ const PostCard = (props) => {
   return (
     <div className={styles.card}>
       <div className="card-header">
-        <PostActions post={props.post} profile={props.profile} group={props.group} />
+        <PostActions post={props.post} profile={props.profile} groupId={props.groupId} />
       </div>
       <div className="post-details">
         <h1 onClick={handleClick}>{props.post.title}</h1>
