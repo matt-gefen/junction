@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import styles from './Group.module.css'
+import styles from './FavoritePosts.module.css'
 
 // Services
 import { updateProfile, getProfileById } from "../../services/profileService";
