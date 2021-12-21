@@ -8,74 +8,41 @@ import { updateProfile, getProfileById } from "../../services/profileService";
 import { deletePost } from "../../services/groupService"
 
 
-
 const PostActions = (props) => {
   const navigate = useNavigate()
-  let favorites = props.profile.favorited_posts.map((element) => {
-    return element._id
-  })
-  const [isFavorite, setIsFavorite] = useState(favorites.includes(props.post._id))
   const [ownerId, setOwnerId] = useState(props.post.owner)
-  const [isOwner, setOwner] = useState(false)
+  const [isOwner, setOwner] = useState(props.user?._id === ownerId)
+  const [isFavorite, setIsFavorite] = useState(true)
 
-  useEffect(() => {
-    const getOwner = async () => {
-      try {
-        const profileData = await getProfileById(props.profile._id)
-        setOwner(profileData._id === ownerId)
-      } catch(error) {
-        throw error
-      }
-    } 
-    getOwner()
-  }, [props.profile._id, ownerId])
 
   function routeToEditPost() {
-    navigate(`/groups/${props.group._id}/posts/${props.post._id}/edit`)
+    navigate(`/groups/${props.groupId}/posts/${props.post._id}/edit`)
   }
 
   function confirmDeletePost() {
-    deletePost(props.group._id, props.post._id)
+    deletePost(props.groupId, props.post._id)
     navigate(-1)
   }
-  
-  function handleFavoritePost() {
-    updateProfile(props.profile._id, {
-      ...props.profile,
-      favorited_posts: [...props.profile.favorited_posts, props.post._id]
-    })
-  
-    if (isFavorite === false) {
-      setIsFavorite(true)
+
+  function handleClick() {
+    if(isFavorite) {
+      props.handleUnfavorite()
+      setIsFavorite(!isFavorite)
+    } else {
+      props.handleFavoritePost()
+      setIsFavorite(!isFavorite)
     }
   }
 
-  function handleUnfavorite() {
-    let newFavorites = []
-    props.profile.favorited_posts.forEach((element) => {
-      if(element._id !== props.post._id) {
-        newFavorites.push(element)
-      }
-    })
-    updateProfile(props.profile._id, {
-      ...props.profile,
-      favorited_posts: newFavorites
-    })
-    setIsFavorite(false)
-  }
+  useEffect(()=>{
+    setIsFavorite(props.favorites?.includes(props.post._id))
+  },[props.favorites, props.post._id])
 
   return (
     <div className="interactions">
-    {!isFavorite &&
       <div>
-        <button onClick={handleFavoritePost}> Favorite</button>
+        <button onClick={handleClick}> {isFavorite? "Unfavorite": "Favorite"}</button>
       </div>
-    }
-    {isFavorite && 
-      <div>
-        <button onClick={handleUnfavorite}>Unfavorite</button>
-      </div>
-    }
     {isOwner &&
         <>
           <button onClick={routeToEditPost}>Edit Post</button>

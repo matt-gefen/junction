@@ -1,18 +1,60 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import styles from './PostCard.module.css'
 import PostActions from "./PostActions"
 
-// Components
+import { getProfileById, updateProfile } from "../../services/profileService"
 
 const PostCard = (props) => {
+  const [favorites, setFavorites] = useState()
+  const [profile, setProfile] = useState()
 
-  const { id } = useParams()
-
+  useEffect(() => {
+    const getFavorites = async () => {
+      try {
+        const profileData = await getProfileById(props.user.profile)
+        setProfile(profileData)
+        setFavorites(profileData.favorited_posts.map((element) => {
+          return element._id
+          }
+        )
+      )
+      } catch(error) {
+        throw error
+      }
+    }
+    getFavorites()
+  }, [props.user.profile])
+  
+  
   const navigate = useNavigate()
 
   function handleClick() {
-    navigate(`/groups/${id}/posts/${props.post._id}`)
+    navigate(`/groups/${props.groupId}/posts/${props.post._id}`)
+  }
+
+  const handleFavoritePost = async () => {
+    try { 
+      updateProfile(profile._id, {
+      ...profile,
+      favorited_posts: [...profile.favorited_posts, props.post._id]
+    })
+      setFavorites([...profile.favorited_posts, props.post._id])
+    } catch(error) {
+      throw error
+    }
+}
+
+  const handleUnfavorite = async () => {
+    try {
+      const newFavorites = favorites.filter((fav) => fav !== props.post._id);
+      updateProfile(profile._id, {
+        favorited_posts: newFavorites,
+      });
+      setFavorites(newFavorites);
+    } catch (error) {
+      throw error;
+    }
   }
 
   let date = new Date(props.post.createdAt)
@@ -20,7 +62,14 @@ const PostCard = (props) => {
   return (
     <div className={styles.card}>
       <div className="card-header">
-        <PostActions post={props.post} profile={props.profile} group={props.group} />
+        <PostActions 
+          post={props.post}
+          profile={profile}
+          groupId={props.groupId}
+          handleFavoritePost={handleFavoritePost}
+          handleUnfavorite={handleUnfavorite}
+          favorites={favorites}
+          />
       </div>
       <div className="post-details">
         <h1 onClick={handleClick}>{props.post.title}</h1>
