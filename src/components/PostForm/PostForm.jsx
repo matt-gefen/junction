@@ -16,6 +16,7 @@ const PostForm = props => {
     setFormData({
       ...formData,
       thumbnail: `https://avatars.dicebear.com/api/croodles-neutral/${title}.svg`,
+      group: id,
       [e.target.name]: e.target.value,
     })
   }
@@ -52,7 +53,8 @@ const PostForm = props => {
             link: postData.link,
             description: postData.description,
             // register: '',
-            date: postData.date
+            date: postData.date,
+            group: id
           })
         } else {
           setFormData({
