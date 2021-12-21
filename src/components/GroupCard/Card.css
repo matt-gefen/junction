@@ -7,6 +7,11 @@ h2 {
 .group-avatar{
   width: 150px;
 }
+
+.image {
+  width: 100%;
+}
+
 .group-list {
   background: #0b0b12;
   padding: 0px 10px 0px 10px;
