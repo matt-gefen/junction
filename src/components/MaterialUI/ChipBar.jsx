@@ -10,7 +10,7 @@ export default function ChipBar({ labels }) {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <Box sx={{ display: { xs: 'flex', md: 'none' }}}>
+          <Box sx={{ flexGrow: 1 }}>
             {labels}
           </Box>
         </Toolbar>

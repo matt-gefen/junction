@@ -1,121 +1,117 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"
 
 // Services
-import { getAllGroups, deleteGroup } from "../../services/groupService";
-import { updateProfile, getProfileById } from "../../services/profileService";
+import { getAllGroups, deleteGroup } from "../../services/groupService"
+import { updateProfile, getProfileById } from "../../services/profileService"
 
 // Components
-import GroupCard from "../../components/GroupCard/GroupCard";
-import CategoryMenu from "../../components/CategoryNav/CategoryMenu";
+import GroupCard from "../../components/GroupCard/GroupCard"
+import CategoryMenu from "../../components/CategoryNav/CategoryMenu"
 
 const GroupList = (props) => {
-  const [groups, setGroups] = useState([]);
-  const [publicGroups, setPublicGroups] = useState([]);
-  const [profile, setProfile] = useState();
-  const [catPrefs, setCatPrefs] = useState([]);
-  const [userGroupPref, setUserGroupPref] = useState([]);
-  const [notUserGroupPref, setNotUserGroupPref] = useState([]);
-  const [usersGroups, setUserGroups] = useState([]);
-  const [userGroupFilter, setUserGroupFilter] = useState(false);
+  const [groups, setGroups] = useState([])
+  const [publicGroups, setPublicGroups] = useState([])
+  const [profile, setProfile] = useState()
+  const [catPrefs, setCatPrefs] = useState([])
+  const [userGroupPref, setUserGroupPref] = useState([])
+  const [notUserGroupPref, setNotUserGroupPref] = useState([])
+  const [usersGroups, setUserGroups] = useState([])
+  const [userGroupFilter, setUserGroupFilter] = useState(false)
   const [categories, setCategories] = useState([])
 
-  const usersJoinedGroups = () => setUserGroupFilter(!userGroupFilter);
+  const usersJoinedGroups = () => setUserGroupFilter(!userGroupFilter)
 
   const handleDeleteGroup = async (groupId) => {
     try {
-      await deleteGroup(groupId);
-      setGroups(groups.filter((group) => group._id !== groupId));
+      await deleteGroup(groupId)
+      setGroups(groups.filter((group) => group._id !== groupId))
     } catch (error) {
-      throw error;
+      throw error
     }
-  };
+  }
 
   const nonLoggedin = async () => {
-    const publicGroupData = await getAllGroups();
-    setPublicGroups(publicGroupData);
-  };
+    const publicGroupData = await getAllGroups()
+    setPublicGroups(publicGroupData)
+  }
 
-  const profileCategories = profile?.category_prefs;
+  const profileCategories = profile?.category_prefs
 
   useEffect(() => {
     const fetchAllGroups = async () => {
-      const groupData = await getAllGroups();
-      setGroups(groupData);
-      const profileData = await getProfileById(props.user?.profile);
+      const groupData = await getAllGroups()
+      setGroups(groupData)
+      const profileData = await getProfileById(props.user?.profile)
+      setProfile(profileData)
 
-      
-      setProfile(profileData);
-
-      const filteredGroups = [];
-      const remainingGroups = [];
+      const filteredGroups = []
+      const remainingGroups = []
 
       groupData.forEach((element) => {
         if (profileData.category_prefs.includes(element.category)) {
-          filteredGroups.push(element);
+          filteredGroups.push(element)
         } else {
-          remainingGroups.push(element);
+          remainingGroups.push(element)
         }
-      });
+      })
 
-      setUserGroupPref(filteredGroups);
-      setNotUserGroupPref(remainingGroups);
+      setUserGroupPref(filteredGroups)
+      setNotUserGroupPref(remainingGroups)
 
-      const joinedGroups = [];
+      const joinedGroups = []
 
       groupData.forEach((element) => {
         element.members.forEach((member) => {
           if (member._id === profileData._id) {
-            joinedGroups.push(element);
+            joinedGroups.push(element)
           }
-        });
-        setUserGroups(joinedGroups);
-      });
+        })
+        setUserGroups(joinedGroups)
+      })
 
       return () => {
-        setGroups([]);
-      };
-    };
-    fetchAllGroups();
-    nonLoggedin();
+        setGroups([])
+      }
+    }
+    fetchAllGroups()
+    nonLoggedin()
 
     const fetchCategories = async () => {
       try {
-        const profileData = await getProfileById(props.user?.profile);
-        setCatPrefs(profileData.category_prefs);
+        const profileData = await getProfileById(props.user?.profile)
+        setCatPrefs(profileData.category_prefs)
       } catch (error) {
-        throw error;
+        throw error
       }
-    };
+    }
 
-    fetchCategories();
-  }, [categories]);
+    fetchCategories()
+  }, [categories])
 
   const handleAddCategory = async (category) => {
     try {
-      console.log('Add Category')
       updateProfile(profile._id, {
         category_prefs: [...catPrefs, category],
-      });
-      setCatPrefs([...catPrefs, category]);
+      })
+      setCatPrefs([...catPrefs, category])
       setCategories([...categories, category])
     } catch (error) {
-      throw error;
+      throw error
     }
-  };
+  }
 
   const handleRemoveCategory = async (category) => {
     try {
-      console.log('Remove Category')
-      const newCategoryPref = catPrefs.filter((pref) => pref !== category);
+      const newCategoryPref = catPrefs.filter((pref) => pref !== category)
       updateProfile(profile._id, {
         category_prefs: newCategoryPref,
-      });
-      setCatPrefs(newCategoryPref);
+      })
+      setCatPrefs(newCategoryPref)
       setCategories(newCategoryPref)
     } catch (error) {
-      throw error;
+      throw error
     }
-  };
+  }
 
   return props.user ? (
     userGroupFilter ? (
@@ -175,7 +171,7 @@ const GroupList = (props) => {
         <GroupCard group={group} key={group._id} />
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default GroupList;
+export default GroupList
