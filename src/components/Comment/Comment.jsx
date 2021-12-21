@@ -9,6 +9,7 @@ import { getProfileById } from '../../services/profileService'
 // Components
 import TextField from '../../components/MaterialUI/TextField'
 import PopupMenu from '../../components/MaterialUI/PopupMenu'
+import ImageAvatar from '../../components/MaterialUI/ImageAvatar'
 
 const Comment = props => {
   const { id, postId } = useParams()
@@ -61,7 +62,7 @@ const Comment = props => {
   return (
     <section className={styles.container}>
       <div className={styles.header}>
-        <img className={styles.image} src={profile?.avatar} alt="owner avatar" />
+        <ImageAvatar image={profile?.avatar}/>
         <div className={styles.container}>
           <div className="owner-name">
             {profile?.name}
