@@ -142,7 +142,7 @@ const PostDetails = props => {
         </div>
         <div className="post-comments-container">
           <h3>Post Comments</h3>
-          {post.comments.length && 
+          {post.title && 
             <CommentList 
               groupId={id} 
               postId={postId} 
