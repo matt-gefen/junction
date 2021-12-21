@@ -15,6 +15,7 @@ const GroupList = (props) => {
   const [catPrefs, setCatPrefs] = useState([]);
   const [userGroupPref, setUserGroupPref] = useState([]);
   const [notUserGroupPref, setNotUserGroupPref] = useState([]);
+  const [usersGroups, setUserGroups] = useState([]);
 
   const handleDeleteGroup = async (groupId) => {
     try {
@@ -32,25 +33,32 @@ const GroupList = (props) => {
       setGroups(groupData);
       setProfile(profileData);
       setCatPrefs(profileData.category_prefs);
-      const filteredGroups = []
-      const remainingGroups = []
+      const filteredGroups = [];
+      const remainingGroups = [];
       groupData.forEach((element) => {
-        if (profileData.category_prefs.includes(element.category)){
-    filteredGroups.push(element) } else { 
-      remainingGroups.push(element)
-    }})
-      setUserGroupPref(filteredGroups)
-      setNotUserGroupPref(remainingGroups)
-    };
+        if (profileData.category_prefs.includes(element.category)) {
+          filteredGroups.push(element);
+        } else {
+          remainingGroups.push(element);
+        }
+      });
+      setUserGroupPref(filteredGroups);
+      setNotUserGroupPref(remainingGroups);
+      const joinedGroups = []
+      groupData.forEach((element) => {
+        console.log("ELEMENT",element.members[0])
+        element.members.forEach((member) => {
+          console.log("MEMBER:",member._id)
+        if (member._id===profileData._id) {
+          joinedGroups.push(element);
+        }})
+    })}
     fetchAllGroups();
     return () => {
       setGroups([]);
     };
   }, [props.user.profile]);
 
-  console.log("YOUR_PREFS", catPrefs);
-  console.log(userGroupPref);
-  console.log(groups);
   return (
     <div className="layout">
       <CategoryMenu user={props.user} />
