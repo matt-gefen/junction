@@ -11,6 +11,7 @@ import CategoryMenu from "../../components/CategoryNav/CategoryMenu";
 
 const GroupList = (props) => {
   const [groups, setGroups] = useState([]);
+  const [publicGroups, setPublicGroups] = useState([]);
   const [profile, setProfile] = useState();
   const [catPrefs, setCatPrefs] = useState([]);
   const [userGroupPref, setUserGroupPref] = useState([]);
@@ -29,10 +30,15 @@ const GroupList = (props) => {
     }
   };
 
+  const nonLoggedin = async () => {
+    const publicGroupData = await getAllGroups();
+    setPublicGroups(publicGroupData);
+  } 
+
   useEffect(() => {
     const fetchAllGroups = async () => {
       const groupData = await getAllGroups();
-      const profileData = await getProfileById(props.user.profile);
+      const profileData = await getProfileById(props.user?.profile);
       setGroups(groupData);
       setProfile(profileData);
       const filteredGroups = [];
@@ -56,13 +62,15 @@ const GroupList = (props) => {
         setUserGroups(joinedGroups);
       });
     };
+    nonLoggedin()
     fetchAllGroups();
     return () => {
       setGroups([]);
     };
-  }, [props.user.profile, ]);
-  console.log(userGroupFilter)
-  return  userGroupFilter ?  (
+  }, [props.user?.profile ]);
+
+  return props.user? 
+    (userGroupFilter ?  (
     <div className="layout">
       <CategoryMenu usersJoinedGroups={usersJoinedGroups} user={props.user} />
       {profile &&
@@ -78,7 +86,7 @@ const GroupList = (props) => {
     </div>
   ) 
   :
- (
+(
     <div className="layout">
       <CategoryMenu usersJoinedGroups={usersJoinedGroups} user={props.user} />
       {profile &&
@@ -102,8 +110,17 @@ const GroupList = (props) => {
           />
         ))}
     </div>
-  )
-  
+  )) 
+:
+<div className="layout">
+{publicGroups.map((group) => (
+    <GroupCard
+      group={group}
+      key={group._id}
+    />
+  ))}
+
+</div>
 };
 
 export default GroupList;
