@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 
 // Services
 import { getAllGroups, deleteGroup } from "../../services/groupService";
-
 import { updateProfile, getProfileById } from "../../services/profileService";
 
 // Components
