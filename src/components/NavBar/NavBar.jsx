@@ -1,9 +1,17 @@
 import { Link } from 'react-router-dom'
 
+// Components
+import AppNavBar from '../../components/MaterialUI/AppNavBar'
+
 const NavBar = ({ user, handleLogout }) => {
   return (
     <>
       {user ?
+        <>
+        <AppNavBar 
+          user={user}
+          handleLogout={handleLogout}
+        />
         <nav>
           <ul>
             {/* <li>Welcome, {user.name}</li> */}
@@ -13,6 +21,7 @@ const NavBar = ({ user, handleLogout }) => {
             <li><Link to="" onClick={handleLogout}>Log Out</Link></li>
           </ul>
         </nav>
+        </>
       :
         <nav>
           <ul>
