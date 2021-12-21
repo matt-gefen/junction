@@ -8,11 +8,12 @@ import { updateProfile, getProfileById } from "../../services/profileService";
 import { deletePost } from "../../services/groupService"
 
 
-
 const PostActions = (props) => {
   const navigate = useNavigate()
   const [ownerId, setOwnerId] = useState(props.post.owner)
-  const [isOwner, setOwner] = useState(false)
+  const [isOwner, setOwner] = useState(props.user?._id === ownerId)
+  const [isFavorite, setIsFavorite] = useState(true)
+
 
   function routeToEditPost() {
     navigate(`/groups/${props.groupId}/posts/${props.post._id}/edit`)
@@ -24,13 +25,23 @@ const PostActions = (props) => {
   }
 
   function handleClick() {
-    return
+    if(isFavorite) {
+      props.handleUnfavorite()
+      setIsFavorite(!isFavorite)
+    } else {
+      props.handleFavoritePost()
+      setIsFavorite(!isFavorite)
+    }
   }
+
+  useEffect(()=>{
+    setIsFavorite(props.favorites?.includes(props.post._id))
+  },[props.favorites, props.post._id])
 
   return (
     <div className="interactions">
       <div>
-        <button onClick={props.handleFavoritePost}> Favorite</button>
+        <button onClick={handleClick}> {isFavorite? "Unfavorite": "Favorite"}</button>
       </div>
     {isOwner &&
         <>

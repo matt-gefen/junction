@@ -6,25 +6,24 @@ import PostActions from "./PostActions"
 import { getProfileById, updateProfile } from "../../services/profileService"
 
 const PostCard = (props) => {
-  const [isFavorite, setIsFavorite] = useState()
   const [favorites, setFavorites] = useState()
   const [profile, setProfile] = useState()
 
   useEffect(() => {
-    const getOwner = async () => {
+    const getFavorites = async () => {
       try {
         const profileData = await getProfileById(props.user.profile)
         setProfile(profileData)
         setFavorites(profileData.favorited_posts.map((element) => {
           return element._id
           }
-          )
         )
+      )
       } catch(error) {
         throw error
       }
     }
-    getOwner()
+    getFavorites()
   }, [props.user.profile])
   
   
@@ -48,15 +47,13 @@ const PostCard = (props) => {
 
   const handleUnfavorite = async () => {
     try {
-      let newFavorites = []
-      props.profile.favorited_posts.forEach((element) => {
-        if(element._id !== props.post._id) {
-          newFavorites.push(element)
-        }
-      })
-      setFavorites(newFavorites)
-    } catch(error) {
-      throw error
+      const newFavorites = favorites.filter((fav) => fav !== props.post._id);
+      updateProfile(profile._id, {
+        favorited_posts: newFavorites,
+      });
+      setFavorites(newFavorites);
+    } catch (error) {
+      throw error;
     }
   }
 
@@ -71,7 +68,8 @@ const PostCard = (props) => {
           groupId={props.groupId}
           handleFavoritePost={handleFavoritePost}
           handleUnfavorite={handleUnfavorite}
-          isFavorite={isFavorite} />
+          favorites={favorites}
+          />
       </div>
       <div className="post-details">
         <h1 onClick={handleClick}>{props.post.title}</h1>

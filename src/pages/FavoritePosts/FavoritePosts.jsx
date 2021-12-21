@@ -9,7 +9,6 @@ import {getProfileById } from "../../services/profileService";
 import PostCard from "../../components/PostCard/PostCard";
 
 const FavoritePosts = (props) => {
-  const { id } = useParams();
   const [profile, setProfile] = useState()
   const [posts, setPosts] = useState()
 
@@ -24,19 +23,20 @@ const FavoritePosts = (props) => {
       }
     };
     fetchPosts();
-  }, [props.user.profile]);
+  }, [props.user.profile, posts]);
 
   console.log(props.user)
 
   return (
     <div className="layout">
       <div className="group-details">
+        <h1>Favorite Posts</h1>
           <>
             <section className={styles.container}>
               {posts?.map(post => (
                 <PostCard user={props.user} groupId={post.group} post={post} profile={profile}/>
               ))}
-            </section>
+            </section> :
           </>
         </div>
     </div>
