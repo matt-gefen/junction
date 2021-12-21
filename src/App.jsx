@@ -3,7 +3,6 @@ import { Routes, Route, useNavigate, Navigate } from 'react-router-dom'
 import NavBar from './components/NavBar/NavBar'
 import Signup from './pages/Signup/Signup'
 import Login from './pages/Login/Login'
-// import Landing from './pages/Landing/Landing'
 import CreateGroup from './pages/CreateGroup/CreateGroup'
 import Group from './pages/Group/Group'
 import UpdateGroup from './pages/UpdateGroup/UpdateGroup'
@@ -35,7 +34,8 @@ const App = () => {
     <>
       <NavBar user={user} handleLogout={handleLogout} />
       <Routes>
-        <Route path="groups/" element={<GroupIndex user={user} />} />
+        <Route path="/" element={<GroupIndex user={user} />} />
+        <Route path="/groups" element={<GroupIndex user={user} />} />
         <Route
           path="/signup"
           element={<Signup handleSignupOrLogin={handleSignupOrLogin} randomSeed={randomSeed}/>}
