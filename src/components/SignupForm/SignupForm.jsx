@@ -1,8 +1,13 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styles from './SignupForm.module.css'
+
+// Services
 import * as authService from '../../services/authService'
+
+// Components
 import PasswordField from '../MaterialUI/PasswordField'
+import TextField from '../MaterialUI/TextField'
 
 const SignupForm = props => {
   const navigate = useNavigate()
@@ -47,26 +52,10 @@ const SignupForm = props => {
       className={styles.container}
     >
       <div className={styles.inputContainer}>
-        <label htmlFor="name" className={styles.label}>Name</label>
-        <input
-          type="text"
-          autoComplete="off"
-          id="name"
-          value={name}
-          name="name"
-          onChange={handleChange}
-        />
+        <TextField value={name} editable={true} label="Name" name="name" handleChange={handleChange}/>
       </div>
       <div className={styles.inputContainer}>
-        <label htmlFor="email" className={styles.label}>Email</label>
-        <input
-          type="text"
-          autoComplete="off"
-          id="email"
-          value={email}
-          name="email"
-          onChange={handleChange}
-        />
+        <TextField value={email} editable={true} label="Email" name="email" handleChange={handleChange}/>
       </div>
       <div className={styles.inputContainer}>
         <PasswordField name="password" value={password} handleChange={handleChange}/>
@@ -75,15 +64,7 @@ const SignupForm = props => {
         <PasswordField name="passwordConf" value={passwordConf} handleChange={handleChange}/>
       </div>
       <div className={styles.inputContainer}>
-        <label htmlFor="location" className={styles.label}>Location</label>
-        <input
-          type="text"
-          autoComplete="off"
-          id="location"
-          value={location}
-          name="location"
-          onChange={handleChange}
-        />
+        <TextField value={location} editable={true} label="Location" name="location" handleChange={handleChange}/>
       </div>
       <div className={styles.inputContainer}>
         <img src={props.avatar} alt="dicebears avatar" style={{width: "150px"}}/>
