@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 // Services
 import { getAllGroups, deleteGroup } from "../../services/groupService";
 
-import { getProfileById } from "../../services/profileService";
+import { updateProfile, getProfileById } from "../../services/profileService";
 
 // Components
 import GroupCard from "../../components/GroupCard/GroupCard";
@@ -33,16 +33,24 @@ const GroupList = (props) => {
   const nonLoggedin = async () => {
     const publicGroupData = await getAllGroups();
     setPublicGroups(publicGroupData);
-  } 
+  };
+
+  const profileCategories = profile?.category_prefs;
+
+ 
 
   useEffect(() => {
     const fetchAllGroups = async () => {
       const groupData = await getAllGroups();
-      const profileData = await getProfileById(props.user?.profile);
       setGroups(groupData);
+      const profileData = await getProfileById(props.user?.profile);
+
+      
       setProfile(profileData);
+
       const filteredGroups = [];
       const remainingGroups = [];
+
       groupData.forEach((element) => {
         if (profileData.category_prefs.includes(element.category)) {
           filteredGroups.push(element);
@@ -50,9 +58,12 @@ const GroupList = (props) => {
           remainingGroups.push(element);
         }
       });
+
       setUserGroupPref(filteredGroups);
       setNotUserGroupPref(remainingGroups);
+
       const joinedGroups = [];
+
       groupData.forEach((element) => {
         element.members.forEach((member) => {
           if (member._id === profileData._id) {
@@ -61,66 +72,108 @@ const GroupList = (props) => {
         });
         setUserGroups(joinedGroups);
       });
+
+      return () => {
+        setGroups([]);
+      };
     };
-    nonLoggedin()
     fetchAllGroups();
-    return () => {
-      setGroups([]);
+    nonLoggedin();
+
+    const fetchCategories = async () => {
+      try {
+        const profileData = await getProfileById(props.user?.profile);
+        setCatPrefs(profileData.category_prefs);
+      } catch (error) {
+        throw error;
+      }
     };
-  }, [props.user?.profile ]);
 
-  return props.user? 
-    (userGroupFilter ?  (
-    <div className="layout">
-      <CategoryMenu usersJoinedGroups={usersJoinedGroups} user={props.user} />
-      {profile &&
-        usersGroups?.map((joinedGroup) => (
-          <GroupCard
-            group={joinedGroup}
-            key={joinedGroup._id}
-            user={props.user}
-            profile={profile}
-            handleDeleteGroup={handleDeleteGroup}
-          />
-        ))}
-    </div>
-  ) 
-  :
-(
-    <div className="layout">
-      <CategoryMenu usersJoinedGroups={usersJoinedGroups} user={props.user} />
-      {profile &&
-        userGroupPref?.map((userPref) => (
-          <GroupCard
-            group={userPref}
-            key={userPref._id}
-            user={props.user}
-            profile={profile}
-            handleDeleteGroup={handleDeleteGroup}
-          />
-        ))}
-      {profile &&
-        notUserGroupPref?.map((group) => (
-          <GroupCard
-            group={group}
-            key={group._id}
-            user={props.user}
-            profile={profile}
-            handleDeleteGroup={handleDeleteGroup}
-          />
-        ))}
-    </div>
-  )) 
-:
-<div className="layout">
-{publicGroups.map((group) => (
-    <GroupCard
-      group={group}
-      key={group._id}
-    />
-  ))}
+    fetchCategories();
+  }, [props.user?.profile]);
 
-</div>
+  const handleAddCategory = async (category) => {
+    try {
+      updateProfile(profile._id, {
+        category_prefs: [...catPrefs, category],
+      });
+      setCatPrefs([...catPrefs, category]);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const handleRemoveCategory = async (category) => {
+    try {
+      const newCategoryPref = catPrefs.filter((pref) => pref !== category);
+      updateProfile(profile._id, {
+        category_prefs: newCategoryPref,
+      });
+      setCatPrefs(newCategoryPref);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  return props.user ? (
+    userGroupFilter ? (
+      <div className="layout">
+        <CategoryMenu
+          handleAddCategory={handleAddCategory}
+          handleRemoveCategory={handleRemoveCategory}
+          usersJoinedGroups={usersJoinedGroups}
+          profileCategories={profileCategories}
+          user={props.user}
+        />
+        {profile &&
+          usersGroups?.map((joinedGroup) => (
+            <GroupCard
+              group={joinedGroup}
+              key={joinedGroup._id}
+              user={props.user}
+              profile={profile}
+              handleDeleteGroup={handleDeleteGroup}
+            />
+          ))}
+      </div>
+    ) : (
+      <div className="layout">
+        <CategoryMenu
+          handleAddCategory={handleAddCategory}
+          handleRemoveCategory={handleRemoveCategory}
+          usersJoinedGroups={usersJoinedGroups}
+          profileCategories={profileCategories}
+          user={props.user}
+        />
+        {profile &&
+          userGroupPref?.map((userPref) => (
+            <GroupCard
+              group={userPref}
+              key={userPref._id}
+              user={props.user}
+              profile={profile}
+              handleDeleteGroup={handleDeleteGroup}
+            />
+          ))}
+        {profile &&
+          notUserGroupPref?.map((group) => (
+            <GroupCard
+              group={group}
+              key={group._id}
+              user={props.user}
+              profile={profile}
+              handleDeleteGroup={handleDeleteGroup}
+            />
+          ))}
+      </div>
+    )
+  ) : (
+    <div className="layout">
+      {publicGroups.map((group) => (
+        <GroupCard group={group} key={group._id} />
+      ))}
+    </div>
+  );
 };
 
 export default GroupList;
