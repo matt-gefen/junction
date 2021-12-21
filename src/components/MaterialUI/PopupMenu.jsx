@@ -49,7 +49,7 @@ export default function LongMenu({ options }) {
             key={option[0]} 
             onClick={() => handleClose(option[1])}
           >
-            {option}
+            {option[0]}
           </MenuItem>
         ))}
       </Menu>

@@ -81,11 +81,9 @@ const PostDetails = props => {
       }
     }
     fetchPost()
-  })
+  }, [])
 
   let date = new Date(post.createdAt)
-
-  // getAllComments()
 
   return (
     <div className="layout">
@@ -144,19 +142,15 @@ const PostDetails = props => {
         </div>
         <div className="post-comments-container">
           <h3>Post Comments</h3>
-          <CommentList 
-            groupId={id} 
-            postId={postId} 
-            user={props.user}
-          />
-          {/* {post.comments?.map((comment) => (
-            <Comment
-              user={props.user} 
-              comment={comment} 
-              confirmDeleteComment={confirmDeleteComment}
-              key={comment._id}
+          {post.comments.length && 
+            <CommentList 
+              groupId={id} 
+              postId={postId} 
+              comments={post.comments}
+              user={props.user}
+              profile={profile}
             />
-          ))} */}
+          }
         </div>
       </div>
     </div>

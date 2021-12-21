@@ -129,8 +129,6 @@ const deletePost = async (req, res) => {
 }
 
 const createComment = async (req, res) => {
-  console.log('Create comment body:', req.body)
-  console.log('User profile:', req.user.profile)
   try {
     req.body.owner = req.user.profile
     const profile = await Profile.findById(req.user.profile)
@@ -140,8 +138,6 @@ const createComment = async (req, res) => {
     post.comments.push(req.body)
     await post.save()
     const newComment = post.comments[post.comments.length - 1]
-    // console.log('Profile:', profile)
-    // newComment.owner = profile
     return res.status(201).json(newComment)
   } catch (error) {
     return res.status(500).json(error)
