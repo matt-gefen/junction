@@ -14,11 +14,6 @@ import ToggleChip from "../MaterialUI/ToggleChip";
 const CategoryMenu = (props) => {
   console.log(props)
 
-  const handleClick = e => {
-    console.log(e.target)
-    e.target.value ? props.handleAddCategory() : props.handleRemoveCategory()
-  }
-
   const groupCategories = new Set(
     categories.map((element, index) => (
 
@@ -37,6 +32,7 @@ const CategoryMenu = (props) => {
       <ToggleChip 
         handleAddCategory={props.handleAddCategory}
         handleRemoveCategory={props.handleRemoveCategory}
+        select={props.profileCategories?.includes(category)}
         label={category}
         key={idx}
       />
