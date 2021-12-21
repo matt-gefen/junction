@@ -21,7 +21,7 @@ console.log("GroupCardProps",props)
 
       <div className="group-avatar">
         <Link to={`/groups/${props.group._id}`}>
-          <img src={props.group.avatar} alt="group avatar"/>
+          <img className="image" src={props.group.avatar} alt="group avatar"/>
         </Link>
       </div>
 
