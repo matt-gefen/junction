@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import styles from './Group.module.css'
 
 // Services
@@ -8,6 +8,7 @@ import { updateProfile, getProfileById } from "../../services/profileService";
 
 // Components
 import PostCard from "../../components/PostCard/PostCard";
+import BasicButton from "../../components/MaterialUI/BasicButton";
 
 const Group = (props) => {
   const { id } = useParams();
@@ -19,8 +20,12 @@ const Group = (props) => {
   const [isOwner, setIsOwner] = useState(false)
   const [isMember, setIsMember] = useState(false)
 
-  function handleClick() {
+  function createPost() {
     navigate(`/groups/${id}/posts`)
+  }
+
+  function editGroup() {
+    navigate(`/groups/${id}/edit`)
   }
 
   function handleJoinGroup() {
@@ -67,7 +72,6 @@ const Group = (props) => {
       try {
         const groupData = await getGroupById(id);
         const profileData = await getProfileById(props.user.profile)
-        console.log("Group Details Data:", groupData);
         setGroup(groupData);
         setProfile(profileData)
         setOwnerId(groupData.owner)
@@ -82,8 +86,6 @@ const Group = (props) => {
     };
     fetchGroup();
   }, [props.user.profile, isMember, id, isOwner, ownerId]);
-
-  console.log(props.user)
 
   return (
     <div className="layout">
@@ -103,24 +105,24 @@ const Group = (props) => {
         }
       {!isMember &&
         <div>
-          <button onClick={handleJoinGroup}>Join Group</button>
+          <BasicButton text="Join Group" handleClick={handleJoinGroup}/>
         </div>
       }
       {isMember && !isOwner &&
         <div>
-          <button onClick={handleLeaveGroup}>Leave Group</button>
+          <BasicButton text="Leave Group" handleClick={handleLeaveGroup}/>
         </div>
       }
 
       {isOwner &&
-          <>
-            <button><Link to={`/groups/${id}/edit`}>Edit Group</Link></button>
-          </>
+        <>
+          <BasicButton text="Edit Group" handleClick={editGroup}/>
+        </>
       }
       </div>
       {isMember &&
         <>
-          <button onClick={handleClick}>Create Post</button>
+          <BasicButton text="Create Post" handleClick={createPost}/>
         </>
       }
       
