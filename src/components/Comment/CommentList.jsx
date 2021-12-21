@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 // Services
 import { getPostById, deleteComment } from "../../services/groupService"
 
-
 // Components
 import Comment from './Comment'
 import CommentForm from './CommentForm'
@@ -19,10 +18,6 @@ const CommentList = props => {
     console.log('Removing comment')
     deleteComment(props.id, props.postId, comment._id)
     setComments(comments.filter(element => element !== comment))
-  }
-
-  function updateComment(comment) {
-
   }
 
   useEffect(() => {

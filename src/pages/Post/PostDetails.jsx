@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import styles from './PostDetails.module.css'
-import CommentForm from "../../components/Comment/CommentForm"
 
 // Services
-import { getPostById, deletePost, deleteComment } from "../../services/groupService"
+import { getPostById, deletePost } from "../../services/groupService"
 import { updateProfile, getProfileById } from "../../services/profileService"
 
-
 // Components
-import Comment from '../../components/Comment/Comment'
 import AlertDialogue from "../../components/MaterialUI/AlertDialogue"
 import CommentList from "../../components/Comment/CommentList"
 
@@ -65,10 +62,6 @@ const PostDetails = props => {
   function confirmDeletePost() {
     deletePost(id, postId)
     navigate(-1)
-  }
-
-  function confirmDeleteComment(commentId) {
-    deleteComment(id, postId, commentId)
   }
   
   useEffect(() => {
@@ -154,7 +147,6 @@ const PostDetails = props => {
           <CommentList 
             groupId={id} 
             postId={postId} 
-            confirmDeleteComment={confirmDeleteComment}
             user={props.user}
           />
           {/* {post.comments?.map((comment) => (

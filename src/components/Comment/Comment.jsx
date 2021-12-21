@@ -4,10 +4,11 @@ import styles from './Comment.module.css'
 
 // Services
 import { getProfileById } from '../../services/profileService'
-import { updateComment, deleteComment } from '../../services/groupService'
+import { updateComment } from '../../services/groupService'
 
 // Components
 import TextField from '../../components/MaterialUI/TextField'
+import PopupMenu from '../../components/MaterialUI/PopupMenu'
 
 const Comment = props => {
   const { id, postId } = useParams()
@@ -36,6 +37,10 @@ const Comment = props => {
     updateComment(id, postId, comment._id, comment)
     setCommentDefault(comment.comment_content)
     toggleEdit(true)
+  }
+
+  function confirmDeleteComment() {
+    props.removeComment(comment)
   }
 
   const handleChange = e => {
@@ -74,13 +79,17 @@ const Comment = props => {
           </div>
         </div>
       </div>
-      <div className={styles.container}>
+      <div className={styles.inlineContainer}>
         <TextField value={comment.comment_content} editable={editable} name="comment_content" handleChange={handleChange}/>
-        {(!editable && isOwner) && 
-          <>
-            <button onClick={toggleEdit}>Edit Comment</button>
-            <button onClick={() => props.removeComment(comment)}>Delete Comment</button>
-          </>
+        {(!editable && isOwner) &&
+          <PopupMenu 
+            options={
+              [
+                ['Edit Comment', toggleEdit], 
+                ['Delete Comment', confirmDeleteComment]
+              ]
+            }
+          />
         }
         {editable && 
           <>
