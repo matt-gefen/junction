@@ -17,17 +17,10 @@ const LocationSearch = (props) => {
     if ("geolocation" in navigator) { 
       navigator.geolocation.getCurrentPosition(position => { 
           map.current = new mapboxgl.Map({
-          // container id specified in the HTML
             container: mapContainer.current,
-  
-             // style URL
             style: 'mapbox://styles/mapbox/streets-v11',
-  
-           // initial position in [lon, lat] format
             center: [position.coords.longitude, position.coords.latitude],
-  
-           // initial zoom
-          zoom: 8
+            zoom: 8
           });
       }); 
   } else {
@@ -37,7 +30,18 @@ const LocationSearch = (props) => {
       center: [lng, lat],
       zoom: zoom
     });
-  }})
+  } 
+  // const geocoder = new mapboxgl.MapboxGeocoder({
+  //   // Initialize the geocoder
+  //   accessToken: mapboxgl.accessToken, // Set the access token
+  //   mapboxgl: mapboxgl, // Set the mapbox-gl instance
+  //   marker: false // Do not use the default marker style
+  // });
+  
+  // // Add the geocoder to the map
+  // map.addControl(geocoder);
+  
+})
 
   return (
     <div>
