@@ -37,12 +37,15 @@ const GroupList = (props) => {
 
   const profileCategories = profile?.category_prefs;
 
+ 
+
   useEffect(() => {
     const fetchAllGroups = async () => {
       const groupData = await getAllGroups();
+      setGroups(groupData);
       const profileData = await getProfileById(props.user?.profile);
 
-      setGroups(groupData);
+      
       setProfile(profileData);
 
       const filteredGroups = [];
@@ -87,7 +90,7 @@ const GroupList = (props) => {
     };
 
     fetchCategories();
-  }, [props.user?.profile, ]);
+  }, [props.user?.profile]);
 
   const handleAddCategory = async (category) => {
     try {
