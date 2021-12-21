@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import styles from './PostDetails.module.css'
-import CommentForm from "../../components/Comment/CommentForm"
 
 // Services
 import { getPostById, deletePost } from "../../services/groupService"
-
-import { updateProfile, getProfileById } from "../../services/profileService";
+import { updateProfile, getProfileById } from "../../services/profileService"
 
 // Components
-import Comment from '../../components/Comment/Comment'
-import AlertDialog from "../../components/MaterialUI/AlertDialogue"
+import AlertDialogue from "../../components/MaterialUI/AlertDialogue"
+import CommentList from "../../components/Comment/CommentList"
 
 const PostDetails = props => {
   const { id, postId } = useParams()
@@ -54,13 +52,12 @@ const PostDetails = props => {
         newFavorites.push(element)
       }
     })
-
-  updateProfile(profile._id, {
-    ...profile,
-    favorited_posts: newFavorites
-  })
-  setIsFavorite(false)
-}
+    updateProfile(profile._id, {
+      ...profile,
+      favorited_posts: newFavorites
+    })
+    setIsFavorite(false)
+  }
 
   function confirmDeletePost() {
     deletePost(id, postId)
@@ -84,7 +81,7 @@ const PostDetails = props => {
       }
     }
     fetchPost()
-  }, [props.user.profile, id, postId])
+  }, [])
 
   let date = new Date(post.createdAt)
 
@@ -93,7 +90,7 @@ const PostDetails = props => {
       {isOwner &&
         <>
           <button onClick={routeToEditPost}>Edit Post</button>
-          <AlertDialog 
+          <AlertDialogue 
             handleConfirm={confirmDeletePost}
             buttonText="Delete Post"
             content="Are you sure you want to delete this post? This action cannot be undone!"
@@ -145,10 +142,15 @@ const PostDetails = props => {
         </div>
         <div className="post-comments-container">
           <h3>Post Comments</h3>
-          <CommentForm user={props.user}/>
-          {post.comments?.map((comment) => (
-            <Comment user={props.user} comment={comment} key={comment._id}/>
-          ))}
+          {post.comments.length && 
+            <CommentList 
+              groupId={id} 
+              postId={postId} 
+              comments={post.comments}
+              user={props.user}
+              profile={profile}
+            />
+          }
         </div>
       </div>
     </div>

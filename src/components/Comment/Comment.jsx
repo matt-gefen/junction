@@ -1,20 +1,16 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import styles from './Comment.module.css'
 
 // Services
-import { getProfileById } from '../../services/profileService'
 import { updateComment } from '../../services/groupService'
 
 // Components
 import TextField from '../../components/MaterialUI/TextField'
+import PopupMenu from '../../components/MaterialUI/PopupMenu'
 
 const Comment = props => {
   const { id, postId } = useParams()
-  const [owner, setOwner] = useState({
-    avatar: '',
-    name: ''
-  })
   const [editable, setEditable] = useState(false)
   const [comment, setComment] = useState(props.comment)
   const [commentDefault, setCommentDefault] = useState(props.comment.comment_content)
@@ -37,6 +33,10 @@ const Comment = props => {
     toggleEdit(true)
   }
 
+  function confirmDeleteComment() {
+    props.removeComment(comment)
+  }
+
   const handleChange = e => {
     setComment({
       ...comment,
@@ -44,38 +44,30 @@ const Comment = props => {
     })
   }
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const profile = await getProfileById(props.user.profile)
-        setOwner({
-          avatar: profile.avatar,
-          name: profile.name
-        })
-      } catch (error) {
-        throw error
-      }
-    }
-    fetchProfile()
-  }, [props.user.profile])
-
   return (
     <section className={styles.container}>
       <div className={styles.header}>
-        <img className={styles.image} src={owner.avatar} alt="owner avatar" />
+        <img className={styles.image} src={comment.avatar} alt="owner avatar" />
         <div className={styles.container}>
           <div className="owner-name">
-            {owner.name}
+            {comment.name}
           </div>
           <div className="comment-date">
             {`${date.toLocaleDateString()} at ${date.getHours() > 12 ? date.getHours() - 12 : date.getHours()}:${date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()}${date.getHours() > 12 ? "pm" : "am"}`}
           </div>
         </div>
       </div>
-      <div className={styles.container}>
+      <div className={styles.inlineContainer}>
         <TextField value={comment.comment_content} editable={editable} name="comment_content" handleChange={handleChange}/>
-        {!editable && 
-            <button onClick={toggleEdit}>Edit Comment</button>
+        {(!editable && props.user.profile === comment.owner) &&
+          <PopupMenu 
+            options={
+              [
+                ['Edit Comment', toggleEdit], 
+                ['Delete Comment', confirmDeleteComment]
+              ]
+            }
+          />
         }
         {editable && 
           <>
