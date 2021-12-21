@@ -8,9 +8,7 @@ import { createComment } from '../../services/groupService'
 const CommentForm = props => {
   const { id, postId } = useParams()
   const [avatar, setAvatar] = useState('')
-  const [comment, setComment] = useState({
-    comment_content: ''
-  })
+  const [comment, setComment] = useState({})
 
   const handleChange = e => {
     setComment({
@@ -23,10 +21,8 @@ const CommentForm = props => {
     e.preventDefault()
     try {
       await createComment(id, postId, comment)
-      // Need to empty comment_content input
-      // Update state
-      // comment.comment_content = ''
-      // setComment(comment)
+      props.addComment(comment)
+      setComment({})
     } catch (err) {
       throw err
     }
@@ -63,7 +59,7 @@ const CommentForm = props => {
           type="text"
           autoComplete="off"
           id="comment_content"
-          value={comment_content}
+          value={comment.comment_content}
           name="comment_content"
           onChange={handleChange}
         />

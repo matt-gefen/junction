@@ -79,7 +79,7 @@ const Comment = props => {
         {(!editable && isOwner) && 
           <>
             <button onClick={toggleEdit}>Edit Comment</button>
-            <button onClick={() => props.confirmDeleteComment(comment._id)}>Delete Comment</button>
+            <button onClick={() => props.removeComment(comment)}>Delete Comment</button>
           </>
         }
         {editable && 
