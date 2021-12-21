@@ -1,7 +1,13 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styles from './LoginForm.module.css'
+
+// Services
 import * as authService from '../../services/authService'
+
+// Components
+import PasswordField from '../MaterialUI/PasswordField'
+import TextField from '../MaterialUI/TextField'
 
 const LoginForm = props => {
   const [formData, setFormData] = useState({
@@ -12,6 +18,7 @@ const LoginForm = props => {
 
   const handleChange = e => {
     props.updateMessage('')
+    console.log('event target', e)
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
@@ -33,26 +40,10 @@ const LoginForm = props => {
       className={styles.container}
     >
       <div className={styles.inputContainer}>
-        <label htmlFor="email" className={styles.label}>Email</label>
-        <input
-          type="text"
-          autoComplete="off"
-          id="email"
-          value={formData.email}
-          name="email"
-          onChange={handleChange}
-        />
+        <TextField value={formData.email} editable={true} label="Email" name="email" handleChange={handleChange}/>
       </div>
       <div className={styles.inputContainer}>
-        <label htmlFor="password" className={styles.label}>Password</label>
-        <input
-          type="password"
-          autoComplete="off"
-          id="password"
-          value={formData.pw}
-          name="pw"
-          onChange={handleChange}
-        />
+        <PasswordField name="pw" value={formData.pw} handleChange={handleChange}/>
       </div>
       <div>
         <button className={styles.button}>Log In</button>
