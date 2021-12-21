@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import styles from './Comment.module.css'
 
 // Services
 import { updateComment } from '../../services/groupService'
+import { getProfileById } from '../../services/profileService'
 
 // Components
 import TextField from '../../components/MaterialUI/TextField'
@@ -14,6 +15,7 @@ const Comment = props => {
   const [editable, setEditable] = useState(false)
   const [comment, setComment] = useState(props.comment)
   const [commentDefault, setCommentDefault] = useState(props.comment.comment_content)
+  const [profile, setProfile] = useState()
 
   let date = new Date(props.comment.createdAt)
 
@@ -44,13 +46,25 @@ const Comment = props => {
     })
   }
 
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const profileData = await getProfileById(comment.owner)
+        setProfile(profileData)
+      } catch (error) {
+        throw error
+      }
+    }
+    fetchPost()
+  }, [])
+
   return (
     <section className={styles.container}>
       <div className={styles.header}>
-        <img className={styles.image} src={comment.avatar} alt="owner avatar" />
+        <img className={styles.image} src={profile?.avatar} alt="owner avatar" />
         <div className={styles.container}>
           <div className="owner-name">
-            {comment.name}
+            {profile?.name}
           </div>
           <div className="comment-date">
             {`${date.toLocaleDateString()} at ${date.getHours() > 12 ? date.getHours() - 12 : date.getHours()}:${date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()}${date.getHours() > 12 ? "pm" : "am"}`}
