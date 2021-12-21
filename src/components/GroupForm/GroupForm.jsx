@@ -26,10 +26,8 @@ const GroupForm = props => {
   })
 
   const handleChange = e => {
-    console.log(e.target.name)
     props.updateMessage('')
     if (e.target.files) {
-      console.log('Chose file:', e.target.files[0])
       let reader = new FileReader()
       reader.onload = e => {
         setFile({image: e.target.result})
@@ -37,21 +35,19 @@ const GroupForm = props => {
       reader.readAsDataURL(e.target.files[0])
       setFormData({
         ...formData,
-        'category': groupCategory,
-        'avatar': `https://junction-image-storage.s3.us-east-2.amazonaws.com/${e.target.files[0].name}`,
-        [e.target.name]: e.target.value,
+        category: groupCategory,
+        avatar: `https://junction-image-storage.s3.us-east-2.amazonaws.com/${e.target.files[0].name}`
       })
     } else {
       setFormData({
         ...formData,
-        'category': groupCategory,
+        category: groupCategory,
         [e.target.name]: e.target.value,
       })
     }
   }
 
   const setupConfig = (configSetup) => {
-    console.log('Setting config info:', configSetup);
     setConfig(configSetup)
   }
 
@@ -71,8 +67,8 @@ const GroupForm = props => {
 
   const handleUpload = async (file) => {
     uploadFile(file, config)
-        .then(data => console.log(data))
-        .catch(err => console.error(err))
+        .then(data => console.log('************ uploaded data: ', data, ' ************'))
+        .catch(err => console.error('************* upload error: ', err, ' ************'))
   }
 
   const { title, category, avatar, location } = formData
@@ -82,8 +78,6 @@ const GroupForm = props => {
   }
 
   console.log('Group form data:', formData)
-  console.log('File data:', file)
-  console.log('Config for file upload:', config)
 
   return (
     <form

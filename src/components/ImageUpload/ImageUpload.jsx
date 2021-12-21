@@ -23,15 +23,14 @@ const UploadImageToS3WithReactS3 = ({ name, setupConfig, handleChange }) => {
         handleChange(e)
     }
 
-    const handleUpload = async (file) => {
-        uploadFile(file, config)
-            .then(data => console.log(data))
-            .catch(err => console.error(err))
-    }
+    // const handleUpload = async (file) => {
+    //     uploadFile(file, config)
+    //         .then(data => console.log(data))
+    //         .catch(err => console.error(err))
+    // }
 
     const addConfig = (config) => {
       setupConfig(config)
-      console.log('set config')
     }
 
     addConfig(config)
@@ -43,7 +42,7 @@ const UploadImageToS3WithReactS3 = ({ name, setupConfig, handleChange }) => {
           name={name}
           onChange={handleFileInput}
         />
-        <button onClick={() => handleUpload(selectedFile)}> Upload to S3</button>
+        {/* <button onClick={() => handleUpload(selectedFile)}> Upload to S3</button> */}
     </div>
 }
 
