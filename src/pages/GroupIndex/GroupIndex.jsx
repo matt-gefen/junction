@@ -15,6 +15,10 @@ const GroupList = (props) => {
   const [catPrefs, setCatPrefs] = useState([]);
   const [userGroupPref, setUserGroupPref] = useState([]);
   const [notUserGroupPref, setNotUserGroupPref] = useState([]);
+  const [usersGroups, setUserGroups] = useState([]);
+  const [userGroupFilter, setUserGroupFilter] = useState(false);
+
+  const usersJoinedGroups = () => setUserGroupFilter(!userGroupFilter);
 
   const handleDeleteGroup = async (groupId) => {
     try {
@@ -44,12 +48,13 @@ const GroupList = (props) => {
       setNotUserGroupPref(remainingGroups);
       const joinedGroups = [];
       groupData.forEach((element) => {
-        if (profileData.category_prefs.includes(element.category)){
-    filteredGroups.push(element) } else { 
-      remainingGroups.push(element)
-    }})
-      setUserGroupPref(filteredGroups)
-      setNotUserGroupPref(remainingGroups)
+        element.members.forEach((member) => {
+          if (member._id === profileData._id) {
+            joinedGroups.push(element);
+          }
+        });
+        setUserGroups(joinedGroups);
+      });
     };
     fetchAllGroups();
     return () => {
@@ -73,7 +78,7 @@ const GroupList = (props) => {
     </div>
   ) : (
     <div className="layout">
-      <CategoryMenu user={props.user} />
+      <CategoryMenu usersJoinedGroups={usersJoinedGroups} user={props.user} />
       {profile &&
         userGroupPref?.map((userPref) => (
           <GroupCard
