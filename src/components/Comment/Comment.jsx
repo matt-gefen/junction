@@ -15,6 +15,7 @@ const Comment = props => {
     avatar: '',
     name: ''
   })
+  const [isOwner, setIsOwner] = useState(false)
   const [editable, setEditable] = useState(false)
   const [comment, setComment] = useState(props.comment)
   const [commentDefault, setCommentDefault] = useState(props.comment.comment_content)
@@ -52,6 +53,7 @@ const Comment = props => {
           avatar: profile.avatar,
           name: profile.name
         })
+        setIsOwner(props.user.profile === comment.owner)
       } catch (error) {
         throw error
       }
@@ -74,7 +76,7 @@ const Comment = props => {
       </div>
       <div className={styles.container}>
         <TextField value={comment.comment_content} editable={editable} name="comment_content" handleChange={handleChange}/>
-        {!editable && 
+        {(!editable && isOwner) && 
           <>
             <button onClick={toggleEdit}>Edit Comment</button>
             <button onClick={() => props.confirmDeleteComment(comment._id)}>Delete Comment</button>
