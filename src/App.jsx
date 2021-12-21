@@ -11,6 +11,7 @@ import PostDetails from './pages/Post/PostDetails'
 import EditPost from './pages/Post/EditPost'
 import * as authService from './services/authService'
 import GroupIndex from './pages/GroupIndex/GroupIndex'
+import FavoritePosts from './pages/FavoritePosts/FavoritePosts'
 
 const App = () => {
   const [user, setUser] = useState(authService.getUser())
@@ -43,6 +44,10 @@ const App = () => {
         <Route
           path="/login"
           element={<Login handleSignupOrLogin={handleSignupOrLogin} />}
+        />
+        <Route
+          path="/profiles/:id/favorites"
+          element={user ? <FavoritePosts user={user} /> : <Navigate to="/login" />}
         />
         <Route
           path="/groups/new"
