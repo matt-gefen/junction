@@ -61,8 +61,8 @@ const GroupList = (props) => {
       setGroups([]);
     };
   }, [props.user.profile, ]);
-  console.log(catPrefs)
-  return !userGroupFilter ? (
+  console.log(userGroupFilter)
+  return  userGroupFilter ?  (
     <div className="layout">
       <CategoryMenu usersJoinedGroups={usersJoinedGroups} user={props.user} />
       {profile &&
@@ -76,7 +76,9 @@ const GroupList = (props) => {
           />
         ))}
     </div>
-  ) : (
+  ) 
+  :
+ (
     <div className="layout">
       <CategoryMenu usersJoinedGroups={usersJoinedGroups} user={props.user} />
       {profile &&
@@ -100,7 +102,8 @@ const GroupList = (props) => {
           />
         ))}
     </div>
-  );
+  )
+  
 };
 
 export default GroupList;
