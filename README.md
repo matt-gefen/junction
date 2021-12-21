@@ -12,6 +12,10 @@ Junction is **NOT** about sharing user information, or allowing marketers to lur
 
 In order to keep the focus on each users individual value and to help protect emotional wellness we intentially will not add a 'Like' button.  
 
+### Deployment Link
+
+[Visit the Junction App online](https://community-junction.herokuapp.com/)
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # **the 404's**

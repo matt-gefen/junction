@@ -83,6 +83,7 @@ const Group = (props) => {
     fetchGroup();
   }, [props.user.profile, isMember, id, isOwner, ownerId]);
 
+  console.log(props.user)
 
   return (
     <div className="layout">
@@ -95,7 +96,7 @@ const Group = (props) => {
             <h4>{group.location}</h4>
             <section className={styles.container}>
               {group.posts?.map(post => (
-                <PostCard group={group} post={post} profile={profile}/>
+                <PostCard user={props.user} group={group} post={post} profile={profile}/>
               ))}
             </section>
           </>

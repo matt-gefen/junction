@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import AlertDialog from "../../components/MaterialUI/AlertDialogue"
@@ -15,25 +15,20 @@ const PostActions = (props) => {
     return element._id
   })
   const [isFavorite, setIsFavorite] = useState(favorites.includes(props.post._id))
-  const ownerId = props.post.owner
-  console.log(props.user?.profile, ownerId)
-  const isOwner = props.user?.profile === ownerId
+  const [ownerId, setOwnerId] = useState(props.post.owner)
+  const [isOwner, setOwner] = useState(false)
 
-  // useEffect(() => {
-  //   const fetchProfile = async () => {
-  //     try {
-  //       const profileData = await getProfileById(props.user.profile)
-  //       setIsOwner(props.user.profile === postData.owner)
-  //       let favorites = profileData.favorited_posts.map((element) => {
-  //         return element._id
-  //       })
-  //       setIsFavorite(favorites.includes(postData._id))
-  //     } catch (error) {
-  //       throw error
-  //     }
-  //   }
-  //   fetchPost()
-  // }, [props.user.profile,])
+  useEffect(() => {
+    const getOwner = async () => {
+      try {
+        const profileData = await getProfileById(props.profile._id)
+        setOwner(profileData._id === ownerId)
+      } catch(error) {
+        throw error
+      }
+    } 
+    getOwner()
+  }, [props.profile._id, ownerId])
 
   function routeToEditPost() {
     navigate(`/groups/${props.group._id}/posts/${props.post._id}/edit`)

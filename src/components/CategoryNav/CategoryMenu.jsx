@@ -68,7 +68,7 @@ const CategoryMenu = (props) => {
     <>
       <div className={styles.categorySelection}>
         <div onClick={props.usersJoinedGroups} className={styles.categoryName}>
-          user groups
+          My Groups
         </div>
         {groupCategories}
       </div>

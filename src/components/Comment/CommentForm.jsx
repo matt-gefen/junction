@@ -1,18 +1,17 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useParams } from "react-router-dom"
 import styles from './Comment.module.css'
 
-import { getProfileById } from '../../services/profileService'
+// Services
 import { createComment } from '../../services/groupService'
 
 const CommentForm = props => {
   const { id, postId } = useParams()
-  const [avatar, setAvatar] = useState('')
-  const [comment, setComment] = useState({
-    comment_content: ''
-  })
+  const [comment, setComment] = useState({})
+  const [value, setValue] = useState('')
 
   const handleChange = e => {
+    setValue(e.target.value)
     setComment({
       ...comment,
       [e.target.name]: e.target.value,
@@ -22,29 +21,15 @@ const CommentForm = props => {
   const handleSubmit = async e => {
     e.preventDefault()
     try {
-      await createComment(id, postId, comment)
-      // Need to empty comment_content input
-      // Update state
-      // comment.comment_content = ''
-      // setComment(comment)
+      const newComment = await createComment(id, postId, comment)
+      setValue('')
+      props.addComment(newComment)
     } catch (err) {
       throw err
     }
   }
 
   const { comment_content } = comment
-
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const profile = await getProfileById(props.user.profile)
-        setAvatar(profile.avatar)
-      } catch (error) {
-        throw error
-      }
-    }
-    fetchProfile()
-  }, [props.user.profile])
 
   const isFormInvalid = () => {
     return !(comment_content)
@@ -56,14 +41,14 @@ const CommentForm = props => {
       onSubmit={handleSubmit}
       className={styles.container}
     >
-      <img className={styles.image} src={avatar} alt="" />
+      <img className={styles.image} src={props.profile?.avatar} alt="" />
       <h2 style={{color: 'black'}}>Add a Comment</h2>
       <div className={styles.inputContainer}>
         <input
           type="text"
           autoComplete="off"
           id="comment_content"
-          value={comment_content}
+          value={value}
           name="comment_content"
           onChange={handleChange}
         />
