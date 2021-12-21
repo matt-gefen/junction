@@ -12,7 +12,10 @@ console.log("GroupCardProps",props)
     <div className="group-card">
 
       <div className="card-header">
-        <GroupActions {...props} />
+      {props.user &&
+      <> 
+      <GroupActions {...props} />
+      </>}
       </div>
 
       <div className="group-title">
