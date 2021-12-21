@@ -1,8 +1,13 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styles from './LoginForm.module.css'
+
+// Services
 import * as authService from '../../services/authService'
+
+// Components
 import PasswordField from '../MaterialUI/PasswordField'
+import TextField from '../MaterialUI/TextField'
 
 const LoginForm = props => {
   const [formData, setFormData] = useState({
@@ -35,15 +40,7 @@ const LoginForm = props => {
       className={styles.container}
     >
       <div className={styles.inputContainer}>
-        <label htmlFor="email" className={styles.label}>Email</label>
-        <input
-          type="text"
-          autoComplete="off"
-          id="email"
-          value={formData.email}
-          name="email"
-          onChange={handleChange}
-        />
+        <TextField value={formData.email} editable={true} label="Email" name="email" handleChange={handleChange}/>
       </div>
       <div className={styles.inputContainer}>
         <PasswordField name="pw" value={formData.pw} handleChange={handleChange}/>
