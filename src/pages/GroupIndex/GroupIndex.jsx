@@ -93,6 +93,7 @@ const GroupList = (props) => {
 
   const handleAddCategory = async (category) => {
     try {
+      console.log('Add Category')
       updateProfile(profile._id, {
         category_prefs: [...catPrefs, category],
       });
@@ -104,6 +105,7 @@ const GroupList = (props) => {
 
   const handleRemoveCategory = async (category) => {
     try {
+      console.log('Remove Category')
       const newCategoryPref = catPrefs.filter((pref) => pref !== category);
       updateProfile(profile._id, {
         category_prefs: newCategoryPref,

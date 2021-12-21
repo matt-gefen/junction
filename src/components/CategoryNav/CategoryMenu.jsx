@@ -8,11 +8,16 @@ import { updateProfile, getProfileById } from "../../services/profileService";
 // Components
 import CategoryFilter from "./CategoryFilter";
 import ChipBar from "../MaterialUI/ChipBar";
+import ToggleChip from "../MaterialUI/ToggleChip";
 
 
 const CategoryMenu = (props) => {
   console.log(props)
 
+  const handleClick = e => {
+    console.log(e.target)
+    e.target.value ? props.handleAddCategory() : props.handleRemoveCategory()
+  }
 
   const groupCategories = new Set(
     categories.map((element, index) => (
@@ -27,9 +32,22 @@ const CategoryMenu = (props) => {
     ))
   );
 
+  const chipCategories = new Set(
+    categories.map((category, idx) => (
+      <ToggleChip 
+        handleAddCategory={props.handleAddCategory}
+        handleRemoveCategory={props.handleRemoveCategory}
+        label={category}
+        key={idx}
+      />
+    ))
+  )
+
   return (
     <>
-      <ChipBar />
+      <ChipBar 
+        labels={chipCategories}
+      />
       <div className={styles.categorySelection}>
         <div onClick={props.usersJoinedGroups} className={styles.categoryName}>
           My Groups
