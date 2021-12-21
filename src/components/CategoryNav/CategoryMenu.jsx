@@ -25,7 +25,7 @@ const CategoryMenu = (props) => {
     try {
       updateProfile(profile._id, {
         ...profile,
-        category_prefs: [...profile.category_prefs, category]
+        category_prefs: [...profile.category_prefs, category],
       });
       setCategoryPref(profile.category_prefs);
     } catch (error) {
@@ -72,9 +72,15 @@ const CategoryMenu = (props) => {
   });
 
   return (
-  <> 
-  <div className={styles.categorySelection}><div onClick={props.usersJoinedGroups} className={styles.categoryName}>user groups</div>{categoryOptions}</div>
-  </>)
+    <>
+      <div className={styles.categorySelection}>
+        <div onClick={props.usersJoinedGroups} className={styles.categoryName}>
+          user groups
+        </div>
+        {categoryOptions}
+      </div>
+    </>
+  );
 };
 
 export default CategoryMenu;
