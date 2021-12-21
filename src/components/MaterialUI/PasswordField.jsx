@@ -27,7 +27,7 @@ export default function PasswordField({ value, name, handleChange }) {
           id="outlined-adornment-password"
           type={showPassword ? 'text' : 'password'}
           value={value}
-          onChange={handleChange()}
+          onChange={handleChange}
           endAdornment={
             <InputAdornment position="end">
               <IconButton
