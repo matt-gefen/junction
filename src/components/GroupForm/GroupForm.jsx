@@ -1,6 +1,5 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { uploadFile } from 'react-s3'
 import styles from './GroupForm.module.css'
 
 // Services
@@ -8,7 +7,7 @@ import { createGroup, getAllGroups } from '../../services/groupService'
 
 // Components
 import GroupCategories from '../GroupCategories/GroupCategories'
-import ImageUpload from '../ImageUpload/ImageUpload'
+import ImageUploadNativeAWS from '../ImageUpload/ImageUploadNativeAWS'
 
 
 const GroupForm = props => {
@@ -17,46 +16,46 @@ const GroupForm = props => {
   const [file, setFile] = useState({
     image: 'https://avatars.dicebear.com/api/initials/CreateGroup.svg'
   })
-  const [config, setConfig] = useState({})
   const [formData, setFormData] = useState({
     title: '',
     category: 'Family',
     avatar: '',
     location: '',
   })
+  const fileUpload = useRef(null)
 
-  const handleChange = e => {
+  const handleChange = event => {
     props.updateMessage('')
-    if (e.target.files) {
+    if (event.target.files) {
+      console.log('File name:', event.target.files[0].name)
       let reader = new FileReader()
       reader.onload = e => {
-        setFile({image: e.target.result})
+        setFile({
+          fullFile: event.target.files[0],
+          name: event.target.files[0].name,
+          image: e.target.result
+        })
       }
-      reader.readAsDataURL(e.target.files[0])
+      reader.readAsDataURL(event.target.files[0])
       setFormData({
         ...formData,
         category: groupCategory,
-        avatar: `https://junction-image-storage.s3.us-east-2.amazonaws.com/${e.target.files[0].name}`
+        avatar: `https://junction-image-storage.s3.us-east-2.amazonaws.com/${event.target.files[0].name}`
       })
     } else {
       setFormData({
         ...formData,
         category: groupCategory,
-        [e.target.name]: e.target.value,
+        [event.target.name]: event.target.value,
       })
     }
-  }
-
-  const setupConfig = (configSetup) => {
-    setConfig(configSetup)
   }
 
   const handleSubmit = async e => {
     e.preventDefault()
     try {
-      handleUpload(file.image)
+      fileUpload.current(file.fullFile)
       await createGroup(formData)
-      // change to Group Details
       let allGroups = await getAllGroups()
       let id = allGroups[allGroups.length - 1]._id
       navigate(`/groups/${id}`)
@@ -65,19 +64,11 @@ const GroupForm = props => {
     }
   }
 
-  const handleUpload = async (file) => {
-    uploadFile(file, config)
-        .then(data => console.log('************ uploaded data: ', data, ' ************'))
-        .catch(err => console.error('************* upload error: ', err, ' ************'))
-  }
-
   const { title, category, avatar, location } = formData
 
   const isFormInvalid = () => {
     return !(title && category && avatar)
   }
-
-  console.log('Group form data:', formData)
 
   return (
     <form
@@ -98,7 +89,11 @@ const GroupForm = props => {
       </div>
       <div className={styles.inputContainer}>
         <label htmlFor="category" className={styles.label}>Category</label>
-        <GroupCategories setGroupCategory={setGroupCategory} groupCategory={groupCategory} handleChange={handleChange}/>
+        <GroupCategories 
+          setGroupCategory={setGroupCategory} 
+          groupCategory={groupCategory} 
+          handleChange={handleChange}
+        />
       </div>
       <div className={styles.inputContainer}>
         <label htmlFor="location" className={styles.label}>Location</label>
@@ -116,9 +111,8 @@ const GroupForm = props => {
         src={file.image} 
         alt="group avatar" style={{width: "150px"}} 
         />
-        <ImageUpload
-          name="avatar"
-          setupConfig={setupConfig}
+        <ImageUploadNativeAWS
+          fileUpload={fileUpload}
           handleChange={handleChange}
         />
       </div>
