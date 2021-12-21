@@ -31,9 +31,18 @@ const GroupList = (props) => {
       const profileData = await getProfileById(props.user.profile);
       setGroups(groupData);
       setProfile(profileData);
-      setCatPrefs(profileData.category_prefs);
-      const filteredGroups = []
-      const remainingGroups = []
+      const filteredGroups = [];
+      const remainingGroups = [];
+      groupData.forEach((element) => {
+        if (profileData.category_prefs.includes(element.category)) {
+          filteredGroups.push(element);
+        } else {
+          remainingGroups.push(element);
+        }
+      });
+      setUserGroupPref(filteredGroups);
+      setNotUserGroupPref(remainingGroups);
+      const joinedGroups = [];
       groupData.forEach((element) => {
         if (profileData.category_prefs.includes(element.category)){
     filteredGroups.push(element) } else { 
@@ -46,12 +55,23 @@ const GroupList = (props) => {
     return () => {
       setGroups([]);
     };
-  }, [props.user.profile]);
-
-  console.log("YOUR_PREFS", catPrefs);
-  console.log(userGroupPref);
-  console.log(groups);
-  return (
+  }, [props.user.profile, ]);
+  console.log(catPrefs)
+  return !userGroupFilter ? (
+    <div className="layout">
+      <CategoryMenu usersJoinedGroups={usersJoinedGroups} user={props.user} />
+      {profile &&
+        usersGroups?.map((joinedGroup) => (
+          <GroupCard
+            group={joinedGroup}
+            key={joinedGroup._id}
+            user={props.user}
+            profile={profile}
+            handleDeleteGroup={handleDeleteGroup}
+          />
+        ))}
+    </div>
+  ) : (
     <div className="layout">
       <CategoryMenu user={props.user} />
       {profile &&
