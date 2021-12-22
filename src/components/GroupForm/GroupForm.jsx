@@ -9,6 +9,7 @@ import { createGroup, getAllGroups } from '../../services/groupService'
 import GroupCategories from '../GroupCategories/GroupCategories'
 import ImageUploadNativeAWS from '../ImageUpload/ImageUploadNativeAWS'
 import LocationSearch from '../LocationSearch/LocationSearch'
+import BasicButton from "../MaterialUI/BasicButton"
 
 
 const GroupForm = props => {
@@ -116,11 +117,13 @@ const GroupForm = props => {
         />
       </div>
       <div className={styles.inputContainer}>
-        <button disabled={isFormInvalid()} className={styles.button}>
-          Create Group
+        <button className={styles.hiddenButton}>
+          <BasicButton text={"Create Group"} isFormInvalid={isFormInvalid()}/>
         </button>
         <Link to="/groups">
-          <button>Cancel</button>
+        <button className={styles.hiddenButton}>
+          <BasicButton text={"Cancel"}/>
+        </button>
         </Link>
       </div>
     </form>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from "react-router-dom";
-import './Card.css' // <= Card Styling
+import styles from './Card.module.css'
 
 // Components
 import GroupActions from './GroupActions'
@@ -9,26 +9,26 @@ const GroupCard = (props) => {
 // console.log("GroupCardProps",props)
   return (
   <>
-    <div className="group-card">
+    <div className={styles.groupCard}>
 
-      <div className="card-header">
+      <div className={styles.cardHeader}>
       {props.user &&
       <> 
       <GroupActions {...props} />
       </>}
       </div>
 
-      <div className="group-title">
+      <div className={styles.groupTitle}>
         <Link to={`/groups/${props.group._id}`}><h2>{props.group.title}</h2></Link>
       </div>
 
-      <div className="group-avatar">
+      <div className={styles.groupAvatar}>
         <Link to={`/groups/${props.group._id}`}>
-          <img className="image" src={props.group.avatar} alt="group avatar"/>
+          <img className={styles.image} src={props.group.avatar} alt="group avatar"/>
         </Link>
       </div>
 
-      <div className="group-members">
+      <div className={styles.groupMembers}>
 
       </div>
         {/* {props.group.members} */}

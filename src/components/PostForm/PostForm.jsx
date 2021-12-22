@@ -9,6 +9,7 @@ import { getProfileById, updateProfile } from '../../services/profileService'
 // Components
 import LocationSearch from '../LocationSearch/LocationSearch'
 import ImageUploadNativeAWS from '../ImageUpload/ImageUploadNativeAWS'
+import DateTimePicker from '../../components/MaterialUI/DateTimePicker'
 
 const PostForm = props => {
   const { id, postId } = useParams()
@@ -154,14 +155,15 @@ const PostForm = props => {
 
       <div className={styles.inputContainer}>
         <label htmlFor="date" className={styles.label}>Event Date</label>
-        <input
+        <DateTimePicker date={formData.date} handleChange={handleChange} />
+        {/* <input
           type="datetime"
           autoComplete="off"
           id="date"
           value={date}
           name="date"
           onChange={handleChange}
-        />
+        /> */}
       </div>
 
       <div className={styles.inputContainer}>

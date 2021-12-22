@@ -9,6 +9,7 @@ import { updateProfile, getProfileById } from "../../services/profileService"
 // Components
 import AlertDialogue from "../../components/MaterialUI/AlertDialogue"
 import CommentList from "../../components/Comment/CommentList"
+import BasicButton from '../../components/MaterialUI/BasicButton'
 import Registration from "../../components/Post/Registration"
 
 const PostDetails = props => {
@@ -112,12 +113,14 @@ const PostDetails = props => {
   }, [])
 
   let date = new Date(post.createdAt)
+  let eventDate = new Date(post.date)
 
   return (
     <div className="layout">
       {isOwner &&
         <>
-          <button onClick={routeToEditPost}>Edit Post</button>
+          {/* <button onClick={routeToEditPost}>Edit Post</button> */}
+          <button className={styles.hiddenButton} onClick={routeToEditPost}><BasicButton text={"Edit Post"}/></button>
           <AlertDialogue 
             handleConfirm={confirmDeletePost}
             buttonText="Delete Post"
@@ -128,10 +131,10 @@ const PostDetails = props => {
         </>
       }
       { !isFavorite &&
-        <button onClick={handleFavoritePost}>Favorite Post</button>
+        <button className={styles.hiddenButton} onClick={handleFavoritePost}><BasicButton text={"Favorite Post"}/></button>
       }
       { isFavorite &&
-        <button onClick={handleUnfavorite}>Unfavorite Post</button>
+        <button className={styles.hiddenButton} onClick={handleUnfavorite}><BasicButton text={"Unfavorite Post"}/></button>
       }
       <div className="post-details">
         <h1>Post Details</h1>
@@ -161,7 +164,7 @@ const PostDetails = props => {
         <div className="post-event-date-container">
           <h3>Event Date</h3>
           <div className="post-event-date">
-            {post.date}
+             {`${eventDate.toLocaleDateString()} at ${eventDate.getHours() > 12 ? eventDate.getHours() - 12 : eventDate.getHours()}:${eventDate.getMinutes()}${eventDate.getHours() > 12 ? "pm" : "am"}`}
           </div>
         </div>
         <div className="post-registration-container">

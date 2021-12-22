@@ -1,9 +1,11 @@
 import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
-import './Card.css'
+import styles from './Card.module.css'
 
 import { updateGroup } from "../../services/groupService";
 import { updateProfile} from "../../services/profileService";
+
+import BasicButton from '../MaterialUI/BasicButton'
 
 const GroupActions = (props) => {
   let  members = props.group.members.map((member) => {
@@ -63,23 +65,23 @@ const GroupActions = (props) => {
   }
   
   return (
-    <div className="interactions">
+    <div className={styles.interactions}>
     {!isMember &&
       <div>
-        <button onClick={handleJoinGroup}>Join Group</button>
-      </div>
+      <button onClick={handleJoinGroup} className={styles.hiddenButton}><BasicButton isActive={true} text={"Join Group"}/></button>
+    </div>
     }
     {isMember && !isOwner &&
       <div>
-        <button onClick={triggerMyGroupRefresh}>Leave Group</button>
+        <button onClick={triggerMyGroupRefresh} className={styles.hiddenButton}><BasicButton isActive={true} text={"Leave Group"}/></button>
       </div>
     }
 
 
     {isOwner &&
     <>
-      <button><Link to={`/groups/${props.group._id}/edit`}>Edit</Link></button>
-      <button onClick={triggerDeleteGroupRefresh}>Delete</button>
+      <Link to={`/groups/${props.group._id}/edit`}><BasicButton isActive={true} text={"Edit"}/></Link>
+      <button className={styles.hiddenButton} onClick={triggerDeleteGroupRefresh}><BasicButton isActive={true} text={"Delete Group"}/></button>
     </ >}
     </div>
   )
