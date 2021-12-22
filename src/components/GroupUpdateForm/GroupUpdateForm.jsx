@@ -1,11 +1,15 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styles from './GroupUpdateForm.module.css'
 
+// Services
+import { getGroupById, updateGroup } from '../../services/groupService'
+
+// Categories
 import GroupCategories from '../GroupCategories/GroupCategories'
 import LocationSearch from '../LocationSearch/LocationSearch'
+import ImageUploadNativeAWS from '../ImageUpload/ImageUploadNativeAWS'
 
-import { getGroupById, updateGroup } from '../../services/groupService'
 
 const GroupUpdateForm = props => {
   const navigate = useNavigate()
@@ -18,6 +22,9 @@ const GroupUpdateForm = props => {
     avatar: '',
     location: location,
   })
+  const [file, setFile] = useState({})
+
+  const fileUpload = useRef(null)
 
   useEffect(() => {
     const fetchGroup = async () => {
@@ -32,6 +39,8 @@ const GroupUpdateForm = props => {
           location: location,
         })
         setGroupCategory(groupData.category);
+        console.log('update default image:', file)
+        setFile({ image: groupData.avatar })
       } catch (error) {
         throw error;
       }
@@ -41,21 +50,40 @@ const GroupUpdateForm = props => {
 
 
 
-  const handleChange = e => {
-    console.log(e.target.name)
+  const handleChange = event => {
     props.updateMessage('')
-    setFormData({
-      ...formData,
-      'avatar': `https://avatars.dicebear.com/api/initials/${title}.svg`,
-      'category': groupCategory,
-      'location': location,
-      [e.target.name]: e.target.value,
-    })
+    if (event.target.files) {
+      console.log('File name:', event.target.files[0].name)
+      let reader = new FileReader()
+      reader.onload = e => {
+        setFile({
+          fullFile: event.target.files[0],
+          name: event.target.files[0].name,
+          image: e.target.result
+        })
+      }
+      reader.readAsDataURL(event.target.files[0])
+      setFormData({
+        ...formData,
+        category: groupCategory,
+        location: location,
+        avatar: `https://junction-image-storage.s3.us-east-2.amazonaws.com/${event.target.files[0].name}`
+      })
+    } else {
+      setFormData({
+        ...formData,
+        category: groupCategory,
+        location: location,
+        [event.target.name]: event.target.value,
+      })
+    }
   }
 
   const handleSubmit = async e => {
     e.preventDefault()
     try {
+      console.log('File upload:', file)
+      fileUpload.current(file.fullFile)
       const updatedGroup = await updateGroup(props.groupId,{...formData, location:location})
       setGroup(updatedGroup)
       navigate(`/groups/${props.groupId}`)
@@ -100,8 +128,12 @@ const GroupUpdateForm = props => {
       </div>
       <div className={styles.inputContainer}>
         <img 
-        src={`https://avatars.dicebear.com/api/initials/${title}.svg`} 
-        alt="initials avatar" style={{width: "150px"}} 
+        src={file.image} 
+        alt="group avatar" style={{width: "150px"}} 
+        />
+        <ImageUploadNativeAWS
+          fileUpload={fileUpload}
+          handleChange={handleChange}
         />
       </div>
       <div className={styles.inputContainer}>
