@@ -63,7 +63,7 @@ const PostCard = (props) => {
 
   return (
     <div className={styles.card}>
-      <div className="card-header">
+      <div className={styles.cardHeader}>
         <PostActions 
           post={props.post}
           profile={profile}
@@ -71,7 +71,10 @@ const PostCard = (props) => {
           handleFavoritePost={handleFavoritePost}
           handleUnfavorite={handleUnfavorite}
           favorites={favorites}
+          user={props.user}
           />
+
+        
       </div>
       <div className="post-details">
         <h1 onClick={handleClick}>{props.post.title}</h1>
