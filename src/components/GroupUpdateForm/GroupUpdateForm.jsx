@@ -3,31 +3,33 @@ import { Link, useNavigate } from 'react-router-dom'
 import styles from './GroupUpdateForm.module.css'
 
 import GroupCategories from '../GroupCategories/GroupCategories'
+import LocationSearch from '../LocationSearch/LocationSearch'
 
 import { getGroupById, updateGroup } from '../../services/groupService'
 
 const GroupUpdateForm = props => {
   const navigate = useNavigate()
   const [group, setGroup] = useState();
+  const [location, setLocation] = useState('')
   const [groupCategory, setGroupCategory] = useState('')
   const [formData, setFormData] = useState({
     title: '',
     category: '',
     avatar: '',
-    location: '',
+    location: location,
   })
 
   useEffect(() => {
     const fetchGroup = async () => {
       try {
         const groupData = await getGroupById(props.groupId);
-        console.log("Group Details Data:", groupData);
         setGroup(groupData)
+        setLocation(groupData.location)
         setFormData({
           title: groupData.title,
           category: groupData.category,
           avatar: groupData.avatar,
-          location: groupData.location,
+          location: location,
         })
         setGroupCategory(groupData.category);
       } catch (error) {
@@ -61,7 +63,7 @@ const GroupUpdateForm = props => {
     }
   }
 
-  const { title, category, avatar, location } = formData
+  const { title, category, avatar } = formData
 
   const isFormInvalid = () => {
     return !(title && category && avatar)
@@ -90,16 +92,10 @@ const GroupUpdateForm = props => {
         <label htmlFor="category" className={styles.label}>Category</label>
         <GroupCategories setGroupCategory={setGroupCategory} groupCategory={groupCategory}handleChange={handleChange}/>
       </div>
-      <div className={styles.inputContainer}>
-        <label htmlFor="location" className={styles.label}>Location</label>
-        <input
-          type="text"
-          autoComplete="off"
-          id="location"
-          value={location}
-          name="location"
-          onChange={handleChange}
-        />
+      <div className={styles.locationContainer}>
+        <label htmlFor="location" className={styles.label}>Selected Location</label>
+        <p>{location}</p>
+        <LocationSearch setLocation={setLocation} onChange={handleChange} />
       </div>
       <div className={styles.inputContainer}>
         <img 
