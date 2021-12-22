@@ -100,7 +100,8 @@ const GroupForm = props => {
         />
       </div>
       <div className={styles.locationContainer}>
-        <label htmlFor="location" className={styles.label}>Location</label>
+        <label htmlFor="location" className={styles.label}>Selected Location</label>
+        <p>{location}</p>
         <LocationSearch setLocation={setLocation} onChange={handleChange} />
       </div>
 
