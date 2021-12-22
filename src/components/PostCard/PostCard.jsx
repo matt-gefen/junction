@@ -79,6 +79,9 @@ const PostCard = (props) => {
         <div className="post-owner-container">
           <div className="post-owner"></div>
         </div>
+        <div>
+          {props.post.location}
+        </div>
         <div className={styles.thumbnail} onClick={handleClick}>
           <img src={props.post.thumbnail} alt="Post thumbnail" />
         </div>
