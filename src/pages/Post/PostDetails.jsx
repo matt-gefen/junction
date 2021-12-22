@@ -23,13 +23,15 @@ const PostDetails = props => {
     link: '',
     location: '',
     date: '',
-    registration: '',
+    hasRegistration: false,
+    registration: [],
     comments: []
   })
   const [profile, setProfile] = useState()
   const [isOwner, setIsOwner] = useState(false)
   const [isFavorite, setIsFavorite] = useState(false)
   const [isAttending, setIsAttending] = useState(false)
+  const [attendingMembers, setAttendingMembers] = useState([])
   const navigate = useNavigate()
 
   function routeToEditPost() {
@@ -92,6 +94,7 @@ const PostDetails = props => {
       try {
         const postData = await getPostById(id, postId)
         const profileData = await getProfileById(props.user.profile)
+        console.log('Post data:', postData)
         setPost(postData)
         setProfile(profileData)
         setIsOwner(props.user.profile === postData.owner)
@@ -100,6 +103,7 @@ const PostDetails = props => {
         })
         setIsFavorite(favorites.includes(postData._id))
         setIsAttending(profile?.registered_events.some(eventId => eventId === postId))
+        setAttendingMembers(postData.registration)
       } catch (error) {
         throw error
       }
@@ -162,8 +166,8 @@ const PostDetails = props => {
         </div>
         <div className="post-registration-container">
           <h3>Post Registration</h3>
-          {post.registration && 
-            <Registration eventDate="" attendees="" isAttending={isAttending} handleClick={handleRegistration}/>
+          {post.hasRegistration && 
+            <Registration eventDate="" attendees={post.registration} isAttending={isAttending} handleClick={handleRegistration}/>
           }
         </div>
         <div className="post-comments-container">

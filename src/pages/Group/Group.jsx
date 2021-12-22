@@ -74,12 +74,12 @@ const Group = (props) => {
         const profileData = await getProfileById(props.user.profile)
         setGroup(groupData);
         setProfile(profileData)
-        setOwnerId(groupData.owner)
+        setOwnerId(groupData?.owner)
         setIsOwner(props.user.profile === ownerId)
-        let members = groupData.members.map((member) => {
+        let members = groupData?.members.map((member) => {
           return member._id
         })
-        setIsMember(members.includes(props.user.profile))
+        setIsMember(members?.includes(props.user.profile))
       } catch (error) {
         throw error;
       }

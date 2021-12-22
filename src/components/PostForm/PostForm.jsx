@@ -16,14 +16,17 @@ const PostForm = props => {
   console.log('User:', props.user)
 
   const handleChange = e => {
-    console.log(e.target.name)
+    console.log('Change name:', e.target.name)
+    console.log('Change value:', e.target.value)
+    console.log(hasRegistration)
     props.updateMessage('')
     if (e.target.name === 'registration') {
-      setHasRegistration(e.target.value)
       setFormData({
         ...formData,
         registration: e.target.value ? [...registrationData, props.user.profile] : [registrationData],
+        hasRegistration: !hasRegistration
       })
+      setHasRegistration(!hasRegistration)
     } else {
       setFormData({
         ...formData,
@@ -42,7 +45,7 @@ const PostForm = props => {
       } else {
         await createPost(id, formData)
       }
-      await updateProfile(props.user.profile, { registered_events: postId._id})
+      await updateProfile(props.user.profile, { registered_events: postId})
       navigate(-1)
     } catch (err) {
       props.updateMessage(err.message)
@@ -83,6 +86,8 @@ const PostForm = props => {
     }
     fetchPost()
   }, [])
+  
+  console.log('Form data:', formData)
 
   return (
     <form
