@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import styles from './PostForm.module.css'
 
+import LocationSearch from '../LocationSearch/LocationSearch'
+
 // Services
 import { createPost, getPostById, updatePost } from '../../services/groupService'
 
@@ -9,14 +11,17 @@ const PostForm = props => {
   const { id, postId } = useParams()
   const navigate = useNavigate()
   const [formData, setFormData] = useState({})
+  const [location, setLocation] = useState('')
 
   const handleChange = e => {
     console.log(e.target.name)
+    console.log(location)
     props.updateMessage('')
     setFormData({
       ...formData,
       thumbnail: `https://avatars.dicebear.com/api/croodles-neutral/${title}.svg`,
       group: id,
+      location:location,
       [e.target.name]: e.target.value,
     })
   }
@@ -35,7 +40,7 @@ const PostForm = props => {
     }
   }
 
-  const { title, thumbnail, group, location, date, link, description, register } = formData
+  const { title, thumbnail, group, date, link, description, register } = formData
 
   const isFormInvalid = () => {
     return !(title && description)
@@ -46,10 +51,11 @@ const PostForm = props => {
       try {
         if (props.editPost) {
           const postData = await getPostById(id, postId)
+          setLocation(postData.location)
           setFormData({
             title: postData.title,
             thumbnail: postData.thumbnail,
-            location: postData.location,
+            location: location,
             link: postData.link,
             description: postData.description,
             // register: '',
@@ -85,16 +91,10 @@ const PostForm = props => {
           onChange={handleChange}
         />
       </div>
-      <div className={styles.inputContainer}>
-        <label htmlFor="location" className={styles.label}>Location</label>
-        <input
-          type="text"
-          autoComplete="off"
-          id="location"
-          value={location}
-          name="location"
-          onChange={handleChange}
-        />
+      <div className={styles.locationContainer}>
+        <label htmlFor="location" className={styles.label}>Selected Location</label>
+        <p>{location}</p>
+        <LocationSearch setLocation={setLocation} onChange={handleChange} />
       </div>
 
       <div className={styles.inputContainer}>
