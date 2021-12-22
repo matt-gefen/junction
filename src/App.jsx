@@ -64,7 +64,7 @@ const App = () => {
         />
         <Route
           path="/groups/:id/posts"
-          element={user ? <CreatePost /> : <Navigate to="/login" />}
+          element={user ? <CreatePost user={user}/> : <Navigate to="/login" />}
         />
         <Route 
           path="/groups/:id/posts/:postId"

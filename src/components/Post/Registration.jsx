@@ -12,7 +12,7 @@ const Registration = ({ eventDate, attendees, isAttending, handleClick }) => {
       <div className="attendees">
         {attendees}
       </div>
-      <BasicButton text={"Going"} isAttending={isAttending} handleClick={handleClick}/>
+      <BasicButton text={"Going"} isActive={isAttending} handleClick={handleClick}/>
     </div>
   )
 }

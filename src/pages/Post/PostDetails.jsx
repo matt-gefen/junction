@@ -23,7 +23,7 @@ const PostDetails = props => {
     link: '',
     location: '',
     date: '',
-    register: '',
+    registration: '',
     comments: []
   })
   const [profile, setProfile] = useState()
@@ -99,7 +99,7 @@ const PostDetails = props => {
           return element._id
         })
         setIsFavorite(favorites.includes(postData._id))
-        setIsAttending(profile.registered_events.some(eventId => eventId === postId))
+        setIsAttending(profile?.registered_events.some(eventId => eventId === postId))
       } catch (error) {
         throw error
       }
@@ -162,7 +162,7 @@ const PostDetails = props => {
         </div>
         <div className="post-registration-container">
           <h3>Post Registration</h3>
-          {post.register && 
+          {post.registration && 
             <Registration eventDate="" attendees="" isAttending={isAttending} handleClick={handleRegistration}/>
           }
         </div>

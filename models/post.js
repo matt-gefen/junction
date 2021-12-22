@@ -32,7 +32,13 @@ const postSchema = new Schema(
       type: String
     },
     description: String,
-    register: { type: mongoose.Schema.Types.ObjectId, ref: "Profile" },
+    hasRegistration: Boolean,
+    registration: [
+      { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "Profile" 
+      }
+    ],
     group: { type: mongoose.Schema.Types.ObjectId, ref: "Group" },
     comments: [commentSchema],
     location: String,

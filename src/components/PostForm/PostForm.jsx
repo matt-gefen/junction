@@ -4,21 +4,34 @@ import styles from './PostForm.module.css'
 
 // Services
 import { createPost, getPostById, updatePost } from '../../services/groupService'
+import { updateProfile } from '../../services/profileService'
 
 const PostForm = props => {
   const { id, postId } = useParams()
   const navigate = useNavigate()
   const [formData, setFormData] = useState({})
+  const [hasRegistration, setHasRegistration] = useState(false)
+  const [registrationData, setRegistrationData] = useState([])
+
+  console.log('User:', props.user)
 
   const handleChange = e => {
     console.log(e.target.name)
     props.updateMessage('')
-    setFormData({
-      ...formData,
-      thumbnail: `https://avatars.dicebear.com/api/croodles-neutral/${title}.svg`,
-      group: id,
-      [e.target.name]: e.target.value,
-    })
+    if (e.target.name === 'registration') {
+      setHasRegistration(e.target.value)
+      setFormData({
+        ...formData,
+        registration: e.target.value ? [...registrationData, props.user.profile] : [registrationData],
+      })
+    } else {
+      setFormData({
+        ...formData,
+        thumbnail: `https://avatars.dicebear.com/api/croodles-neutral/${title}.svg`,
+        group: id,
+        [e.target.name]: e.target.value,
+      })
+    }
   }
 
   const handleSubmit = async e => {
@@ -29,6 +42,7 @@ const PostForm = props => {
       } else {
         await createPost(id, formData)
       }
+      await updateProfile(props.user.profile, { registered_events: postId._id})
       navigate(-1)
     } catch (err) {
       props.updateMessage(err.message)
@@ -52,10 +66,12 @@ const PostForm = props => {
             location: postData.location,
             link: postData.link,
             description: postData.description,
-            // register: '',
+            registration: postData.registration,
             date: postData.date,
             group: id
           })
+          setHasRegistration(postData.hasRegistration)
+          setRegistrationData(postData.registration)
         } else {
           setFormData({
             thumbnail: 'https://i.imgur.com/izJwDia.png'
@@ -135,18 +151,17 @@ const PostForm = props => {
         />
       </div>
 
-      {/* <div className={styles.inputContainer}>
-        <label htmlFor="register" className={styles.label}>Register for event</label>
+      <div className={styles.inputContainer}>
+        <label htmlFor="registration" className={styles.label}>Registration for Event?</label>
         <input
           type="checkbox"
           autoComplete="off"
-          id="register"
-          value={register}
-          name="register"
+          id="registration"
+          value={hasRegistration}
+          name="registration"
           onChange={handleChange}
         />
-      </div> */}
-
+      </div>
 
       <div className={styles.inputContainer}>
         <img 

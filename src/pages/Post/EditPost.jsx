@@ -13,7 +13,7 @@ const EditPost = props => {
     <main className={styles.container}>
       <h1>Edit Post</h1>
       <p>{message}</p>
-      <PostForm {...props} updateMessage={updateMessage} editPost={true}/>
+      <PostForm {...props} updateMessage={updateMessage} editPost={true} user={props.user}/>
     </main>
   )
 }
