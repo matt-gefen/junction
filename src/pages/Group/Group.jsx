@@ -106,7 +106,7 @@ const Group = (props) => {
             <h4>{group.location}</h4>
             <section className={styles.container}>
               {group.posts?.map(post => (
-                <PostCard user={props.user} group={group} post={post} profile={profile}/>
+                <PostCard user={props.user} groupId={group._id} post={post} profile={profile}/>
               ))}
             </section>
           </>

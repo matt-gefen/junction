@@ -24,8 +24,6 @@ const PostForm = props => {
 
   const fileUpload = useRef(null)
 
-  console.log('User:', props.user)
-
   const handleChange = e => {
     props.updateMessage('')
     if (e.target.files) {
@@ -66,7 +64,10 @@ const PostForm = props => {
   const handleSubmit = async e => {
     e.preventDefault()
     try {
-      fileUpload.current(file.fullFile)
+      console.log('Submit Post')
+      console.log('File', file)
+      console.log('Is this an update?', props.editPost)
+      if (file.fullFile) fileUpload.current(file.fullFile)
       if (props.editPost) {
         await updatePost(id, postId, {...formData, location:location})
       } else {
@@ -118,8 +119,6 @@ const PostForm = props => {
   }, [])
   
   console.log('Form data:', formData)
-
-  console.log(formData)
 
   return (
     <form

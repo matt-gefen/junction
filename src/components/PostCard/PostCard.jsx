@@ -29,6 +29,8 @@ const PostCard = (props) => {
   
   const navigate = useNavigate()
 
+  console.log('Group ID:', props.groupId)
+
   function handleClick() {
     navigate(`/groups/${props.groupId}/posts/${props.post._id}`)
   }
