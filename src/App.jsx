@@ -51,6 +51,10 @@ const App = () => {
           element={user ? <FavoritePosts user={user} /> : <Navigate to="/login" />}
         />
         <Route
+          path="/groups/mygroups"
+          element={user ? <MyGroups user={user} /> : <Navigate to="/login" />}
+        />
+        <Route
           path="/groups/new"
           element={user ? <CreateGroup /> : <Navigate to="/login" />}
         />
