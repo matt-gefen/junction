@@ -102,7 +102,7 @@ const PostDetails = props => {
           return element._id
         })
         setIsFavorite(favorites.includes(postData._id))
-        setIsAttending(profile?.registered_events.some(eventId => eventId === postId))
+        setIsAttending(profileData.registered_events.some(event => event._id === postId))
         setAttendingMembers(postData.registration)
       } catch (error) {
         throw error

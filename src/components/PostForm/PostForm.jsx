@@ -4,7 +4,7 @@ import styles from './PostForm.module.css'
 
 // Services
 import { createPost, getPostById, updatePost } from '../../services/groupService'
-import { updateProfile } from '../../services/profileService'
+import { getProfileById, updateProfile } from '../../services/profileService'
 
 const PostForm = props => {
   const { id, postId } = useParams()
@@ -40,12 +40,15 @@ const PostForm = props => {
   const handleSubmit = async e => {
     e.preventDefault()
     try {
+      let newPost = {}
       if (props.editPost) {
-        await updatePost(id, postId, formData)
+        newPost = await updatePost(id, postId, formData)
       } else {
-        await createPost(id, formData)
+        newPost = await createPost(id, formData)
+        const profileData = await getProfileById(props.user.profile)
+        profileData.registered_events.push(newPost)
+        await updateProfile(props.user.profile, profileData)
       }
-      await updateProfile(props.user.profile, { registered_events: postId})
       navigate(-1)
     } catch (err) {
       props.updateMessage(err.message)
