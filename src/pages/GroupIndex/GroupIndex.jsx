@@ -18,6 +18,7 @@ const GroupList = (props) => {
   const [usersGroups, setUserGroups] = useState([])
   const [userGroupFilter, setUserGroupFilter] = useState(false)
   const [categories, setCategories] = useState([])
+  const [click, setClick] = useState (false)
 
   const usersJoinedGroups = () => setUserGroupFilter(!userGroupFilter)
 
@@ -30,6 +31,9 @@ const GroupList = (props) => {
     }
   }
 
+  const beenClicked = () => {
+    setClick(!click)
+}
   const nonLoggedin = async () => {
     const publicGroupData = await getAllGroups()
     setPublicGroups(publicGroupData)
@@ -126,6 +130,7 @@ const GroupList = (props) => {
         {profile &&
           usersGroups?.map((joinedGroup) => (
             <GroupCard
+            beenClicked = {beenClicked}
               group={joinedGroup}
               key={joinedGroup._id}
               user={props.user}
@@ -137,6 +142,7 @@ const GroupList = (props) => {
     ) : (
       <div className="layout">
         <CategoryMenu
+        beenClicked = {beenClicked}
           handleAddCategory={handleAddCategory}
           handleRemoveCategory={handleRemoveCategory}
           usersJoinedGroups={usersJoinedGroups}
@@ -146,6 +152,7 @@ const GroupList = (props) => {
         {profile &&
           userGroupPref?.map((userPref) => (
             <GroupCard
+            beenClicked = {beenClicked}
               group={userPref}
               key={userPref._id}
               user={props.user}
@@ -156,6 +163,7 @@ const GroupList = (props) => {
         {profile &&
           notUserGroupPref?.map((group) => (
             <GroupCard
+            beenClicked = {beenClicked}
               group={group}
               key={group._id}
               user={props.user}
