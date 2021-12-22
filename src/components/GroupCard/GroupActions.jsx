@@ -5,6 +5,8 @@ import './Card.css'
 import { updateGroup } from "../../services/groupService";
 import { updateProfile} from "../../services/profileService";
 
+import BasicButton from '../MaterialUI/BasicButton'
+
 const GroupActions = (props) => {
   let  members = props.group.members.map((member) => {
     return member._id
@@ -71,7 +73,8 @@ const GroupActions = (props) => {
     {isOwner &&
     <>
       <button><Link to={`/groups/${props.group._id}/edit`}>Edit</Link></button>
-      <button onClick={() => props.handleDeleteGroup(props.group._id)}>Delete</button>
+      <button className="hiddenButton" onClick={() => props.handleDeleteGroup(props.group._id)}><BasicButton text={"Delete Group"}/></button>
+
     </ >}
     </div>
   )
