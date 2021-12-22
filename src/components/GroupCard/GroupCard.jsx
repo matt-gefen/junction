@@ -4,6 +4,7 @@ import styles from './Card.module.css'
 
 // Components
 import GroupActions from './GroupActions'
+import GroupHeader from '../GroupHeader/GroupHeader'
 
 const GroupCard = (props) => {
 // console.log("GroupCardProps",props)
@@ -14,7 +15,7 @@ const GroupCard = (props) => {
       <div className={styles.cardHeader}>
       {props.user &&
       <> 
-      <GroupActions {...props} />
+      <GroupHeader {...props} />
       </>}
       </div>
 
