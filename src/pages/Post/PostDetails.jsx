@@ -85,6 +85,19 @@ const PostDetails = props => {
       ...profile,
       registered_events: newRegisteredEvents
     })
+    let memberAvatarIdx = 0
+    const newMemberRegistration = post.registration.filter((member, idx) => {
+      if (member === profile._id) {
+        memberAvatarIdx = idx
+      }
+      return member !== profile._id
+    })
+    const newRegisteredAvatars = post.registeredAvatars.filter((avatar, idx) => idx !== memberAvatarIdx)
+    updatePost(id, postId, {
+      ...post,
+      registration: newMemberRegistration,
+      registeredAvatars: newRegisteredAvatars
+    })
     setIsAttending(false)
   }
 
@@ -114,8 +127,6 @@ const PostDetails = props => {
     }
     fetchPost()
   }, [])
-
-
 
   let date = new Date(post.createdAt)
   let eventDate = new Date(post.date)
