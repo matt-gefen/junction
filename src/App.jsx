@@ -74,10 +74,6 @@ const App = () => {
           path="/groups/:id/posts/:postId/edit"
           element={<EditPost user={user}/>}
         />
-        <Route 
-          path="/location"
-          element={<LocationSearch user={user}/>}
-        />
       </Routes>
     </>
   )
