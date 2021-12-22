@@ -111,6 +111,9 @@ export default function AppNavBar({ user, handleLogout }) {
         <Link style={{ textDecoration: 'none', color: 'black' }} to="/groups/new">Create a Group</Link>
       </MenuItem>
       <MenuItem onClick={handleMainMenuClose}>
+        <Link style={{ textDecoration: 'none', color: 'black' }} to="/groups/mygroups">My Groups</Link>
+      </MenuItem>
+      <MenuItem onClick={handleMainMenuClose}>
         <Link style={{ textDecoration: 'none', color: 'black' }} to={`/profiles/${user.profile}/favorites`}>Favorite Posts</Link>
       </MenuItem>
     </Menu>
