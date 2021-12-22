@@ -78,7 +78,7 @@ import CategoryMenu from "../../components/CategoryNav/CategoryMenu";
     };
 
     fetchCategories();
-  }, [categories]);
+  }, [categories, click]);
 
   const handleAddCategory = async (category) => {
     try {
@@ -108,7 +108,6 @@ import CategoryMenu from "../../components/CategoryNav/CategoryMenu";
   return props.user ? (
     <div className="layout">
       <CategoryMenu
-        beenClicked={beenClicked}
         handleAddCategory={handleAddCategory}
         handleRemoveCategory={handleRemoveCategory}
         profileCategories={profileCategories}
