@@ -9,6 +9,8 @@ import { updateProfile, getProfileById } from "../../services/profileService"
 // Components
 import AlertDialogue from "../../components/MaterialUI/AlertDialogue"
 import CommentList from "../../components/Comment/CommentList"
+import BasicButton from '../../components/MaterialUI/BasicButton'
+
 
 const PostDetails = props => {
   const { id, postId } = useParams()
@@ -89,7 +91,8 @@ const PostDetails = props => {
     <div className="layout">
       {isOwner &&
         <>
-          <button onClick={routeToEditPost}>Edit Post</button>
+          {/* <button onClick={routeToEditPost}>Edit Post</button> */}
+          <BasicButton text={"Edit Post"} onClick={routeToEditPost}/>
           <AlertDialogue 
             handleConfirm={confirmDeletePost}
             buttonText="Delete Post"
@@ -100,10 +103,10 @@ const PostDetails = props => {
         </>
       }
       { !isFavorite &&
-        <button onClick={handleFavoritePost}>Favorite Post</button>
+        <BasicButton text={"Favorite Post"} onClick={handleFavoritePost}/>
       }
       { isFavorite &&
-        <button onClick={handleUnfavorite}>Unfavorite Post</button>
+        <BasicButton text={"Unfavorite Post"} onClick={handleUnfavorite}/>
       }
       <div className="post-details">
         <h1>Post Details</h1>
