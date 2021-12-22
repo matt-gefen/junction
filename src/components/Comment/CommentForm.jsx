@@ -4,6 +4,8 @@ import styles from './Comment.module.css'
 
 // Services
 import { createComment } from '../../services/groupService'
+import BasicButton from '../../components/MaterialUI/BasicButton'
+
 
 const CommentForm = props => {
   const { id, postId } = useParams()
@@ -54,10 +56,10 @@ const CommentForm = props => {
         />
       </div>
       <div className={styles.inputContainer}>
-        <button disabled={isFormInvalid()} className={styles.button}>
-          Add Comment
+        <button className={styles.hiddenButton}>
+          <BasicButton text={"Add Comment"} isFormInvalid={isFormInvalid()}/>
         </button>
-      </div>
+    </div>
     </form>
   )
 }

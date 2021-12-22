@@ -8,6 +8,7 @@ import * as authService from '../../services/authService'
 // Components
 import PasswordField from '../MaterialUI/PasswordField'
 import TextField from '../MaterialUI/TextField'
+import BasicButton from '../MaterialUI/BasicButton'
 
 const LoginForm = props => {
   const [formData, setFormData] = useState({
@@ -46,9 +47,14 @@ const LoginForm = props => {
         <PasswordField name="pw" value={formData.pw} handleChange={handleChange}/>
       </div>
       <div>
-        <button className={styles.button}>Log In</button>
+        <button className={styles.hiddenButton}>
+          <BasicButton text={"Log In"}/>
+        </button>
+        {/* <button className={styles.button}>Log In</button> */}
         <Link to="/groups">
-          <button>Cancel</button>
+        <button className={styles.hiddenButton}>
+          <BasicButton text={"Cancel"}/>
+        </button>
         </Link>
       </div>
     </form>

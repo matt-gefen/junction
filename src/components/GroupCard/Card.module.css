@@ -4,7 +4,7 @@ h2 {
   color: white;
 }
 
-.group-avatar{
+.groupAvatar{
   width: 150px;
 }
 
@@ -12,13 +12,13 @@ h2 {
   width: 100%;
 }
 
-.group-list {
+.groupList {
   background: #0b0b12;
   padding: 0px 10px 0px 10px;
   width: 300px;
 }
 
-.group-card {
+.groupCard {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -31,18 +31,18 @@ h2 {
   padding-bottom: 15px;
 }
 
-.card-header {
+.cardHeader {
   display: flex;
   align-items: center;
   padding: 5px 0px 0px 5px;
 }
 
-.comment-link {
+.commentLink {
   border-top: 1px solid #292934;
   padding: 8px 8px 11px 8px;
 }
 
-.comment-link a {
+.commentLink a {
   color: rgb(190, 190, 190);
   font-weight: medium;
   font-size: 14px;
@@ -54,13 +54,7 @@ h2 {
   padding-right: 10px;
 }
 
-.interactions button {
-  border: none;
-  font-size: 13px;
-  background: none;
-  border-radius: 8px;
-  margin: 0px 0px 0px 10px ;
-  border: 1px solid #363642;
-  color: rgb(190, 190, 190);
-  padding: 7px 14px 7px 14px;
+.hiddenButton {
+  background-color: transparent;
+  border: transparent;
 }

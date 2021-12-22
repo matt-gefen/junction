@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import AWS from 'aws-sdk'
 
+import BasicButton from '../MaterialUI/BasicButton'
+
 const S3_BUCKET ='junction-image-storage'
 const REGION ='us-east-2'
 
@@ -44,12 +46,13 @@ const UploadImageToS3WithNativeSdk = ({ fileUpload, handleChange }) => {
     }
 
     useEffect(() => {
-      fileUpload.current = uploadFile
+    fileUpload.current = uploadFile
     }, [])
 
 
     return <div>
         <input type="file" onChange={handleFileInput}/>
+        
     </div>
 }
 

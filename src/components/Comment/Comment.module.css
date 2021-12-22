@@ -24,3 +24,8 @@
 .textarea {
   resize: none;
 }
+
+.hiddenButton {
+  background-color: transparent;
+  border: transparent;
+}
