@@ -26,13 +26,15 @@ const PostForm = props => {
     })
   }
 
+
   const handleSubmit = async e => {
     e.preventDefault()
+    console.log(location)
     try {
       if (props.editPost) {
-        await updatePost(id, postId, formData)
+        await updatePost(id, postId, {...formData, location:location})
       } else {
-        await createPost(id, formData)
+        await createPost(id, {...formData, location:location})
       }
       navigate(-1)
     } catch (err) {
@@ -74,6 +76,8 @@ const PostForm = props => {
     fetchPost()
   }, [])
 
+  console.log(formData)
+
   return (
     <form
       autoComplete="off"
@@ -94,7 +98,16 @@ const PostForm = props => {
       <div className={styles.locationContainer}>
         <label htmlFor="location" className={styles.label}>Selected Location</label>
         <p>{location}</p>
-        <LocationSearch setLocation={setLocation} onChange={handleChange} />
+        <LocationSearch setLocation={setLocation} />
+        <input
+          type="text"
+          autoComplete="off"
+          id="text"
+          value={location}
+          name="location"
+          onChange={handleChange}
+          hidden
+        />
       </div>
 
       <div className={styles.inputContainer}>

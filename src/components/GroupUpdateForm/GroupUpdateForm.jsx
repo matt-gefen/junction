@@ -48,6 +48,7 @@ const GroupUpdateForm = props => {
       ...formData,
       'avatar': `https://avatars.dicebear.com/api/initials/${title}.svg`,
       'category': groupCategory,
+      'location': location,
       [e.target.name]: e.target.value,
     })
   }
@@ -55,7 +56,7 @@ const GroupUpdateForm = props => {
   const handleSubmit = async e => {
     e.preventDefault()
     try {
-      const updatedGroup = await updateGroup(props.groupId,formData)
+      const updatedGroup = await updateGroup(props.groupId,{...formData, location:location})
       setGroup(updatedGroup)
       navigate(`/groups/${props.groupId}`)
     } catch (err) {
