@@ -20,3 +20,8 @@
 .thumbnail {
   width: 100%;
 }
+
+.hiddenButton {
+  background-color: transparent;
+  border: transparent;
+}

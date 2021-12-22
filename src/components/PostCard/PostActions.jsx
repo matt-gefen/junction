@@ -2,10 +2,13 @@ import React, {useState, useEffect} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import AlertDialog from "../../components/MaterialUI/AlertDialogue"
+import BasicButton from '../MaterialUI/BasicButton';
 
 import { updateProfile, getProfileById } from "../../services/profileService";
 
 import { deletePost } from "../../services/groupService"
+
+import styles from './PostCard.module.css'
 
 
 const PostActions = (props) => {
@@ -38,14 +41,15 @@ const PostActions = (props) => {
     setIsFavorite(props.favorites?.includes(props.post._id))
   },[props.favorites, props.post._id])
 
+  console.log(ownerId, props.user?._id)
   return (
     <div className="interactions">
       <div>
-        <button onClick={handleClick}> {isFavorite? "Unfavorite": "Favorite"}</button>
+        <button className={styles.hiddenButton} onClick={handleClick}><BasicButton text={isFavorite? "Unfavorite": "Favorite"}/></button>
       </div>
     {isOwner &&
         <>
-          <button onClick={routeToEditPost}>Edit Post</button>
+          <button className={styles.hiddenButton} onClick={routeToEditPost}><BasicButton text={"Edit Post"}/></button>
           <AlertDialog 
             handleConfirm={confirmDeletePost}
             buttonText="Delete Post"

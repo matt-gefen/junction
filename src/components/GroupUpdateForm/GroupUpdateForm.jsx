@@ -9,6 +9,7 @@ import { getGroupById, updateGroup } from '../../services/groupService'
 import GroupCategories from '../GroupCategories/GroupCategories'
 import LocationSearch from '../LocationSearch/LocationSearch'
 import ImageUploadNativeAWS from '../ImageUpload/ImageUploadNativeAWS'
+import BasicButton from '../MaterialUI/BasicButton'
 
 
 const GroupUpdateForm = props => {
@@ -136,12 +137,12 @@ const GroupUpdateForm = props => {
           handleChange={handleChange}
         />
       </div>
-      <div className={styles.inputContainer}>
-        <button disabled={isFormInvalid()} className={styles.button}>
-          Update Group
+      <div>
+        <button className={styles.hiddenButton} disabled={isFormInvalid()} >
+          <BasicButton text={"Update Group"} isFormInvalid={isFormInvalid()}/>
         </button>
         <Link to={`/groups/${props.groupId}`}>
-          <button>Cancel</button>
+          <BasicButton text={"Cancel"} />
         </Link>
       </div>
     </form>
