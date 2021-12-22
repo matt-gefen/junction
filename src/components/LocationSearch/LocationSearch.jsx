@@ -60,11 +60,12 @@ const LocationSearch = () => {
         showUserLocation={false}
         auto
       />
-        <Geocoder
-          mapRef={mapRef}
-          onViewportChange={handleGeocoderViewportChange}
-          mapboxApiAccessToken={MAPBOX_TOKEN}
-          position="top-left"
+      <Geocoder
+        mapRef={mapRef}
+        proximity={{longitude: viewport.longitude, latitude: viewport.latitude}}
+        onViewportChange={handleGeocoderViewportChange}
+        mapboxApiAccessToken={MAPBOX_TOKEN}
+        position="top-left"
         />
       </MapGL>
     </div>
