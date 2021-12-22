@@ -1,30 +1,50 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import styles from './PostForm.module.css'
-
-import LocationSearch from '../LocationSearch/LocationSearch'
 
 // Services
 import { createPost, getPostById, updatePost } from '../../services/groupService'
 import { getProfileById, updateProfile } from '../../services/profileService'
+
+// Components
+import LocationSearch from '../LocationSearch/LocationSearch'
+import ImageUploadNativeAWS from '../ImageUpload/ImageUploadNativeAWS'
 
 const PostForm = props => {
   const { id, postId } = useParams()
   const navigate = useNavigate()
   const [formData, setFormData] = useState({})
   const [location, setLocation] = useState('')
-
+  const [file, setFile] = useState({
+    image: `https://avatars.dicebear.com/api/croodles-neutral/newPost.svg`
+  })
   const [hasRegistration, setHasRegistration] = useState(false)
   const [registrationData, setRegistrationData] = useState([])
+
+  const fileUpload = useRef(null)
 
   console.log('User:', props.user)
 
   const handleChange = e => {
-    console.log('Change name:', e.target.name)
-    console.log('Change value:', e.target.value)
-    console.log(hasRegistration)
     props.updateMessage('')
-    if (e.target.name === 'registration') {
+    if (e.target.files) {
+      console.log('File name:', e.target.files[0].name)
+      let reader = new FileReader()
+      reader.onload = event => {
+        setFile({
+          fullFile: e.target.files[0],
+          name: e.target.files[0].name,
+          image: event.target.result
+        })
+      }
+      reader.readAsDataURL(e.target.files[0])
+      setFormData({
+        ...formData,
+        thumbnail: `https://junction-image-storage.s3.us-east-2.amazonaws.com/${e.target.files[0].name}`,
+        group: id,
+        location: location
+      })
+    } else if (e.target.name === 'registration') {
       setFormData({
         ...formData,
         registration: e.target.value ? [...registrationData, props.user.profile] : [registrationData],
@@ -34,9 +54,8 @@ const PostForm = props => {
     } else {
       setFormData({
         ...formData,
-        thumbnail: `https://avatars.dicebear.com/api/croodles-neutral/${title}.svg`,
         group: id,
-        location:location,
+        location: location,
         [e.target.name]: e.target.value,
       })
     }
@@ -45,9 +64,11 @@ const PostForm = props => {
 
   const handleSubmit = async e => {
     e.preventDefault()
-    console.log(location)
     try {
       let newPost = {}
+      fileUpload.current(file.fullFile)
+      console.log('Editing post?', props.editPost)
+      console.log('Post data', formData)
       if (props.editPost) {
         newPost = await updatePost(id, postId, {...formData, location:location})
       } else {
@@ -186,8 +207,12 @@ const PostForm = props => {
 
       <div className={styles.inputContainer}>
         <img 
-        src={thumbnail} 
-        alt="initials avatar" style={{width: "150px"}} 
+        src={file.image} 
+        alt="post avatar" style={{width: "150px"}} 
+        />
+        <ImageUploadNativeAWS
+          fileUpload={fileUpload}
+          handleChange={handleChange}
         />
       </div>
 
