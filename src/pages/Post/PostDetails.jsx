@@ -120,7 +120,7 @@ const PostDetails = props => {
       {isOwner &&
         <>
           {/* <button onClick={routeToEditPost}>Edit Post</button> */}
-          <BasicButton text={"Edit Post"} onClick={routeToEditPost}/>
+          <button className={styles.hiddenButton} onClick={routeToEditPost}><BasicButton text={"Edit Post"}/></button>
           <AlertDialogue 
             handleConfirm={confirmDeletePost}
             buttonText="Delete Post"
@@ -131,10 +131,10 @@ const PostDetails = props => {
         </>
       }
       { !isFavorite &&
-        <BasicButton text={"Favorite Post"} onClick={handleFavoritePost}/>
+        <button className={styles.hiddenButton} onClick={handleFavoritePost}><BasicButton text={"Favorite Post"}/></button>
       }
       { isFavorite &&
-        <BasicButton text={"Unfavorite Post"} onClick={handleUnfavorite}/>
+        <button className={styles.hiddenButton} onClick={handleUnfavorite}><BasicButton text={"Unfavorite Post"}/></button>
       }
       <div className="post-details">
         <h1>Post Details</h1>

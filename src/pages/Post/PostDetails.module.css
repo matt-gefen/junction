@@ -7,3 +7,8 @@
 .thumbnail {
   width: 150px;
 }
+
+.hiddenButton {
+  background-color: transparent;
+  border: transparent;
+}
