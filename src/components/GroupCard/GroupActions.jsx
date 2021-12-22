@@ -68,20 +68,20 @@ const GroupActions = (props) => {
     <div className={styles.interactions}>
     {!isMember &&
       <div>
-      <button onClick={handleJoinGroup} className={styles.hiddenButton}><BasicButton text={"Join Group"}/></button>
+      <button onClick={handleJoinGroup} className={styles.hiddenButton}><BasicButton isActive={true} text={"Join Group"}/></button>
     </div>
     }
     {isMember && !isOwner &&
       <div>
-        <button onClick={triggerMyGroupRefresh} className={styles.hiddenButton}><BasicButton text={"Leave Group"}/></button>
+        <button onClick={triggerMyGroupRefresh} className={styles.hiddenButton}><BasicButton isActive={true} text={"Leave Group"}/></button>
       </div>
     }
 
 
     {isOwner &&
     <>
-      <Link to={`/groups/${props.group._id}/edit`}><BasicButton text={"Edit"}/></Link>
-      <button className={styles.hiddenButton} onClick={triggerDeleteGroupRefresh}><BasicButton text={"Delete Group"}/></button>
+      <Link to={`/groups/${props.group._id}/edit`}><BasicButton isActive={true} text={"Edit"}/></Link>
+      <button className={styles.hiddenButton} onClick={triggerDeleteGroupRefresh}><BasicButton isActive={true} text={"Delete Group"}/></button>
     </ >}
     </div>
   )
