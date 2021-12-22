@@ -112,6 +112,7 @@ const PostDetails = props => {
   }, [])
 
   let date = new Date(post.createdAt)
+  let eventDate = new Date(post.date)
 
   return (
     <div className="layout">
@@ -161,7 +162,7 @@ const PostDetails = props => {
         <div className="post-event-date-container">
           <h3>Event Date</h3>
           <div className="post-event-date">
-            {post.date}
+             {`${eventDate.toLocaleDateString()} at ${eventDate.getHours() > 12 ? eventDate.getHours() - 12 : eventDate.getHours()}:${eventDate.getMinutes()}${eventDate.getHours() > 12 ? "pm" : "am"}`}
           </div>
         </div>
         <div className="post-registration-container">
