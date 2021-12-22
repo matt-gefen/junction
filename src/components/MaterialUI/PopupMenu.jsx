@@ -14,7 +14,7 @@ export default function LongMenu({ options }) {
   }
   const handleClose = (callBack) => {
     setAnchorEl(null)
-    callBack()
+    if (callBack) callBack()
   }
 
   return (
@@ -36,7 +36,7 @@ export default function LongMenu({ options }) {
         }}
         anchorEl={anchorEl}
         open={open}
-        onClose={handleClose}
+        onClose={() => handleClose()}
         PaperProps={{
           style: {
             maxHeight: ITEM_HEIGHT * 4.5,
