@@ -11,7 +11,6 @@ const MyGroups = (props) => {
   const [groups, setGroups] = useState([]);
   const [profile, setProfile] = useState();
   const [myGroups, setMyGroups] = useState();
-  const [watchGroups, setWatchGroups] = useState([])
   const [click, setClick] = useState (false)
 
   const handleDeleteGroup = async (groupId) => {
