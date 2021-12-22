@@ -8,6 +8,10 @@ import LocationSearch from '../LocationSearch/LocationSearch'
 import { createPost, getPostById, updatePost } from '../../services/groupService'
 import { getProfileById, updateProfile } from '../../services/profileService'
 
+//Components
+import DateTimePicker from '../../components/MaterialUI/DateTimePicker'
+
+
 const PostForm = props => {
   const { id, postId } = useParams()
   const navigate = useNavigate()
@@ -136,14 +140,15 @@ const PostForm = props => {
 
       <div className={styles.inputContainer}>
         <label htmlFor="date" className={styles.label}>Event Date</label>
-        <input
+        <DateTimePicker date={formData.date} handleChange={handleChange} />
+        {/* <input
           type="datetime"
           autoComplete="off"
           id="date"
           value={date}
           name="date"
           onChange={handleChange}
-        />
+        /> */}
       </div>
 
       <div className={styles.inputContainer}>
