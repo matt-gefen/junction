@@ -8,11 +8,13 @@ import { createGroup, getAllGroups } from '../../services/groupService'
 // Components
 import GroupCategories from '../GroupCategories/GroupCategories'
 import ImageUploadNativeAWS from '../ImageUpload/ImageUploadNativeAWS'
+import LocationSearch from '../LocationSearch/LocationSearch'
 
 
 const GroupForm = props => {
   const navigate = useNavigate()
   const [groupCategory, setGroupCategory] = useState('Family')
+  const [location, setLocation] = useState('')
   const [file, setFile] = useState({
     image: 'https://avatars.dicebear.com/api/initials/CreateGroup.svg'
   })
@@ -40,12 +42,14 @@ const GroupForm = props => {
       setFormData({
         ...formData,
         category: groupCategory,
+        location: location,
         avatar: `https://junction-image-storage.s3.us-east-2.amazonaws.com/${event.target.files[0].name}`
       })
     } else {
       setFormData({
         ...formData,
         category: groupCategory,
+        location: location,
         [event.target.name]: event.target.value,
       })
     }
@@ -64,7 +68,7 @@ const GroupForm = props => {
     }
   }
 
-  const { title, category, avatar, location } = formData
+  const { title, category, avatar } = formData
 
   const isFormInvalid = () => {
     return !(title && category && avatar)
@@ -95,17 +99,11 @@ const GroupForm = props => {
           handleChange={handleChange}
         />
       </div>
-      <div className={styles.inputContainer}>
+      <div className={styles.locationContainer}>
         <label htmlFor="location" className={styles.label}>Location</label>
-        <input
-          type="text"
-          autoComplete="off"
-          id="location"
-          value={location}
-          name="location"
-          onChange={handleChange}
-        />
+        <LocationSearch setLocation={setLocation} onChange={handleChange} />
       </div>
+
       <div className={styles.inputContainer}>
         <img 
         src={file.image} 
