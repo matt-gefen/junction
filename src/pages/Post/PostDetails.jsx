@@ -75,7 +75,7 @@ const PostDetails = props => {
       registered_events: [...profile.registered_events, post._id]
     })
     await updatePost(id, postId, {...post, registration: [...post.registration, profile._id], registeredAvatars: [...post.registeredAvatars, profile.avatar]})
-    setPost({...post, registration: [...post.registration, profile._id]})
+    setPost({...post, registration: [...post.registration, profile._id], registeredAvatars: [...post.registeredAvatars, profile.avatar]})
     setIsAttending(true)
   }
 
@@ -98,6 +98,7 @@ const PostDetails = props => {
       registration: newMemberRegistration,
       registeredAvatars: newRegisteredAvatars
     })
+    setPost({...post, registration: newMemberRegistration, registeredAvatars: newRegisteredAvatars})
     setIsAttending(false)
   }
 
