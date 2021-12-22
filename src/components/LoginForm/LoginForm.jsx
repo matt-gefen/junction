@@ -41,7 +41,7 @@ const LoginForm = props => {
       className={styles.container}
     >
       <div className={styles.inputContainer}>
-        <TextField value={formData.email} editable={true} label="Email" name="email" handleChange={handleChange}/>
+        <TextField value={formData.email} editable={true} label="Email" name="email" autoComplete="username" handleChange={handleChange}/>
       </div>
       <div className={styles.inputContainer}>
         <PasswordField name="pw" value={formData.pw} handleChange={handleChange}/>

@@ -32,7 +32,7 @@ const profileSchema = new mongoose.Schema(
       },
     ],
     category_prefs: Array,
-    location:{ type: String, required: true },
+    location:{ type: String },
     registered_events: [
       {
         type: mongoose.Schema.Types.ObjectId,

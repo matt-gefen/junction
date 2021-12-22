@@ -53,10 +53,10 @@ const SignupForm = props => {
       className={styles.container}
     >
       <div className={styles.inputContainer}>
-        <TextField value={name} editable={true} label="Name" name="name" handleChange={handleChange}/>
+        <TextField value={name} editable={true} label="Name" name="name" autoComplete="username" handleChange={handleChange}/>
       </div>
       <div className={styles.inputContainer}>
-        <TextField value={email} editable={true} label="Email" name="email" handleChange={handleChange}/>
+        <TextField value={email} editable={true} label="Email" name="email" autoComplete="email" handleChange={handleChange}/>
       </div>
       <div className={styles.inputContainer}>
         <PasswordField name="password" value={password} handleChange={handleChange}/>
