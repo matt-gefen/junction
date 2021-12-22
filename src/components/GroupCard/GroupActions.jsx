@@ -57,6 +57,10 @@ const GroupActions = (props) => {
     handleLeaveGroup()
     props.beenClicked()
   }
+  function triggerDeleteGroupRefresh() {
+    props.handleDeleteGroup(props.group._id)
+    props.beenClicked()
+  }
   
   return (
     <div className="interactions">
@@ -71,10 +75,11 @@ const GroupActions = (props) => {
       </div>
     }
 
+
     {isOwner &&
     <>
       <button><Link to={`/groups/${props.group._id}/edit`}>Edit</Link></button>
-      <button onClick={() => props.handleDeleteGroup(props.group._id)}>Delete</button>
+      <button onClick={triggerDeleteGroupRefresh}>Delete</button>
     </ >}
     </div>
   )
