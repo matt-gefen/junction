@@ -8,6 +8,7 @@ import * as authService from '../../services/authService'
 // Components
 import PasswordField from '../MaterialUI/PasswordField'
 import TextField from '../MaterialUI/TextField'
+import BasicButton from '../MaterialUI/BasicButton'
 
 const SignupForm = props => {
   const navigate = useNavigate()
@@ -42,7 +43,7 @@ const SignupForm = props => {
   const { name, email, password, passwordConf, avatar, location } = formData
 
   const isFormInvalid = () => {
-    return !(name && email && password && password === passwordConf && avatar && location)
+    return !(name && email && password && password === passwordConf && avatar)
   }
 
   return (
@@ -63,24 +64,24 @@ const SignupForm = props => {
       <div className={styles.inputContainer}>
         <PasswordField name="passwordConf" value={passwordConf} handleChange={handleChange}/>
       </div>
-      <div className={styles.inputContainer}>
+      {/* <div className={styles.inputContainer}>
         <TextField value={location} editable={true} label="Location" name="location" handleChange={handleChange}/>
-      </div>
+      </div> */}
       <div className={styles.inputContainer}>
         <img src={props.avatar} alt="dicebears avatar" style={{width: "150px"}}/>
-        <button name="avatar" type="button" value={props.avatar} onClick={(e) => {
+        <button className={styles.hiddenButton} name="avatar" type="button" value={props.avatar} >
+          <BasicButton text={"New Avatar"} handleClick={(e) => {
           props.resetSeed() 
           handleChange(e)}
-          } >New Avatar</button>
+          }/>
+        </button>
       </div>
-      <div className={styles.inputContainer}>
-        <button disabled={isFormInvalid()} className={styles.button}>
-          Sign Up
+        <button className={styles.hiddenButton}>
+          <BasicButton text={"Sign Up"} isFormInvalid={isFormInvalid()}/>
         </button>
         <Link to="/">
-          <button>Cancel</button>
+          <BasicButton text={"Cancel"}/>
         </Link>
-      </div>
     </form>
   )
 }
