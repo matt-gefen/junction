@@ -75,6 +75,7 @@ const GroupActions = (props) => {
       </div>
     }
 
+
     {isOwner &&
     <>
       <button><Link to={`/groups/${props.group._id}/edit`}>Edit</Link></button>
