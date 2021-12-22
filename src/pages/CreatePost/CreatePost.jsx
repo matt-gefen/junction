@@ -13,7 +13,7 @@ const CreatePost = props => {
     <main className={styles.container}>
       <h1>Create Post</h1>
       <p>{message}</p>
-      <PostForm {...props} updateMessage={updateMessage}/>
+      <PostForm {...props} updateMessage={updateMessage} user={props.user}/>
     </main>
   )
 }
