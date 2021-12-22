@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom'
-import NavBar from './components/NavBar/NavBar'
+import AppNavBar from './components/MaterialUI/AppNavBar'
 import Signup from './pages/Signup/Signup'
 import Login from './pages/Login/Login'
 import CreateGroup from './pages/CreateGroup/CreateGroup'
@@ -35,7 +35,7 @@ const App = () => {
 
   return (
     <>
-      <NavBar user={user} handleLogout={handleLogout} />
+      <AppNavBar user={user} handleLogout={handleLogout} />
       <Routes>
         <Route path="/" element={<GroupIndex user={user} />} />
         <Route path="/groups" element={<GroupIndex user={user} />} />

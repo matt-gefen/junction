@@ -107,15 +107,19 @@ export default function AppNavBar({ user, handleLogout }) {
       <MenuItem onClick={handleMainMenuClose}>
         <Link style={{ textDecoration: 'none', color: 'black' }} to="/groups">Discover Groups</Link>
       </MenuItem>
-      <MenuItem onClick={handleMainMenuClose}>
-        <Link style={{ textDecoration: 'none', color: 'black' }} to="/groups/new">Create a Group</Link>
-      </MenuItem>
-      <MenuItem onClick={handleMainMenuClose}>
-        <Link style={{ textDecoration: 'none', color: 'black' }} to="/groups/mygroups">My Groups</Link>
-      </MenuItem>
-      <MenuItem onClick={handleMainMenuClose}>
-        <Link style={{ textDecoration: 'none', color: 'black' }} to={`/profiles/${user.profile}/favorites`}>Favorite Posts</Link>
-      </MenuItem>
+      {user && 
+        <>
+          <MenuItem onClick={handleMainMenuClose}>
+            <Link style={{ textDecoration: 'none', color: 'black' }} to="/groups/new">Create a Group</Link>
+          </MenuItem>
+          <MenuItem onClick={handleMainMenuClose}>
+            <Link style={{ textDecoration: 'none', color: 'black' }} to="/groups/mygroups">My Groups</Link>
+          </MenuItem>
+          <MenuItem onClick={handleMainMenuClose}>
+            <Link style={{ textDecoration: 'none', color: 'black' }} to={`/profiles/${user.profile}/favorites`}>Favorite Posts</Link>
+          </MenuItem>
+        </>
+      }
     </Menu>
   )
 
@@ -135,12 +139,25 @@ export default function AppNavBar({ user, handleLogout }) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>
-        <Link style={{ textDecoration: 'none', color: 'black' }} to="/">Profile</Link>
-      </MenuItem>
-      <MenuItem onClick={handleMenuClose}>
-        <Link style={{ textDecoration: 'none', color: 'black' }} to="/login" onClick={handleLogout}>Log Out</Link>
-      </MenuItem>
+      {user ? 
+        <>
+          {/* <MenuItem onClick={handleMenuClose}>
+            <Link style={{ textDecoration: 'none', color: 'black' }} to="/">Profile</Link>
+          </MenuItem> */}
+          <MenuItem onClick={handleMenuClose}>
+            <Link style={{ textDecoration: 'none', color: 'black' }} to="/login" onClick={handleLogout}>Log Out</Link>
+          </MenuItem>
+        </>
+        :
+        <>
+          <MenuItem onClick={handleMenuClose}>
+            <Link style={{ textDecoration: 'none', color: 'black' }} to="/signup">Sign Up</Link>
+          </MenuItem>
+          <MenuItem onClick={handleMenuClose}>
+            <Link style={{ textDecoration: 'none', color: 'black' }} to="/login">Log In</Link>
+          </MenuItem>
+        </>
+      }
     </Menu>
   )
 
@@ -189,7 +206,7 @@ export default function AppNavBar({ user, handleLogout }) {
           >
             <MenuIcon />
           </IconButton>
-          <Search>
+          {/* <Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -197,7 +214,7 @@ export default function AppNavBar({ user, handleLogout }) {
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
             />
-          </Search>
+          </Search> */}
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' }}}>
           <Link style={{ textDecoration: 'none', color: 'white' }} to="/login" onClick={handleLogout}>Log Out</Link>
