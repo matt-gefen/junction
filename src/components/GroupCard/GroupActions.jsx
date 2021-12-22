@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
-import './Card.css'
+import styles from './Card.module.css'
 
 import { updateGroup } from "../../services/groupService";
 import { updateProfile} from "../../services/profileService";
@@ -58,22 +58,22 @@ const GroupActions = (props) => {
 
 
   return (
-    <div className="interactions">
+    <div className={styles.interactions}>
     {!isMember &&
       <div>
-        <button onClick={handleJoinGroup}>Join Group</button>
-      </div>
+      <button onClick={handleJoinGroup} className={styles.hiddenButton}><BasicButton text={"Join Group"}/></button>
+    </div>
     }
     {isMember && !isOwner &&
       <div>
-        <button onClick={handleLeaveGroup}>Leave Group</button>
+        <button onClick={handleLeaveGroup} className={styles.hiddenButton}><BasicButton text={"Leave Group"}/></button>
       </div>
     }
 
     {isOwner &&
     <>
-      <button><Link to={`/groups/${props.group._id}/edit`}>Edit</Link></button>
-      <button className="hiddenButton" onClick={() => props.handleDeleteGroup(props.group._id)}><BasicButton text={"Delete Group"}/></button>
+      <Link to={`/groups/${props.group._id}/edit`}><BasicButton text={"Edit"}/></Link>
+      <button className={styles.hiddenButton} onClick={() => props.handleDeleteGroup(props.group._id)}><BasicButton text={"Delete Group"}/></button>
 
     </ >}
     </div>
