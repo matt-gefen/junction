@@ -117,6 +117,13 @@ const PostDetails = props => {
 
   return (
     <div className="layout">
+      <div className={styles.groupDetailButtons}>
+      { !isFavorite &&
+        <button className={styles.hiddenButton} onClick={handleFavoritePost}><BasicButton text={"Favorite Post"}/></button>
+      }
+      { isFavorite &&
+        <button className={styles.hiddenButton} onClick={handleUnfavorite}><BasicButton text={"Unfavorite Post"}/></button>
+      }
       {isOwner &&
         <>
           {/* <button onClick={routeToEditPost}>Edit Post</button> */}
@@ -130,12 +137,7 @@ const PostDetails = props => {
           />
         </>
       }
-      { !isFavorite &&
-        <button className={styles.hiddenButton} onClick={handleFavoritePost}><BasicButton text={"Favorite Post"}/></button>
-      }
-      { isFavorite &&
-        <button className={styles.hiddenButton} onClick={handleUnfavorite}><BasicButton text={"Unfavorite Post"}/></button>
-      }
+      </div>
       <div className="post-details">
         <h1>Post Details</h1>
         <h1>{post.title}</h1>
