@@ -13,6 +13,7 @@ import * as authService from './services/authService'
 import GroupIndex from './pages/GroupIndex/GroupIndex'
 import FavoritePosts from './pages/FavoritePosts/FavoritePosts'
 import LocationSearch from './components/LocationSearch/LocationSearch'
+import MyGroups from './pages/MyGroups/MyGroups'
 
 const App = () => {
   const [user, setUser] = useState(authService.getUser())
