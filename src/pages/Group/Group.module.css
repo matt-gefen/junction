@@ -1,10 +1,14 @@
-.container {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-}
-
-
-h2 {
-  color: black;
-}
+.layout{
+  width: 100%;
+  text-align: center;
+  }
+  
+  .groupDetailButtons{
+    padding: 10px;
+    display: flex;
+    text-align: center;
+    justify-content: left;
+    gap: 20px;
+    color: white;
+    width:100%;
+  }

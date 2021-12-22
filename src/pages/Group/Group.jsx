@@ -96,44 +96,48 @@ const Group = (props) => {
   }, [props.user.profile, isMember, id, isOwner, ownerId]);
 
   return (
-    <div className="layout">
-      <div className="group-details">
+    <div className={styles.layout}>
+        <div className={styles.groupDetailButtons}>
+        {!isMember &&
+          <div>
+            <BasicButton text="Join Group" handleClick={handleJoinGroup}/>
+          </div>
+        }
+        {isMember && !isOwner &&
+          <div>
+            <BasicButton text="Leave Group" handleClick={handleLeaveGroup}/>
+          </div>
+        }
+  
+        {isOwner &&
+          <>
+            <BasicButton text="Edit Group" handleClick={editGroup}/>
+            <BasicButton text="Delete Group" handleClick={handleDeleteGroup}/>
+          </>
+        }
+        {isMember &&
+          <>
+            <BasicButton text="Create Post" handleClick={createPost}/>
+          </>
+        }
+        </div>
       {group && profile &&
           <>
             <img src={group.avatar} alt="" style={{width:"150px"}}/>
             <h2 style={{color:"black"}}>{group.title}</h2>
-            <h3>{group.category}</h3>
-            <h4>{group.location}</h4>
+            <h4>Group Location: {group.location}</h4>
+            <h4>Group Category: {group.category}</h4>
             <section className={styles.container}>
               {group.posts?.map(post => (
                 <PostCard user={props.user} group={group} post={post} profile={profile}/>
               ))}
             </section>
+            <div className={styles.spacer}>
+
+
+            </div>
           </>
         }
-      {!isMember &&
-        <div>
-          <BasicButton text="Join Group" handleClick={handleJoinGroup}/>
-        </div>
-      }
-      {isMember && !isOwner &&
-        <div>
-          <BasicButton text="Leave Group" handleClick={handleLeaveGroup}/>
-        </div>
-      }
-
-      {isOwner &&
-        <>
-          <BasicButton text="Edit Group" handleClick={editGroup}/>
-          <BasicButton text="Delete Group" handleClick={handleDeleteGroup}/>
-        </>
-      }
-      </div>
-      {isMember &&
-        <>
-          <BasicButton text="Create Post" handleClick={createPost}/>
-        </>
-      }
       
     </div>
   );
