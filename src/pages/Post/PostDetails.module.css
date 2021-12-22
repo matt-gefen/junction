@@ -12,3 +12,18 @@
   background-color: transparent;
   border: transparent;
 }
+
+.layout{
+  width: 75%;
+  text-align: center;
+  }
+  
+  .groupDetailButtons{
+    padding: 10px;
+    display: flex;
+    text-align: center;
+    justify-content: left;
+    gap: 20px;
+    color: white;
+    width:100%;
+  }
