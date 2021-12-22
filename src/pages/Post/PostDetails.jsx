@@ -9,6 +9,7 @@ import { updateProfile, getProfileById } from "../../services/profileService"
 // Components
 import AlertDialogue from "../../components/MaterialUI/AlertDialogue"
 import CommentList from "../../components/Comment/CommentList"
+import Registration from "../../components/Post/Registration"
 
 const PostDetails = props => {
   const { id, postId } = useParams()
@@ -28,6 +29,7 @@ const PostDetails = props => {
   const [profile, setProfile] = useState()
   const [isOwner, setIsOwner] = useState(false)
   const [isFavorite, setIsFavorite] = useState(false)
+  const [isAttending, setIsAttending] = useState(false)
   const navigate = useNavigate()
 
   function routeToEditPost() {
@@ -59,6 +61,27 @@ const PostDetails = props => {
     setIsFavorite(false)
   }
 
+  function handleRegistration() {
+    isAttending ? handleUnattendEvent() : handleAttendEvent()
+  }
+
+  function handleAttendEvent () {
+    updateProfile(profile._id, {
+      ...profile,
+      registered_events: [...profile.registered_events, post._id]
+    })
+    setIsAttending(true)
+  }
+
+  function handleUnattendEvent () {
+    let newRegisteredEvents = profile.registered_events.filter(event => event !== post._id)
+    updateProfile(profile._id, {
+      ...profile,
+      registered_events: newRegisteredEvents
+    })
+    setIsAttending(false)
+  }
+
   function confirmDeletePost() {
     deletePost(id, postId)
     navigate(-1)
@@ -76,6 +99,7 @@ const PostDetails = props => {
           return element._id
         })
         setIsFavorite(favorites.includes(postData._id))
+        setIsAttending(profile.registered_events.some(eventId => eventId === postId))
       } catch (error) {
         throw error
       }
@@ -138,7 +162,9 @@ const PostDetails = props => {
         </div>
         <div className="post-registration-container">
           <h3>Post Registration</h3>
-          {post.registration}
+          {post.register && 
+            <Registration eventDate="" attendees="" isAttending={isAttending} handleClick={handleRegistration}/>
+          }
         </div>
         <div className="post-comments-container">
           <h3>Post Comments</h3>
