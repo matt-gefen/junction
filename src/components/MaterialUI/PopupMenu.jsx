@@ -15,7 +15,7 @@ export default function LongMenu({ options }) {
   const handleClose = (callBack) => {
     setAnchorEl(null)
     if (callBack) callBack()
-  }
+  } 
 
   return (
     <div>
