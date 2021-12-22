@@ -61,6 +61,10 @@ In order to keep the focus on each users individual value and to help protect em
 - [ ] a Profile details view page
 - [ ] geo-location based groups search/filtering   
 - [ ] an update Profile view, so users can amend profile information
+- [ ] Add Avatar customization
+- [ ] Select Avatar Style in Avatar customization
+- [ ] Drag and Drop Post elements
+
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
