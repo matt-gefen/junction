@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import styles from "./GroupIndex.module.css"
 
 // Services
 import { getAllGroups, deleteGroup } from "../../services/groupService";
@@ -106,7 +107,7 @@ import CategoryMenu from "../../components/CategoryNav/CategoryMenu";
   };
 
   return props.user ? (
-    <div className="layout">
+    <div className={styles.layout}>
       <CategoryMenu
         handleAddCategory={handleAddCategory}
         handleRemoveCategory={handleRemoveCategory}
