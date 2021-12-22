@@ -133,8 +133,6 @@ const Group = (props) => {
               ))}
             </section>
             <div className={styles.spacer}>
-
-
             </div>
           </>
         }
