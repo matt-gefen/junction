@@ -65,14 +65,11 @@ const PostForm = props => {
   const handleSubmit = async e => {
     e.preventDefault()
     try {
-      let newPost = {}
       fileUpload.current(file.fullFile)
-      console.log('Editing post?', props.editPost)
-      console.log('Post data', formData)
       if (props.editPost) {
-        newPost = await updatePost(id, postId, {...formData, location:location})
+        await updatePost(id, postId, {...formData, location:location})
       } else {
-        newPost = await createPost(id, {...formData, location:location})
+        const newPost = await createPost(id, {...formData, location:location})
         const profileData = await getProfileById(props.user.profile)
         profileData.registered_events.push(newPost)
         await updateProfile(props.user.profile, profileData)
