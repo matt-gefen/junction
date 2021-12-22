@@ -1,13 +1,16 @@
 import React, {useState} from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styles from './Card.module.css'
 
 import { updateGroup } from "../../services/groupService";
 import { updateProfile} from "../../services/profileService";
 
-import BasicButton from '../MaterialUI/BasicButton'
+
+import PopupMenu from '../MaterialUI/PopupMenu'
+
 
 const GroupActions = (props) => {
+  const navigate = useNavigate()
   let  members = props.group.members.map((member) => {
     return member._id
   })
@@ -28,6 +31,10 @@ const GroupActions = (props) => {
     })
     setIsMember(true)
   }
+
+function editReroute() {
+  navigate(`/groups/${props.group._id}/edit`)
+}
 
   function handleLeaveGroup() {
     let newMembers = []
@@ -64,27 +71,35 @@ const GroupActions = (props) => {
     props.beenClicked()
   }
   
+  let popUpOptions = [ ]
+
+  if (!isMember) {
+      popUpOptions=
+        [ 
+          ['Join Group', handleJoinGroup] 
+        ]
+      
+  }else if (isOwner) {
+    popUpOptions=
+        [ 
+          ['Edit', editReroute],
+          ['Delete', triggerDeleteGroupRefresh]
+        ]
+  } else if (isMember){ 
+  popUpOptions=
+        [
+          ['Leave Group', triggerMyGroupRefresh]
+        ]
+  } 
+  
+
   return (
     <div className={styles.interactions}>
-    {!isMember &&
-      <div>
-      <button onClick={handleJoinGroup} className={styles.hiddenButton}><BasicButton isActive={true} text={"Join Group"}/></button>
-    </div>
-    }
-    {isMember && !isOwner &&
-      <div>
-        <button onClick={triggerMyGroupRefresh} className={styles.hiddenButton}><BasicButton isActive={true} text={"Leave Group"}/></button>
-      </div>
-    }
-
-
-    {isOwner &&
-    <>
-      <Link to={`/groups/${props.group._id}/edit`}><BasicButton isActive={true} text={"Edit"}/></Link>
-      <button className={styles.hiddenButton} onClick={triggerDeleteGroupRefresh}><BasicButton isActive={true} text={"Delete Group"}/></button>
-    </ >}
-    </div>
+      <PopupMenu 
+        options = {popUpOptions}
+          />
+ </div>
   )
-}
+  }
 
 export default GroupActions
