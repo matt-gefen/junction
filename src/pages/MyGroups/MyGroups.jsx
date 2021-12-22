@@ -50,6 +50,7 @@ const MyGroups = (props) => {
   console.log("hello", myGroups);
   return (
     <div className="layout">
+        <h1>My Groups</h1>
       {myGroups?.map((joinedGroup) => (
         <GroupCard
           beenClicked = {beenClicked}
