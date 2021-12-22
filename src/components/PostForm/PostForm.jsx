@@ -6,6 +6,7 @@ import LocationSearch from '../LocationSearch/LocationSearch'
 
 // Services
 import { createPost, getPostById, updatePost } from '../../services/groupService'
+import { getProfileById, updateProfile } from '../../services/profileService'
 
 const PostForm = props => {
   const { id, postId } = useParams()
@@ -13,17 +14,32 @@ const PostForm = props => {
   const [formData, setFormData] = useState({})
   const [location, setLocation] = useState('')
 
+  const [hasRegistration, setHasRegistration] = useState(false)
+  const [registrationData, setRegistrationData] = useState([])
+
+  console.log('User:', props.user)
+
   const handleChange = e => {
-    console.log(e.target.name)
-    console.log(location)
+    console.log('Change name:', e.target.name)
+    console.log('Change value:', e.target.value)
+    console.log(hasRegistration)
     props.updateMessage('')
-    setFormData({
-      ...formData,
-      thumbnail: `https://avatars.dicebear.com/api/croodles-neutral/${title}.svg`,
-      group: id,
-      location:location,
-      [e.target.name]: e.target.value,
-    })
+    if (e.target.name === 'registration') {
+      setFormData({
+        ...formData,
+        registration: e.target.value ? [...registrationData, props.user.profile] : [registrationData],
+        hasRegistration: !hasRegistration
+      })
+      setHasRegistration(!hasRegistration)
+    } else {
+      setFormData({
+        ...formData,
+        thumbnail: `https://avatars.dicebear.com/api/croodles-neutral/${title}.svg`,
+        group: id,
+        location:location,
+        [e.target.name]: e.target.value,
+      })
+    }
   }
 
 
@@ -31,10 +47,14 @@ const PostForm = props => {
     e.preventDefault()
     console.log(location)
     try {
+      let newPost = {}
       if (props.editPost) {
-        await updatePost(id, postId, {...formData, location:location})
+        newPost = await updatePost(id, postId, {...formData, location:location})
       } else {
-        await createPost(id, {...formData, location:location})
+        newPost = await createPost(id, {...formData, location:location})
+        const profileData = await getProfileById(props.user.profile)
+        profileData.registered_events.push(newPost)
+        await updateProfile(props.user.profile, profileData)
       }
       navigate(-1)
     } catch (err) {
@@ -60,10 +80,12 @@ const PostForm = props => {
             location: location,
             link: postData.link,
             description: postData.description,
-            // register: '',
+            registration: postData.registration,
             date: postData.date,
             group: id
           })
+          setHasRegistration(postData.hasRegistration)
+          setRegistrationData(postData.registration)
         } else {
           setFormData({
             thumbnail: 'https://i.imgur.com/izJwDia.png'
@@ -75,6 +97,8 @@ const PostForm = props => {
     }
     fetchPost()
   }, [])
+  
+  console.log('Form data:', formData)
 
   console.log(formData)
 
@@ -148,18 +172,17 @@ const PostForm = props => {
         />
       </div>
 
-      {/* <div className={styles.inputContainer}>
-        <label htmlFor="register" className={styles.label}>Register for event</label>
+      <div className={styles.inputContainer}>
+        <label htmlFor="registration" className={styles.label}>Registration for Event?</label>
         <input
           type="checkbox"
           autoComplete="off"
-          id="register"
-          value={register}
-          name="register"
+          id="registration"
+          value={hasRegistration}
+          name="registration"
           onChange={handleChange}
         />
-      </div> */}
-
+      </div>
 
       <div className={styles.inputContainer}>
         <img 

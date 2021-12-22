@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import styles from './Group.module.css'
 
 // Services
-import { getGroupById, updateGroup } from "../../services/groupService";
+import { getGroupById, updateGroup, deleteGroup } from "../../services/groupService";
 import { updateProfile, getProfileById } from "../../services/profileService";
 
 // Components
@@ -66,6 +66,14 @@ const Group = (props) => {
     setIsMember(false)
   }
 
+  const handleDeleteGroup = async () => {
+    try {
+      await deleteGroup(id)
+      navigate('/groups')
+    } catch (error) {
+      throw error
+    }
+  }
 
   useEffect(() => {
     const fetchGroup = async () => {
@@ -74,12 +82,12 @@ const Group = (props) => {
         const profileData = await getProfileById(props.user.profile)
         setGroup(groupData);
         setProfile(profileData)
-        setOwnerId(groupData.owner)
+        setOwnerId(groupData?.owner)
         setIsOwner(props.user.profile === ownerId)
-        let members = groupData.members.map((member) => {
+        let members = groupData?.members.map((member) => {
           return member._id
         })
-        setIsMember(members.includes(props.user.profile))
+        setIsMember(members?.includes(props.user.profile))
       } catch (error) {
         throw error;
       }
@@ -117,6 +125,7 @@ const Group = (props) => {
       {isOwner &&
         <>
           <BasicButton text="Edit Group" handleClick={editGroup}/>
+          <BasicButton text="Delete Group" handleClick={handleDeleteGroup}/>
         </>
       }
       </div>

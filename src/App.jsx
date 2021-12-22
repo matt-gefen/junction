@@ -13,6 +13,7 @@ import * as authService from './services/authService'
 import GroupIndex from './pages/GroupIndex/GroupIndex'
 import FavoritePosts from './pages/FavoritePosts/FavoritePosts'
 import LocationSearch from './components/LocationSearch/LocationSearch'
+import MyGroups from './pages/MyGroups/MyGroups'
 
 const App = () => {
   const [user, setUser] = useState(authService.getUser())
@@ -51,6 +52,10 @@ const App = () => {
           element={user ? <FavoritePosts user={user} /> : <Navigate to="/login" />}
         />
         <Route
+          path="/groups/mygroups"
+          element={user ? <MyGroups user={user} /> : <Navigate to="/login" />}
+        />
+        <Route
           path="/groups/new"
           element={user ? <CreateGroup /> : <Navigate to="/login" />}
         />
@@ -64,7 +69,7 @@ const App = () => {
         />
         <Route
           path="/groups/:id/posts"
-          element={user ? <CreatePost /> : <Navigate to="/login" />}
+          element={user ? <CreatePost user={user}/> : <Navigate to="/login" />}
         />
         <Route 
           path="/groups/:id/posts/:postId"

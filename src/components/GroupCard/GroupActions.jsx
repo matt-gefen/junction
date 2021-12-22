@@ -29,7 +29,6 @@ const GroupActions = (props) => {
     setIsMember(true)
   }
 
-
   function handleLeaveGroup() {
     let newMembers = []
     props.group.members.forEach((element) => {
@@ -37,14 +36,14 @@ const GroupActions = (props) => {
         newMembers.push(element)
       }
     })
-
+    
     let newGroups = []
     props.profile.joined_groups.forEach((element) => {
       if(element._id !== props.group._id) {
         newGroups.push(element)
       }
     })
-
+    
     updateGroup(props.group._id, {
       ...props.group,
       members: newMembers
@@ -55,8 +54,16 @@ const GroupActions = (props) => {
     })
     setIsMember(false)
   }
-
-
+  
+  function triggerMyGroupRefresh() {
+    handleLeaveGroup()
+    props.beenClicked()
+  }
+  function triggerDeleteGroupRefresh() {
+    props.handleDeleteGroup(props.group._id)
+    props.beenClicked()
+  }
+  
   return (
     <div className={styles.interactions}>
     {!isMember &&
@@ -66,15 +73,15 @@ const GroupActions = (props) => {
     }
     {isMember && !isOwner &&
       <div>
-        <button onClick={handleLeaveGroup} className={styles.hiddenButton}><BasicButton text={"Leave Group"}/></button>
+        <button onClick={triggerMyGroupRefresh} className={styles.hiddenButton}><BasicButton text={"Leave Group"}/></button>
       </div>
     }
+
 
     {isOwner &&
     <>
       <Link to={`/groups/${props.group._id}/edit`}><BasicButton text={"Edit"}/></Link>
-      <button className={styles.hiddenButton} onClick={() => props.handleDeleteGroup(props.group._id)}><BasicButton text={"Delete Group"}/></button>
-
+      <button className={styles.hiddenButton} onClick={triggerDeleteGroupRefresh}><BasicButton text={"Delete Group"}/></button>
     </ >}
     </div>
   )
