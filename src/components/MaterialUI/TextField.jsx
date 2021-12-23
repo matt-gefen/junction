@@ -4,7 +4,8 @@ import TextField from '@mui/material/TextField'
 export default function MultilineTextFields({ value, editable, label, name, autoComplete, handleChange }) {
 
   return (
-    <TextField
+    <TextField 
+      fullWidth
       name={name}
       autoComplete={autoComplete}
       id="outlined-multiline-flexible"

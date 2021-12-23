@@ -67,7 +67,7 @@ const SignupForm = props => {
       {/* <div className={styles.inputContainer}>
         <TextField value={location} editable={true} label="Location" name="location" handleChange={handleChange}/>
       </div> */}
-      <div className={styles.inputContainer}>
+      <div className={styles.container}>
         <img src={props.avatar} alt="dicebears avatar" style={{width: "150px"}}/>
         <button className={styles.hiddenButton} name="avatar" type="button" value={props.avatar} >
           <BasicButton text={"New Avatar"} handleClick={(e) => {
@@ -76,12 +76,14 @@ const SignupForm = props => {
           }/>
         </button>
       </div>
+      <div>
         <button className={styles.hiddenButton}>
           <BasicButton text={"Sign Up"} isFormInvalid={isFormInvalid()}/>
         </button>
-        <Link to="/">
-          <BasicButton text={"Cancel"}/>
+        <Link to="/" style={{ textDecoration: "none" }}>
+          <BasicButton text={"Cancel"} />
         </Link>
+      </div>
     </form>
   )
 }

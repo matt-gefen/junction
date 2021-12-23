@@ -1,0 +1,11 @@
+.input {
+  width: 250px;
+  display: none;
+}
+
+.customFileUpload {
+  margin-top: 8px;
+  display: inline-block;
+  padding: 0px 50px;
+  cursor: pointer;
+}

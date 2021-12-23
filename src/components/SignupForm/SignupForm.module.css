@@ -12,7 +12,9 @@
 }
 
 .inputContainer {
+  margin: 0;
   margin-bottom: 1rem;
+  width: 100%;
 }
 
 .hiddenButton {

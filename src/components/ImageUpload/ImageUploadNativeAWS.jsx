@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import AWS from 'aws-sdk'
+import styles from './ImageUpload.module.css'
 
 import BasicButton from '../MaterialUI/BasicButton'
 
@@ -49,11 +50,16 @@ const UploadImageToS3WithNativeSdk = ({ fileUpload, handleChange }) => {
     fileUpload.current = uploadFile
     }, [])
 
+    function click() {
+        console.log('I was clicked')
+    }
 
-    return <div>
-        <input type="file" onChange={handleFileInput}/>
-        
-    </div>
+    return (
+        <label for="file-upload" className={styles.customFileUpload}>
+            <input className={styles.input} id="file-upload" type="file" onChange={handleFileInput}/>
+            <BasicButton className={styles.customButton} text="Choose a file" isFormInvalid={true} handleClick={click}/>
+        </label>
+    )
 }
 
 export default UploadImageToS3WithNativeSdk
