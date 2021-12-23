@@ -13,6 +13,6 @@ export default function ToggleChip({ label, handleAddCategory, handleRemoveCateg
   }, [select])
 
   return (
-      <Chip label={label} color="default" variant={selected ? "" : "outlined"} onClick={toggleChip} value={selected}/>
+      <Chip label={label} color="default" variant={selected ? "outlined" : ""} onClick={toggleChip} value={selected}/>
   )
 }
