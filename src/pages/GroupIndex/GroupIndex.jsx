@@ -107,6 +107,7 @@ import CategoryMenu from "../../components/CategoryNav/CategoryMenu";
   };
 
   return props.user ? (
+
     <div className={styles.layout}>
       <CategoryMenu
         handleAddCategory={handleAddCategory}
@@ -114,6 +115,7 @@ import CategoryMenu from "../../components/CategoryNav/CategoryMenu";
         profileCategories={profileCategories}
         user={props.user}
       />
+      <h1>Discover Groups</h1>
       {profile &&
         userGroupPref?.map((userPref) => (
           <GroupCard
@@ -139,6 +141,7 @@ import CategoryMenu from "../../components/CategoryNav/CategoryMenu";
     </div>
   ) : (
     <div className={styles.layout}>
+      <h1>Discover Groups</h1>
       {publicGroups.map((group) => (
         <GroupCard group={group} key={group._id} />
       ))}
