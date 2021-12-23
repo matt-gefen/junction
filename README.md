@@ -3,7 +3,6 @@
 # **Junction**
 ![Imgur](https://i.imgur.com/Xfbh80G.png)
 
-
 # **Description** 
 
 The challenge of finding community is continuous. During a global pandemic it is an even greater challenge. We felt there is a need for a place to help connect people of various interest groups in a way that builds community. There are other Apps available that easily fill the 'social media' market. We are aware of that, we are also aware of the ever growing problem of selling user information and allowing targeted marketing for profit.
@@ -36,6 +35,17 @@ In order to keep the focus on each users individual value and to help protect em
   - Express.js
   - React
   - Node.js
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+# Screenshots
+![Imgur](https://i.imgur.com/wpupisal.png)
+![Imgur](https://i.imgur.com/igWThr3l.png)
+![Imgur](https://i.imgur.com/ok9m8dQl.png)
+<p align="center">
+<img src="https://i.imgur.com/dcwEN51m.png" alt=" Junction Mobile Screen Shot"/>
+<img src="https://i.imgur.com/1NhuUQJm.png" alt=" Junction Mobile Screen Shot"/>
+</P>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
   
