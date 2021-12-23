@@ -2,11 +2,6 @@ body {
   padding: 0px !important;
 }
 
-/* main {
-  margin: 8px;
-  border: 2px solid lightgray;
-} */
-
 .formContainer {
   display: flex;
   flex-flow: column nowrap;

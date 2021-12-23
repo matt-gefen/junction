@@ -13,6 +13,7 @@ const GroupCategories = (props) => {
         setGroupCategory={props.setGroupCategory} 
         groupCategory={props.categories} 
         handleChange={props.handleChange}
+        defaultValue={props.defaultValue}
       />
     </>
   )
