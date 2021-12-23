@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import categories from "../../data/categories";
-import styles from './CategoryNav.module.css'
+import styles from "./CategoryNav.module.css";
 
 // Services
 

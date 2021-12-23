@@ -1,7 +1,7 @@
 .categorySelection {
- display:flex;
- flex-direction: row;
-gap: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 }
 
 .categoryName {
