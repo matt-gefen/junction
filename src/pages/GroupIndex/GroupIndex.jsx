@@ -138,7 +138,7 @@ import CategoryMenu from "../../components/CategoryNav/CategoryMenu";
         ))}
     </div>
   ) : (
-    <div className="layout">
+    <div className={styles.layout}>
       {publicGroups.map((group) => (
         <GroupCard group={group} key={group._id} />
       ))}

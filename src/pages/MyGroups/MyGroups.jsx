@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import styles from "./MyGroups.module.css"
 
 // Services
 import { getAllGroups, deleteGroup } from "../../services/groupService";
@@ -49,7 +50,7 @@ const MyGroups = (props) => {
 
   console.log("hello", myGroups);
   return (
-    <div className="layout">
+    <div className={styles.layout}>
         <h1>My Groups</h1>
       {myGroups?.map((joinedGroup) => (
         <GroupCard
