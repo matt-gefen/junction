@@ -14,6 +14,7 @@ import { updateProfile, getProfileById } from "../../services/profileService";
 import AlertDialogue from "../../components/MaterialUI/AlertDialogue";
 import CommentList from "../../components/Comment/CommentList";
 import BasicButton from "../../components/MaterialUI/BasicButton";
+import ImageAvatar from '../../components/MaterialUI/ImageAvatar'
 import Registration from "../../components/Post/Registration";
 
 const PostDetails = (props) => {
@@ -154,9 +155,6 @@ const PostDetails = (props) => {
   let date = new Date(post.createdAt);
   let eventDate = new Date(post.date);
 
-  console.log("Registration:", post.registration);
-  console.log("Attending Member Avatars:", post.registeredAvatars);
-
   return (
     <div className="layout">
       <div className={styles.groupDetailButtons}>
@@ -205,16 +203,16 @@ const PostDetails = (props) => {
             alt="Post thumbnail"
           />
         </div>
-        <div className="post-description-container">
-          <h3>Post Description</h3>
+        <div className={styles.container}>
           {post.description}
         </div>
-        <div className="post-link-container">
-          <h3>Post Link</h3>
-          {post.link}
+        <div className={styles.container}>
+          {/* <a href={post.link} target="_blank"> */}
+            {post.link}
+          {/* </a> */}
         </div>
-        <div className="post-location-container">
-          <h3>Post Location</h3>
+        <div className={styles.container}>
+          <h3>Location</h3>
           {post.location}
         </div>
         <div className="post-event-date-container">
@@ -246,6 +244,7 @@ const PostDetails = (props) => {
             <CommentList
               groupId={id}
               postId={postId}
+
               comments={post.comments}
               user={props.user}
               profile={profile}

@@ -4,7 +4,10 @@ import styles from './Comment.module.css'
 
 // Services
 import { createComment } from '../../services/groupService'
+
+// Components
 import BasicButton from '../../components/MaterialUI/BasicButton'
+import TextField from '../../components/MaterialUI/TextField'
 
 
 const CommentForm = props => {
@@ -43,23 +46,17 @@ const CommentForm = props => {
       onSubmit={handleSubmit}
       className={styles.container}
     >
-      <img className={styles.image} src={props.profile?.avatar} alt="" />
-      <h2 style={{color: 'black'}}>Add a Comment</h2>
-      <div className={styles.inputContainer}>
-        <input
-          type="text"
-          autoComplete="off"
-          id="comment_content"
-          value={value}
-          name="comment_content"
-          onChange={handleChange}
-        />
+      <div className={styles.inlineContainer}>
+        <img className={styles.image} src={props.profile?.avatar} alt="" />
+        <div className={styles.inputContainer}>
+          <TextField value={value} editable={true} label="Add a Comment"name="comment_content" handleChange={handleChange}/>
+        </div>
       </div>
       <div className={styles.inputContainer}>
         <button className={styles.hiddenButton}>
           <BasicButton text={"Add Comment"} isFormInvalid={isFormInvalid()}/>
         </button>
-    </div>
+      </div>
     </form>
   )
 }

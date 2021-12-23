@@ -10,6 +10,7 @@ import { getProfileById } from '../../services/profileService'
 import TextField from '../../components/MaterialUI/TextField'
 import PopupMenu from '../../components/MaterialUI/PopupMenu'
 import ImageAvatar from '../../components/MaterialUI/ImageAvatar'
+import BasicButton from '../MaterialUI/BasicButton'
 
 const Comment = props => {
   const { id, postId } = useParams()
@@ -40,6 +41,11 @@ const Comment = props => {
     props.removeComment(comment)
   }
 
+  function cancelEditComment() {
+    toggleEdit(false)
+    console.log('Cancel comment');
+  }
+
   const handleChange = e => {
     setComment({
       ...comment,
@@ -64,16 +70,13 @@ const Comment = props => {
       <div className={styles.header}>
         <ImageAvatar image={profile?.avatar}/>
         <div className={styles.container}>
-          <div className="owner-name">
+          <div className={styles.commentHeaderTitle}>
             {profile?.name}
           </div>
-          <div className="comment-date">
+          <div className={styles.commentHeaderDate}>
             {`${date.toLocaleDateString()} at ${date.getHours() > 12 ? date.getHours() - 12 : date.getHours()}:${date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()}${date.getHours() > 12 ? "pm" : "am"}`}
           </div>
         </div>
-      </div>
-      <div className={styles.inlineContainer}>
-        <TextField value={comment.comment_content} editable={editable} name="comment_content" handleChange={handleChange}/>
         {(!editable && props.user.profile === comment.owner) &&
           <PopupMenu 
             options={
@@ -84,13 +87,20 @@ const Comment = props => {
             }
           />
         }
-        {editable && 
-          <>
-            <button onClick={submitComment}>Update Comment</button>
-            <button onClick={() => toggleEdit(false)}>Cancel</button>
-          </>
-        }
       </div>
+      <div className={styles.inlineContainer}>
+        <TextField value={comment.comment_content} editable={editable} name="comment_content" handleChange={handleChange}/>
+      </div>
+      {editable && 
+          <div>
+            <button className={styles.hiddenButton} onClick={submitComment}>
+              <BasicButton text={"Update Comment"} isActive={true}/>
+            </button>
+            <button className={styles.hiddenButton} onClick={cancelEditComment}>
+              <BasicButton text="Cancel"/>
+            </button>
+          </div>
+        }
     </section>
   )
 }

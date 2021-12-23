@@ -206,6 +206,8 @@ export default function AppNavBar({ user, handleLogout }) {
           >
             <MenuIcon />
           </IconButton>
+          <img style={{width:"50px"}} src="https://i.imgur.com/Dj1wRPL.png" alt="logo" />
+          <h1 style={{color:"white"}}>Junction</h1>
           {/* <Search>
             <SearchIconWrapper>
               <SearchIcon />
