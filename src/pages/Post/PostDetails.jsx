@@ -139,7 +139,7 @@ const PostDetails = props => {
   console.log('Attending Member Avatars:', post.registeredAvatars)
 
   return (
-    <div className="layout">
+    <div className="post-layout">
       <div className={styles.groupDetailButtons}>
       { !isFavorite &&
         <button className={styles.hiddenButton} onClick={handleFavoritePost}><BasicButton text={"Favorite Post"}/></button>
