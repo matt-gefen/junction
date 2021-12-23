@@ -2,10 +2,16 @@
 
 h2 {
   color: white;
+  font-size: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .groupAvatar{
   width: 150px;
+  padding-top: 10px;
 }
 
 .image {
@@ -23,11 +29,11 @@ h2 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: #727171;
+  background: #1976d2;
   border: 1px solid #292934;
   margin-top: 10px;
   border-radius: 8px;
-  width: 300px;
+  width: 90%;
   padding-bottom: 15px;
 }
 
@@ -59,4 +65,8 @@ h2 {
 .hiddenButton {
   background-color: transparent;
   border: transparent;
+}
+
+.groupCategory{
+  color: white;
 }

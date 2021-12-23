@@ -3,3 +3,13 @@
   align-items: center;
   flex-direction: column;
 }
+
+.layout {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.Card {
+  width: 90%
+}

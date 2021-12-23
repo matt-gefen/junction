@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import categories from "../../data/categories";
+import styles from './CategoryNav.module.css'
 
 // Services
 
@@ -23,9 +24,9 @@ const CategoryMenu = (props) => {
   );
 
   return (
-    <>
+    <div className={styles.chipBar}>
       <ChipBar labels={chipCategories} />
-    </>
+    </div>
   );
 };
 
