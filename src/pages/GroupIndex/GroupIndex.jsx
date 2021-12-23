@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styles from "./GroupIndex.module.css"
+import styles from "./GroupIndex.module.css";
 
 // Services
 import { getAllGroups, deleteGroup } from "../../services/groupService";
@@ -9,7 +9,7 @@ import { updateProfile, getProfileById } from "../../services/profileService";
 import GroupCard from "../../components/GroupCard/GroupCard";
 import CategoryMenu from "../../components/CategoryNav/CategoryMenu";
 
-  const GroupList = (props) => {
+const GroupList = (props) => {
   const [groups, setGroups] = useState([]);
   const [publicGroups, setPublicGroups] = useState([]);
   const [profile, setProfile] = useState();
@@ -40,7 +40,6 @@ import CategoryMenu from "../../components/CategoryNav/CategoryMenu";
 
   useEffect(() => {
     const fetchAllGroups = async () => {
-
       const groupData = await getAllGroups();
       setGroups(groupData);
 
@@ -65,7 +64,7 @@ import CategoryMenu from "../../components/CategoryNav/CategoryMenu";
         setGroups([]);
       };
     };
-    
+
     fetchAllGroups();
     nonLoggedin();
 
@@ -107,7 +106,6 @@ import CategoryMenu from "../../components/CategoryNav/CategoryMenu";
   };
 
   return props.user ? (
-
     <div className={styles.layout}>
       <CategoryMenu
         handleAddCategory={handleAddCategory}

@@ -7,9 +7,11 @@
   }
   
   .groupHeader{
+    margin-left: 5px;
     display: flex;
     padding: 10px;
-    width: 80%;
+    /* width: 80%; */
+    max-width: 600px;
     background-color: #1976d2;
     color: white;
     border-radius: 8px;
