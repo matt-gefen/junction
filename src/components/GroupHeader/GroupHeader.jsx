@@ -12,6 +12,7 @@ const GroupHeader = (props) => {
   return (
 
       <div className={styles.header}>
+        <h1>{props.group.title}</h1>
         <GroupActions {...props} />
       </div>
 
