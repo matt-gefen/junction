@@ -22,7 +22,7 @@ export default function BasicSelect(props) {
           labelId="selector"
           id="category-select"
           value={category}
-          label="category"
+          label="Category"
           onChange={handleChange}
           name="category"
         >

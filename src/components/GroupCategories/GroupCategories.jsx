@@ -8,11 +8,12 @@ const GroupCategories = (props) => {
 
   return (
     <>
-    <Select 
-    name="category"
-    setGroupCategory={props.setGroupCategory} 
-    groupCategory={props.categories} 
-    handleChange={props.handleChange}/>
+      <Select 
+        name="Category"
+        setGroupCategory={props.setGroupCategory} 
+        groupCategory={props.categories} 
+        handleChange={props.handleChange}
+      />
     </>
   )
 }

@@ -1,7 +1,11 @@
-main {
+body {
+  padding: 0px !important;
+}
+
+/* main {
   margin: 8px;
   border: 2px solid lightgray;
-}
+} */
 
 .formContainer {
   display: flex;
@@ -28,6 +32,7 @@ main {
 
 .inputContainer {
   margin-bottom: 50px;
+  width: 60%;
 }
 
 .imageUploadContainer {
@@ -35,7 +40,7 @@ main {
   flex-direction: column;
   justify-content: center;
   position: relative;
-  top: -350px;
+  top: -250px;
   width: 250px;
 }
 
@@ -49,7 +54,7 @@ main {
 
 .submissionContainer {
   position: relative;
-  top: -300px;
+  top: -200px;
 }
 
 .hiddenButton {
