@@ -156,7 +156,7 @@ const PostDetails = (props) => {
   let eventDate = new Date(post.date);
 
   return (
-    <div className="layout">
+    <div className="post-layout">
       <div className={styles.groupDetailButtons}>
         {!isFavorite && (
           <button className={styles.hiddenButton} onClick={handleFavoritePost}>
