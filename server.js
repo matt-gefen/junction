@@ -28,7 +28,7 @@ app.use('/api/groups', groupRouter)
 
 app.get('/*', function (req, res) {
   res.sendFile(
-    path.dirname(fileURLToPath(import.meta.url), 'build', 'index.html')
+    path.join(path.dirname(fileURLToPath(import.meta.url)), 'build', 'index.html')
   )
 })
 
