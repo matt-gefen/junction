@@ -19,8 +19,7 @@ export default function PasswordField({ value, name, handleChange }) {
   }
 
   return (
-    <div>
-      <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+      <FormControl fullWidth sx={{ width: '100%' }} variant="outlined">
         <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
         <OutlinedInput
           name={name}
@@ -43,6 +42,5 @@ export default function PasswordField({ value, name, handleChange }) {
           label="Password"
         />
       </FormControl>
-    </div>
   )
 }

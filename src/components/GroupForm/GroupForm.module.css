@@ -4,6 +4,7 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 50px;
+  width: 80%;
 }
 
 .label,
@@ -12,13 +13,29 @@
 }
 
 .inputContainer {
-  margin-bottom: 1rem;
+  margin-bottom: 50px;
+}
+
+.imageUploadContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  top: -350px;
+  width: 250px;
 }
 
 .locationContainer {
-  height: 20em;
-  width: 60em;
-  margin-bottom: 1rem;
+  position: relative;
+  left: 30%;
+  height: 700px;
+  width: 120%;
+  margin-bottom: 50px;
+}
+
+.submissionContainer {
+  position: relative;
+  top: -300px;
 }
 
 .hiddenButton {

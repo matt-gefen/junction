@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import AWS from 'aws-sdk'
+import styles from './ImageUpload.module.css'
 
 import BasicButton from '../MaterialUI/BasicButton'
 
@@ -50,10 +51,11 @@ const UploadImageToS3WithNativeSdk = ({ fileUpload, handleChange }) => {
     }, [])
 
 
-    return <div>
-        <input type="file" onChange={handleFileInput}/>
-        
-    </div>
+    return (
+        <div>
+            <input className={styles.input} type="file" onChange={handleFileInput}/>
+        </div>
+    )
 }
 
 export default UploadImageToS3WithNativeSdk

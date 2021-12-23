@@ -10,6 +10,7 @@ import GroupCategories from '../GroupCategories/GroupCategories'
 import ImageUploadNativeAWS from '../ImageUpload/ImageUploadNativeAWS'
 import LocationSearch from '../LocationSearch/LocationSearch'
 import BasicButton from "../MaterialUI/BasicButton"
+import TextField from "../MaterialUI/TextField"
 
 
 const GroupForm = props => {
@@ -75,6 +76,8 @@ const GroupForm = props => {
     return !(title && category && avatar)
   }
 
+  console.log(formData)
+
   return (
     <form
       autoComplete="off"
@@ -82,15 +85,7 @@ const GroupForm = props => {
       className={styles.container}
     >
       <div className={styles.inputContainer}>
-        <label htmlFor="title" className={styles.label}>Title</label>
-        <input
-          type="text"
-          autoComplete="off"
-          id="name"
-          value={title}
-          name="title"
-          onChange={handleChange}
-        />
+        <TextField value={title} editable={true} label="Group Title" name="title" handleChange={handleChange}/>
       </div>
       <div className={styles.inputContainer}>
         <label htmlFor="category" className={styles.label}>Category</label>
@@ -102,21 +97,21 @@ const GroupForm = props => {
       </div>
       <div className={styles.locationContainer}>
         <label htmlFor="location" className={styles.label}>Selected Location</label>
-        <p>{location}</p>
-        <LocationSearch setLocation={setLocation} onChange={handleChange} />
+        {/* <p>{location}</p> */}
+        <LocationSearch fullWidth fullHeight setLocation={setLocation} onChange={handleChange} />
       </div>
 
-      <div className={styles.inputContainer}>
+      <div className={styles.imageUploadContainer}>
         <img 
         src={file.image} 
-        alt="group avatar" style={{width: "150px"}} 
+        alt="group avatar"
         />
         <ImageUploadNativeAWS
           fileUpload={fileUpload}
           handleChange={handleChange}
         />
       </div>
-      <div className={styles.inputContainer}>
+      <div className={styles.submissionContainer}>
         <button className={styles.hiddenButton}>
           <BasicButton text={"Create Group"} isFormInvalid={isFormInvalid()}/>
         </button>
