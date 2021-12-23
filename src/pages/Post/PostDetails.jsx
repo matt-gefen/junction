@@ -10,6 +10,7 @@ import { updateProfile, getProfileById } from "../../services/profileService"
 import AlertDialogue from "../../components/MaterialUI/AlertDialogue"
 import CommentList from "../../components/Comment/CommentList"
 import BasicButton from '../../components/MaterialUI/BasicButton'
+import ImageAvatar from '../../components/MaterialUI/ImageAvatar'
 import Registration from "../../components/Post/Registration"
 
 const PostDetails = props => {
@@ -132,6 +133,8 @@ const PostDetails = props => {
   let date = new Date(post.createdAt)
   let eventDate = new Date(post.date)
 
+  console.log('Post date:', eventDate)
+
   console.log('Registration:', post.registration)
   console.log('Attending Member Avatars:', post.registeredAvatars)
 
@@ -158,45 +161,47 @@ const PostDetails = props => {
         </>
       }
       </div>
-      <div className="post-details">
-        <h1>Post Details</h1>
-        <h1>{post.title}</h1>
-        <div className="post-date">
-          {`${date.toLocaleDateString()} at ${date.getHours() > 12 ? date.getHours() - 12 : date.getHours()}:${date.getMinutes()}${date.getHours() > 12 ? "pm" : "am"}`}
-        </div>
-        <div className="post-owner-container">
-          <h3>Post Owner</h3>
-          <div className="post-owner"></div>
-        </div>
-        <div className="post-thumbnail">
-          <img className={styles.thumbnail} src={post.thumbnail} alt="Post thumbnail" />
-        </div>
-        <div className="post-description-container">
-          <h3>Post Description</h3>
-          {post.description}
-        </div>
-        <div className="post-link-container">
-          <h3>Post Link</h3>
-          {post.link}
-        </div>
-        <div className="post-location-container">
-          <h3>Post Location</h3>
-          {post.location}
-        </div>
-        <div className="post-event-date-container">
-          <h3>Event Date</h3>
-          <div className="post-event-date">
-            {`${eventDate.toLocaleDateString()} at ${eventDate.getHours() > 12 ? eventDate.getHours() - 12 : eventDate.getHours()}:${eventDate.getMinutes()}${eventDate.getHours() > 12 ? "pm" : "am"}`}
+      <div className={styles.postDetails}>
+        <div className={styles.header}>
+          <ImageAvatar image={profile?.avatar}/>
+          <div className={styles.headerInfo}>
+            <h3 className={styles.headerTitle}>{post.title}</h3>
+            <div className={styles.date}>
+              {`${date.toLocaleDateString()} at ${date.getHours() > 12 ? date.getHours() - 12 : date.getHours()}:${date.getMinutes()}${date.getHours() > 12 ? "pm" : "am"}`}
+            </div>
           </div>
         </div>
-        <div className="post-registration-container">
-          <h3>Post Registration</h3>
+        <div className={styles.container}>
+          <img className={styles.thumbnail} src={post.thumbnail} alt="Post thumbnail" />
+        </div>
+        <div className={styles.container}>
+          {post.description}
+        </div>
+        <div className={styles.container}>
+          {/* <a href={post.link} target="_blank"> */}
+            {post.link}
+          {/* </a> */}
+        </div>
+        <div className={styles.container}>
+          <h3>Location</h3>
+          {post.location}
+        </div>
+        <div className={styles.container}>
+          {post.date && 
+            <>
+              <h3>Event Date</h3>
+              <div className="post-event-date">
+                {`${eventDate.toLocaleDateString()} at ${eventDate.getHours() > 12 ? eventDate.getHours() - 12 : eventDate.getHours()}:${eventDate.getMinutes()}${eventDate.getHours() > 12 ? "pm" : "am"}`}
+              </div>
+            </>
+          }
+        </div>
+        <div className={styles.container}>
           {post.hasRegistration && 
             <Registration eventDate="" attendees={post.registeredAvatars} isAttending={isAttending} handleClick={handleRegistration}/>
           }
         </div>
-        <div className="post-comments-container">
-          <h3>Post Comments</h3>
+        <div className={styles.container}>
           {post.title && 
             <CommentList 
               groupId={id} 

@@ -3,18 +3,35 @@
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
-  margin-bottom: 50px;
+  margin-bottom: 10px;
 }
 
 .inlineContainer {
   display: flex;
   justify-content: center;
+  margin-bottom: 20px;
+}
+
+.inputContainer {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
 }
 
 .header {
+  margin-top: 20px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
+}
+
+.commentHeaderTitle {
+  font-size: 1.1rem;
+}
+
+.commentHeaderDate {
+  font-size: .7rem;
+  color: gray;
 }
 
 .image {
