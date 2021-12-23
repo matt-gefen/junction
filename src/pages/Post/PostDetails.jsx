@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom"
 import styles from './PostDetails.module.css'
 
 // Services
-import { getPostById, deletePost } from "../../services/groupService"
+import { getPostById, updatePost, deletePost } from "../../services/groupService"
 import { updateProfile, getProfileById } from "../../services/profileService"
 
 // Components
@@ -68,11 +68,14 @@ const PostDetails = props => {
     isAttending ? handleUnattendEvent() : handleAttendEvent()
   }
 
-  function handleAttendEvent () {
-    updateProfile(profile._id, {
+  const handleAttendEvent = async () => {
+    console.log(`${profile._id} is attending this event ${profile.avatar}`)
+    await updateProfile(profile._id, {
       ...profile,
       registered_events: [...profile.registered_events, post._id]
     })
+    await updatePost(id, postId, {...post, registration: [...post.registration, profile._id], registeredAvatars: [...post.registeredAvatars, profile.avatar]})
+    setPost({...post, registration: [...post.registration, profile._id], registeredAvatars: [...post.registeredAvatars, profile.avatar]})
     setIsAttending(true)
   }
 
@@ -82,6 +85,20 @@ const PostDetails = props => {
       ...profile,
       registered_events: newRegisteredEvents
     })
+    let memberAvatarIdx = 0
+    const newMemberRegistration = post.registration.filter((member, idx) => {
+      if (member === profile._id) {
+        memberAvatarIdx = idx
+      }
+      return member !== profile._id
+    })
+    const newRegisteredAvatars = post.registeredAvatars.filter((avatar, idx) => idx !== memberAvatarIdx)
+    updatePost(id, postId, {
+      ...post,
+      registration: newMemberRegistration,
+      registeredAvatars: newRegisteredAvatars
+    })
+    setPost({...post, registration: newMemberRegistration, registeredAvatars: newRegisteredAvatars})
     setIsAttending(false)
   }
 
@@ -114,6 +131,9 @@ const PostDetails = props => {
 
   let date = new Date(post.createdAt)
   let eventDate = new Date(post.date)
+
+  console.log('Registration:', post.registration)
+  console.log('Attending Member Avatars:', post.registeredAvatars)
 
   return (
     <div className="layout">
@@ -172,7 +192,7 @@ const PostDetails = props => {
         <div className="post-registration-container">
           <h3>Post Registration</h3>
           {post.hasRegistration && 
-            <Registration eventDate="" attendees={post.registration} isAttending={isAttending} handleClick={handleRegistration}/>
+            <Registration eventDate="" attendees={post.registeredAvatars} isAttending={isAttending} handleClick={handleRegistration}/>
           }
         </div>
         <div className="post-comments-container">

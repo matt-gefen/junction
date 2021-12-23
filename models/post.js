@@ -34,11 +34,12 @@ const postSchema = new Schema(
     description: String,
     hasRegistration: Boolean,
     registration: [
-      { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: "Profile" 
-      }
+        { 
+          type: mongoose.Schema.Types.ObjectId, 
+          ref: "Profile" 
+        }
     ],
+    registeredAvatars: [String],
     group: { type: mongoose.Schema.Types.ObjectId, ref: "Group" },
     comments: [commentSchema],
     location: String,

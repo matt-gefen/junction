@@ -10,6 +10,7 @@ import { getProfileById, updateProfile } from '../../services/profileService'
 import LocationSearch from '../LocationSearch/LocationSearch'
 import ImageUploadNativeAWS from '../ImageUpload/ImageUploadNativeAWS'
 import DateTimePicker from '../../components/MaterialUI/DateTimePicker'
+import BasicButton from '../../components/MaterialUI/BasicButton'
 
 const PostForm = props => {
   const { id, postId } = useParams()
@@ -21,10 +22,11 @@ const PostForm = props => {
   })
   const [hasRegistration, setHasRegistration] = useState(false)
   const [registrationData, setRegistrationData] = useState([])
+  const [registeredAvatars, setRegisteredAvatars] = useState([])
 
   const fileUpload = useRef(null)
 
-  const handleChange = e => {
+  const handleChange = async e => {
     props.updateMessage('')
     if (e.target.files) {
       console.log('File name:', e.target.files[0].name)
@@ -44,9 +46,16 @@ const PostForm = props => {
         location: location
       })
     } else if (e.target.name === 'registration') {
+      const isRegisteredMember = registrationData.some(id => id === props.user.profile)
+      console.log('Is user registered already?', isRegisteredMember)
+      let profileData = {}
+      if (!isRegisteredMember) {
+        profileData = await getProfileById(props.user.profile)
+      }
       setFormData({
         ...formData,
-        registration: e.target.value ? [...registrationData, props.user.profile] : [registrationData],
+        registration: isRegisteredMember ? [registrationData] : [...registrationData, props.user.profile],
+        registeredAvatars: isRegisteredMember ? [registeredAvatars] : [...registeredAvatars, profileData.avatar],
         hasRegistration: !hasRegistration
       })
       setHasRegistration(!hasRegistration)
@@ -82,6 +91,10 @@ const PostForm = props => {
     }
   }
 
+  function cancelFormSubmission() {
+    navigate(-1)
+  }
+
   const { title, thumbnail, group, date, link, description, register } = formData
 
   const isFormInvalid = () => {
@@ -101,11 +114,13 @@ const PostForm = props => {
             link: postData.link,
             description: postData.description,
             registration: postData.registration,
+            registeredAvatars: postData.registeredAvatars,
             date: postData.date,
             group: id
           })
           setHasRegistration(postData.hasRegistration)
           setRegistrationData(postData.registration)
+          setRegisteredAvatars(postData.registeredAvatars)
         } else {
           setFormData({
             thumbnail: 'https://i.imgur.com/izJwDia.png'
@@ -200,6 +215,7 @@ const PostForm = props => {
           value={hasRegistration}
           name="registration"
           onChange={handleChange}
+          checked={hasRegistration}
         />
       </div>
 
@@ -218,9 +234,7 @@ const PostForm = props => {
         <button disabled={isFormInvalid()} className={styles.button}>
           {props.editPost ? "Update" : "Post"}
         </button>
-        <Link to={props.editPost ? `groups/${id}/posts/${postId}` : `groups/${id}`}>
-          <button>Cancel</button>
-        </Link>
+          <button onClick={cancelFormSubmission}>Cancel</button>
       </div>
     </form>
   )
