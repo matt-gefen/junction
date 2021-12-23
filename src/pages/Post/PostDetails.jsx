@@ -155,6 +155,8 @@ const PostDetails = (props) => {
   let date = new Date(post.createdAt);
   let eventDate = new Date(post.date);
 
+  console.log(eventDate.toLocaleDateString() === 'Invalid Date' ? false : true)
+
   return (
     <div className="post-layout">
       <div className={styles.groupDetailButtons}>
@@ -184,7 +186,7 @@ const PostDetails = (props) => {
           </>
         )}
       </div>
-      <div className="post-details">
+      <div className={styles.postDetails}>
         <h1>Post Details</h1>
         <h1>{post.title}</h1>
         <div className="post-date">
@@ -217,7 +219,7 @@ const PostDetails = (props) => {
         </div>
         <div className="post-event-date-container">
           <h3>Event Date</h3>
-          <div className="post-event-date">
+          <div className={eventDate.toLocaleDateString() === 'Invalid Date' ? styles.hidden : ''}>
             {`${eventDate.toLocaleDateString()} at ${
               eventDate.getHours() > 12
                 ? eventDate.getHours() - 12
