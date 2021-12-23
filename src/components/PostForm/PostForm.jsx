@@ -15,6 +15,7 @@ import LocationSearch from "../LocationSearch/LocationSearch";
 import ImageUploadNativeAWS from "../ImageUpload/ImageUploadNativeAWS";
 import DateTimePicker from "../../components/MaterialUI/DateTimePicker";
 import BasicButton from "../../components/MaterialUI/BasicButton";
+import TextField from "../../components/MaterialUI/TextField";
 import Switch from "../../components/MaterialUI/Switch";
 
 const PostForm = (props) => {
@@ -154,20 +155,10 @@ const PostForm = (props) => {
     <form
       autoComplete="off"
       onSubmit={handleSubmit}
-      className={styles.container}
+      className={styles.formContainer}
     >
       <div className={styles.inputContainer}>
-        <label htmlFor="title" className={styles.label}>
-          Title
-        </label>
-        <input
-          type="text"
-          autoComplete="off"
-          id="name"
-          value={title}
-          name="title"
-          onChange={handleChange}
-        />
+        <TextField value={title} editable={true} label={title ? "" : "Post Title"} name="title" handleChange={handleChange}/>
       </div>
       <div className={styles.locationContainer}>
         <label htmlFor="location" className={styles.label}>
@@ -186,44 +177,19 @@ const PostForm = (props) => {
         />
       </div>
 
-      <div className={styles.inputContainer}>
-        <label htmlFor="date" className={styles.label}>
-          Event Date
-        </label>
-        <DateTimePicker date={formData.date} handleChange={handleChange} />
+      <div className={styles.adjustedContainer}>
+        <DateTimePicker date={formData.date} handleChange={handleChange}/>
       </div>
 
-      <div className={styles.inputContainer}>
-        <label htmlFor="link" className={styles.label}>
-          Link
-        </label>
-        <input
-          type="text"
-          autoComplete="off"
-          id="link"
-          value={link}
-          name="link"
-          onChange={handleChange}
-        />
+      <div className={styles.adjustedContainer}>
+        <TextField value={link} editable={true} label={link ? "" : "Link"} name="link" handleChange={handleChange}/>
       </div>
 
-      <div className={styles.inputContainer}>
-        <label htmlFor="description" className={styles.label}>
-          Description
-        </label>
-        <textarea
-          rows="6"
-          columns="10"
-          autoComplete="off"
-          id="description"
-          value={description}
-          name="description"
-          onChange={handleChange}
-        />
+      <div className={styles.adjustedContainer}>
+        <TextField value={description} editable={true} label={description ? "" : "Description"} name="description" handleChange={handleChange}/>
       </div>
 
-      <div className={styles.inputContainer}>
-        {/* <label htmlFor="registration" className={styles.label}>Registration for Event?</label> */}
+      <div className={styles.adjustedContainer}>
         <Switch
           id="registration"
           hasRegistration={hasRegistration}
@@ -232,30 +198,24 @@ const PostForm = (props) => {
           checked={hasRegistration}
           setHasRegistration={setHasRegistration}
         />
-        {/* <input
-          type="checkbox"
-          autoComplete="off"
-          id="registration"
-          value={hasRegistration}
-          name="registration"
-          onChange={handleChange}
-          checked={hasRegistration}
-        /> */}
       </div>
 
-      <div className={styles.inputContainer}>
-        <img src={file.image} alt="post avatar" style={{ width: "150px" }} />
+      <div className={styles.imageUploadContainer}>
+        <img 
+          src={file.image} 
+          alt="post avatar" 
+        />
         <ImageUploadNativeAWS
           fileUpload={fileUpload}
           handleChange={handleChange}
         />
       </div>
 
-      <div className={styles.inputContainer}>
-        <button disabled={isFormInvalid()} className={styles.button}>
-          {props.editPost ? "Update" : "Post"}
+      <div className={styles.submissionContainer}>
+        <button className={styles.hiddenButton}>
+          <BasicButton text={props.editPost ? "Update" : "Post"} isFormInvalid={isFormInvalid()}/>
         </button>
-        <button onClick={cancelFormSubmission}>Cancel</button>
+        <BasicButton text={"Cancel"} onClick={cancelFormSubmission}/>
       </div>
     </form>
   );

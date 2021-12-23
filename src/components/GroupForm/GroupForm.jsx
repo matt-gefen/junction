@@ -85,7 +85,7 @@ const GroupForm = props => {
       className={styles.formContainer}
     >
       <div className={styles.inputContainer}>
-        <TextField value={title} editable={true} label="Group Title" name="title" handleChange={handleChange}/>
+        <TextField value={title} editable={true} label={title ? "" : "Group Title"} name="title" handleChange={handleChange}/>
       </div>
       <div className={styles.inputContainer}>
         <GroupCategories 

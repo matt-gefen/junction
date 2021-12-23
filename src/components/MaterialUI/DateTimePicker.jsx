@@ -1,23 +1,21 @@
-import * as React from 'react';
-import TextField from '@mui/material/TextField';
+import React from 'react'
+import TextField from '@mui/material/TextField'
 
 export default function DateTimePicker(props) {
 
   return (
-
       <TextField
+        fullWidth
         id="datetime-local"
-        label="Next appointment"
+        label="Event Date and Time"
         type="datetime-local"
         name="date"
         defaultValue=""
         value={props.date}
-        sx={{ width: 250 }}
         InputLabelProps={{
           shrink: true,
         }}
         onChange={props.handleChange}
       />
-
-  );
+  )
 }
