@@ -22,6 +22,8 @@
   align-items: center;
   flex-direction: column;
   margin-bottom: 20px;
+  width: 80%;
+  margin-top: 10px;
 }
 
 .thumbnail {
@@ -53,4 +55,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.hidden {
+  display: none;
+}
+
+h3 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

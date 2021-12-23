@@ -155,6 +155,8 @@ const PostDetails = (props) => {
   let date = new Date(post.createdAt);
   let eventDate = new Date(post.date);
 
+  console.log(eventDate.toLocaleDateString() === 'Invalid Date' ? false : true)
+
   return (
     <div className="post-layout">
       <div className={styles.groupDetailButtons}>
