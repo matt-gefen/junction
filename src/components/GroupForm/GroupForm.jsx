@@ -18,7 +18,7 @@ const GroupForm = props => {
   const [groupCategory, setGroupCategory] = useState('Family')
   const [location, setLocation] = useState('')
   const [file, setFile] = useState({
-    image: 'https://avatars.dicebear.com/api/initials/CreateGroup.svg'
+    image: 'https://i.imgur.com/izJwDia.png'
   })
   const [formData, setFormData] = useState({
     title: '',
@@ -82,7 +82,7 @@ const GroupForm = props => {
     <form
       autoComplete="off"
       onSubmit={handleSubmit}
-      className={styles.container}
+      className={styles.formContainer}
     >
       <div className={styles.inputContainer}>
         <TextField value={title} editable={true} label="Group Title" name="title" handleChange={handleChange}/>
