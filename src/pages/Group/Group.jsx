@@ -128,13 +128,13 @@ const Group = (props) => {
       {group && profile && (
         <>
           <div className={styles.groupHeader}>
-            <div className="groupLogo">
+            <div className={styles.groupAvatar}>
               {" "}
               <img src={group.avatar} alt="" style={{ width: "150px" }} />
             </div>
             <div className={styles.groupInfo}>
-              <h2 style={{ color: "black" }}>{group.title}</h2>
-              <h4>Group Location: {group.location}</h4>
+              <h2>{group.title}</h2>
+              <h4>Group Location:</h4> {group.location}
               <h4>Group Category: {group.category}</h4>
             </div>
           </div>
