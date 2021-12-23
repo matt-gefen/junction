@@ -193,9 +193,9 @@ export default function AppNavBar({ user, handleLogout }) {
   )
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
+    <Box sx={{flexGrow: 1 }}>
+      <AppBar sx={{height: "100%"}} position="static">
+        <Toolbar sx={{height: "100%"}}>
           <IconButton
             size="large"
             edge="start"

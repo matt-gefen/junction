@@ -11,6 +11,7 @@ h2 {
 
 .groupAvatar{
   width: 150px;
+  padding-top: 10px;
 }
 
 .image {
@@ -64,4 +65,8 @@ h2 {
 .hiddenButton {
   background-color: transparent;
   border: transparent;
+}
+
+.groupCategory{
+  color: white;
 }
