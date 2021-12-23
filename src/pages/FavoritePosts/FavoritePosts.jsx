@@ -28,7 +28,7 @@ const FavoritePosts = (props) => {
   console.log(props.user)
 
   return (
-    <div className="layout">
+    <div className={styles.layout}>
       <div className="group-details">
         <h1>Favorite Posts</h1>
           <>

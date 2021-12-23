@@ -27,17 +27,7 @@ const PostActions = (props) => {
 
   function confirmDeletePost() {
     deletePost(props.groupId, props.post._id)
-    navigate(-1)
-  }
-
-  function showDeleteDialogue() {
-    return <AlertDialog 
-            handleConfirm={confirmDeletePost}
-            buttonText="Delete Post"
-            content="Are you sure you want to delete this post? This action cannot be undone!"
-            confirmOption="Delete Post"
-            cancelOption="Cancel"
-          />
+    // navigate()
   }
 
   function handleClick() {
@@ -52,22 +42,31 @@ const PostActions = (props) => {
 
   let popUpOptions = [ ]
 
-  if (!isFavorite) {
+if (!isFavorite && isOwner) {
     popUpOptions=
       [ 
-        ['Favorite', handleClick] 
+        ['Favorite', handleClick],
+        ['Edit', routeToEditPost],
+        ['Delete Post', confirmDeletePost]
       ]
     
-}else if (isOwner) {
+}else if (isFavorite && isOwner) {
   popUpOptions=
       [ 
+        ['Unfavorite', handleClick],
         ['Edit', routeToEditPost],
-        ['Delete', showDeleteDialogue]
+        ['Delete', confirmDeletePost]
+        
       ]
 } else if (isFavorite){ 
   popUpOptions=
       [
         ['Unfavorite', handleClick]
+      ]
+} else if (!isFavorite){ 
+  popUpOptions=
+      [
+        ['Favorite', handleClick]
       ]
 } 
 
@@ -80,6 +79,13 @@ const PostActions = (props) => {
       <PopupMenu 
         options = {popUpOptions}
           />
+      {/* <AlertDialog hidden={deleting?}
+            handleConfirm={confirmDeletePost}
+            buttonText=""
+            content="Are you sure you want to delete this post? This action cannot be undone!"
+            confirmOption="Delete Post"
+            cancelOption="Cancel"
+          /> */}
     </div>
   )
 }
