@@ -96,7 +96,7 @@ const GroupForm = props => {
       </div>
       <div className={styles.locationContainer}>
         <label htmlFor="location" className={styles.label}>Selected Location</label>
-        {/* <p>{location}</p> */}
+        <p>{location}</p>
         <LocationSearch fullWidth fullHeight setLocation={setLocation} onChange={handleChange} />
       </div>
 
