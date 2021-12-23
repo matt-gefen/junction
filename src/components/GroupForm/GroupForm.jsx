@@ -85,7 +85,7 @@ const GroupForm = props => {
       className={styles.formContainer}
     >
       <div className={styles.inputContainer}>
-        <TextField value={title} editable={true} label="Group Title" name="title" handleChange={handleChange}/>
+        <TextField value={title} editable={true} label={title ? "" : "Group Title"} name="title" handleChange={handleChange}/>
       </div>
       <div className={styles.inputContainer}>
         <GroupCategories 
@@ -96,7 +96,7 @@ const GroupForm = props => {
       </div>
       <div className={styles.locationContainer}>
         <label htmlFor="location" className={styles.label}>Selected Location</label>
-        {/* <p>{location}</p> */}
+        <p>{location}</p>
         <LocationSearch fullWidth fullHeight setLocation={setLocation} onChange={handleChange} />
       </div>
 

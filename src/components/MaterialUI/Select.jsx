@@ -7,7 +7,7 @@ import Select from '@mui/material/Select';
 import categories from '../../data/categories'
 
 export default function BasicSelect(props) {
-  const [category, setCategory] = React.useState('');
+  const [category, setCategory] = React.useState(props.defaultValue);
 
   const handleChange = (event) => {
     setCategory(event.target.value);
@@ -22,9 +22,10 @@ export default function BasicSelect(props) {
           labelId="selector"
           id="category-select"
           value={category}
-          label="category"
+          label="Category"
           onChange={handleChange}
           name="category"
+          defaultValue={props.defaultValue}
         >
           {categories.map((element)=> 
           <MenuItem value={element}>{element}</MenuItem>

@@ -10,6 +10,7 @@ import GroupCategories from "../GroupCategories/GroupCategories";
 import LocationSearch from "../LocationSearch/LocationSearch";
 import ImageUploadNativeAWS from "../ImageUpload/ImageUploadNativeAWS";
 import BasicButton from "../MaterialUI/BasicButton";
+import TextField from "../MaterialUI/TextField";
 
 const GroupUpdateForm = (props) => {
   const navigate = useNavigate();
@@ -108,23 +109,14 @@ const GroupUpdateForm = (props) => {
       className={styles.container}
     >
       <div className={styles.inputContainer}>
-        <label htmlFor="title" className={styles.label}>
-          Title
-        </label>
-        <input
-          type="text"
-          autoComplete="off"
-          id="name"
-          value={title}
-          name="title"
-          onChange={handleChange}
-        />
+        <TextField value={title} editable={true} name="title" handleChange={handleChange}/>
       </div>
       <div className={styles.inputContainer}>
         <GroupCategories
           setGroupCategory={setGroupCategory}
           groupCategory={groupCategory}
           handleChange={handleChange}
+          defaultValue={formData.category}
         />
       </div>
       <div className={styles.locationContainer}>
@@ -134,19 +126,22 @@ const GroupUpdateForm = (props) => {
         <p>{location}</p>
         <LocationSearch setLocation={setLocation} onChange={handleChange} />
       </div>
-      <div className={styles.inputContainer}>
-        <img src={file.image} alt="group avatar" style={{ width: "150px" }} />
+      <div className={styles.imageUploadContainer}>
+        <img 
+          src={file.image} 
+          alt="group avatar"
+        />
         <ImageUploadNativeAWS
           fileUpload={fileUpload}
           handleChange={handleChange}
         />
       </div>
-      <div>
+      <div className={styles.submissionContainer}>
         <button className={styles.hiddenButton} disabled={isFormInvalid()}>
           <BasicButton text={"Update Group"} isFormInvalid={isFormInvalid()} />
         </button>
-        <Link to={`/groups/${props.groupId}`}>
-          <BasicButton text={"Cancel"} />
+        <Link to={`/groups/${props.groupId}`} style={{ textDecoration: 'none' }}>
+          <BasicButton text={"Cancel"}/>
         </Link>
       </div>
     </form>
