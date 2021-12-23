@@ -187,16 +187,14 @@ const PostDetails = (props) => {
         )}
       </div>
       <div className={styles.postDetails}>
-        <h1>Post Details</h1>
-        <h1>{post.title}</h1>
-        <div className="post-date">
-          {`${date.toLocaleDateString()} at ${
-            date.getHours() > 12 ? date.getHours() - 12 : date.getHours()
-          }:${date.getMinutes()}${date.getHours() > 12 ? "pm" : "am"}`}
-        </div>
-        <div className="post-owner-container">
-          <h3>Post Owner</h3>
-          <div className="post-owner"></div>
+        <div className={styles.header}>
+          <ImageAvatar image={profile?.avatar}/>
+          <div className={styles.headerInfo}>
+            <h3 className={styles.headerTitle}>{post.title}</h3>
+            <div className={styles.date}>
+              {`${date.toLocaleDateString()} at ${date.getHours() > 12 ? date.getHours() - 12 : date.getHours()}:${date.getMinutes() > 0 ? date.getMinutes() : date.getMinutes() + "0"}${date.getHours() > 12 ? "pm" : "am"}`}
+            </div>
+          </div>
         </div>
         <div className="post-thumbnail">
           <img
@@ -213,40 +211,42 @@ const PostDetails = (props) => {
             {post.link}
           {/* </a> */}
         </div>
-        <div className={styles.container}>
-          <h3>Location</h3>
-          {post.location}
-        </div>
-        <div className="post-event-date-container">
-          <h3>Event Date</h3>
-          <div className={eventDate.toLocaleDateString() === 'Invalid Date' ? styles.hidden : ''}>
-            {`${eventDate.toLocaleDateString()} at ${
-              eventDate.getHours() > 12
-                ? eventDate.getHours() - 12
-                : eventDate.getHours()
-            }:${eventDate.getMinutes()}${
-              eventDate.getHours() > 12 ? "pm" : "am"
-            }`}
+        {post.location && 
+          <div className={styles.container}>
+            <h3>Location</h3>
+            {post.location}
           </div>
-        </div>
-        <div className="post-registration-container">
-          <h3>Post Registration</h3>
-          {post.hasRegistration && (
-            <Registration
-              eventDate=""
-              attendees={post.registeredAvatars}
-              isAttending={isAttending}
-              handleClick={handleRegistration}
-            />
-          )}
-        </div>
+        }
+        {post.hasRegistration && 
+          <div className={eventDate.toLocaleDateString() === 'Invalid Date' ? styles.hidden : ''}>
+            <h3>Event Date</h3>
+            <div className="post-event-date">
+              {`${eventDate.toLocaleDateString()} at ${
+                eventDate.getHours() > 12
+                  ? eventDate.getHours() - 12
+                  : eventDate.getHours()
+              }:${eventDate.getMinutes() > 0 ? eventDate.getMinutes() : eventDate.getMinutes() + "0"}${
+                eventDate.getHours() > 12 ? "pm" : "am"
+              }`}
+            </div>
+          </div>
+        }
+        {post.hasRegistration && (
+          <div className="post-registration-container">
+            <h3>Post Registration</h3>
+              <Registration
+                eventDate=""
+                attendees={post.registeredAvatars}
+                isAttending={isAttending}
+                handleClick={handleRegistration}
+              />
+          </div>
+        )}
         <div className="post-comments-container">
-          <h3>Post Comments</h3>
           {post.title && (
             <CommentList
               groupId={id}
               postId={postId}
-
               comments={post.comments}
               user={props.user}
               profile={profile}
