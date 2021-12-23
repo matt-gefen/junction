@@ -97,7 +97,7 @@ const GroupUpdateForm = (props) => {
   const { title, category, avatar } = formData;
 
   const isFormInvalid = () => {
-    return !(title && category && avatar);
+    return !(title && category);
   };
 
   console.log(formData);
