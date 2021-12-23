@@ -11,6 +11,7 @@ export default function BasicSelect(props) {
 
   const handleChange = (event) => {
     setCategory(event.target.value);
+    props.setGroupCategory(event.target.value)
   };
 
   return (
@@ -23,6 +24,7 @@ export default function BasicSelect(props) {
           value={category}
           label="category"
           onChange={handleChange}
+          name="category"
         >
           {categories.map((element)=> 
           <MenuItem value={element}>{element}</MenuItem>

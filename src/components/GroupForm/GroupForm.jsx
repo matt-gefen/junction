@@ -10,7 +10,7 @@ import GroupCategories from '../GroupCategories/GroupCategories'
 import ImageUploadNativeAWS from '../ImageUpload/ImageUploadNativeAWS'
 import LocationSearch from '../LocationSearch/LocationSearch'
 import BasicButton from "../MaterialUI/BasicButton"
-import Select from '../MaterialUI/Select'
+
 
 const GroupForm = props => {
   const navigate = useNavigate()
@@ -93,8 +93,6 @@ const GroupForm = props => {
         />
       </div>
       <div className={styles.inputContainer}>
-        {/* <label htmlFor="category" className={styles.label}>Category</label> */}
-
         <GroupCategories 
           setGroupCategory={setGroupCategory} 
           groupCategory={groupCategory} 
