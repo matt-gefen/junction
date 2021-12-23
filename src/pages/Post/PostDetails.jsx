@@ -232,7 +232,7 @@ const PostDetails = (props) => {
           </div>
         }
         {post.hasRegistration && (
-          <div className="post-registration-container">
+          <div className={styles.container}>
             <h3>Post Registration</h3>
               <Registration
                 eventDate=""
