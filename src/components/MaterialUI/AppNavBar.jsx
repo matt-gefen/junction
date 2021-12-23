@@ -218,10 +218,10 @@ export default function AppNavBar({ user, handleLogout }) {
             />
           </Search> */}
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' }}}>
+          {/* <Box sx={{ display: { xs: 'none', md: 'flex' }}}>
           <Link style={{ textDecoration: 'none', color: 'white' }} to="/login" onClick={handleLogout}>Log Out</Link>
-          </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' }}}>
+          </Box> */}
+          <Box sx={{ display: { xs: 'none', md: 'flex' }}}>
             <IconButton
               size="large"
               aria-label="show more"
