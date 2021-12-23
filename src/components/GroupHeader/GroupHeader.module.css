@@ -1,7 +1,14 @@
+
+
+h1{
+  margin-left: 15px;
+}
+
 .header{
+  text-align: center;
   width: 100%;
   display: flex;
-  justify-content: right;
+  justify-content:right;
   background-color: white;
   border-top-right-radius: 8px;
   border-top-left-radius: 8px;

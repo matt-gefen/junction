@@ -19,24 +19,29 @@ const GroupCard = (props) => {
       </>}
       </div>
 
-      <div className={styles.groupAvatar}>
+        <div claseName="link-div">
         <Link to={`/groups/${props.group._id}`}>
-          <img className={styles.image} src={props.group.avatar} alt="group avatar"/>
-        </Link>
-      </div>
 
-      <div className={styles.groupTitle}>
-        <Link to={`/groups/${props.group._id}`}><h2>{props.group.title}</h2></Link>
+        
+      <div className={styles.groupAvatar}>
+        
+          <img className={styles.image} src={props.group.avatar} alt="group avatar"/>
+        
       </div>
 
       <div>
-        <h4 className={styles.groupCategory}>Category: {props.group.category}</h4>
+        <h4 className={styles.groupCategory}>Category:  {props.group.category}</h4>
       </div>
 
       <div className={styles.groupMembers}>
-
       </div>
-        {/* {props.group.members} */}
+      <div className={styles.groupMembers}>
+        <p><bold>Posts: {props.group.posts.length}</bold><br/>
+        <bold>Members: {props.group.members.length}</bold>
+        </p>
+      </div>
+      </Link>
+      </div>
     </div>
   </>
   )

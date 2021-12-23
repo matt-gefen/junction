@@ -1,5 +1,7 @@
 /* CARD CSS */
-
+.groupCard a{
+  text-decoration: none;
+}
 h2 {
   color: white;
   font-size: 2em;
@@ -9,8 +11,11 @@ h2 {
   text-align: center;
 }
 
+P{
+  color:white;
+}
 .groupAvatar{
-  width: 150px;
+  width: 300px;
   padding-top: 10px;
 }
 
@@ -35,6 +40,7 @@ h2 {
   border-radius: 8px;
   width: 90%;
   padding-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .cardHeader {
