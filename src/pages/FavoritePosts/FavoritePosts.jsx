@@ -29,16 +29,12 @@ const FavoritePosts = (props) => {
 
   return (
     <div className={styles.layout}>
-      <div className="group-details">
         <h1>Favorite Posts</h1>
-          <>
             <section className={styles.container}>
               {posts?.map(post => (
                 <PostCard user={props.user} groupId={post.group} post={post} profile={profile}/>
               ))}
             </section> :
-          </>
-        </div>
     </div>
   );
 };

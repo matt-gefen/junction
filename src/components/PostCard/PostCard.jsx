@@ -64,6 +64,7 @@ const PostCard = (props) => {
   return (
     <div className={styles.card}>
       <div className={styles.cardHeader}>
+      <h1 onClick={handleClick}>{props.post.title}</h1>
         <PostActions 
           post={props.post}
           profile={profile}
@@ -76,11 +77,10 @@ const PostCard = (props) => {
 
         
       </div>
-      <div className="post-details">
-        <h1 onClick={handleClick}>{props.post.title}</h1>
-        <div className={styles.container}>
+      <div className={styles.time}>
           {`${date.toLocaleDateString()} at ${date.getHours() > 12 ? date.getHours() - 12 : date.getHours()}:${date.getMinutes()}${date.getHours() > 12 ? "pm" : "am"}`}
         </div>
+      <div className={styles.postDetails}>
         <div className="post-owner-container">
           <div className="post-owner"></div>
         </div>
