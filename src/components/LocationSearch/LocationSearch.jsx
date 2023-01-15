@@ -7,7 +7,7 @@ import MAP_STYLE from './MapStyle.json';
 import styles from './LocationSearch.module.css'
 
 // Ways to set Mapbox token: https://uber.github.io/react-map-gl/#/Documentation/getting-started/about-mapbox-tokens
-const MAPBOX_TOKEN = 'pk.eyJ1IjoibWdlZmVuIiwiYSI6ImNreGduZzBidjBoZzQydm1sNzducGJ2azgifQ.inJ-UIK78Vd7VGc91RiRug'
+const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_TOKEN
 
 const geolocateStyle = {
   top: 0,
