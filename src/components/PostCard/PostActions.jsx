@@ -1,25 +1,21 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-import AlertDialog from "../../components/MaterialUI/AlertDialogue"
-import BasicButton from '../MaterialUI/BasicButton';
+import AlertDialog from '../../components/MaterialUI/AlertDialogue'
+import BasicButton from '../MaterialUI/BasicButton'
 import PopupMenu from '../MaterialUI/PopupMenu'
 
-import { updateProfile, getProfileById } from "../../services/profileService";
+import { updateProfile, getProfileById } from '../../services/profileService'
 
-import { deletePost } from "../../services/groupService"
+import { deletePost } from '../../services/groupService'
 
 import styles from './PostCard.module.css'
-
-
 
 const PostActions = (props) => {
   const navigate = useNavigate()
   const [ownerId, setOwnerId] = useState(props.post.owner)
   const [isOwner, setIsOwner] = useState(props.user?.profile === ownerId)
-  console.log(props.user?.profile)
   const [isFavorite, setIsFavorite] = useState(true)
-
 
   function routeToEditPost() {
     navigate(`/groups/${props.groupId}/posts/${props.post._id}/edit`)
@@ -31,7 +27,7 @@ const PostActions = (props) => {
   }
 
   function handleClick() {
-    if(isFavorite) {
+    if (isFavorite) {
       props.handleUnfavorite()
       setIsFavorite(!isFavorite)
     } else {
@@ -40,45 +36,33 @@ const PostActions = (props) => {
     }
   }
 
-  let popUpOptions = [ ]
+  let popUpOptions = []
 
-if (!isFavorite && isOwner) {
-    popUpOptions=
-      [ 
-        ['Favorite', handleClick],
-        ['Edit', routeToEditPost],
-        ['Delete Post', confirmDeletePost]
-      ]
-    
-}else if (isFavorite && isOwner) {
-  popUpOptions=
-      [ 
-        ['Unfavorite', handleClick],
-        ['Edit', routeToEditPost],
-        ['Delete', confirmDeletePost]
-        
-      ]
-} else if (isFavorite){ 
-  popUpOptions=
-      [
-        ['Unfavorite', handleClick]
-      ]
-} else if (!isFavorite){ 
-  popUpOptions=
-      [
-        ['Favorite', handleClick]
-      ]
-} 
+  if (!isFavorite && isOwner) {
+    popUpOptions = [
+      ['Favorite', handleClick],
+      ['Edit', routeToEditPost],
+      ['Delete Post', confirmDeletePost]
+    ]
+  } else if (isFavorite && isOwner) {
+    popUpOptions = [
+      ['Unfavorite', handleClick],
+      ['Edit', routeToEditPost],
+      ['Delete', confirmDeletePost]
+    ]
+  } else if (isFavorite) {
+    popUpOptions = [['Unfavorite', handleClick]]
+  } else if (!isFavorite) {
+    popUpOptions = [['Favorite', handleClick]]
+  }
 
-  useEffect(()=>{
+  useEffect(() => {
     setIsFavorite(props.favorites?.includes(props.post._id))
-  },[props.favorites, props.post._id])
+  }, [props.favorites, props.post._id])
 
   return (
     <div className={styles.interactions}>
-      <PopupMenu 
-        options = {popUpOptions}
-          />
+      <PopupMenu options={popUpOptions} />
       {/* <AlertDialog hidden={deleting?}
             handleConfirm={confirmDeletePost}
             buttonText=""

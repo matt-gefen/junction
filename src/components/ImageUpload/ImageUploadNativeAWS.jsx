@@ -4,62 +4,67 @@ import styles from './ImageUpload.module.css'
 
 import BasicButton from '../MaterialUI/BasicButton'
 
-const S3_BUCKET ='junction-image-storage'
-const REGION ='us-east-2'
-
+const S3_BUCKET = 'junction-image-storage'
+const REGION = 'us-east-2'
 
 AWS.config.update({
-    accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY,
-    secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY
+  accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY,
+  secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY
 })
 
 const myBucket = new AWS.S3({
-    params: { Bucket: S3_BUCKET},
-    region: REGION,
+  params: { Bucket: S3_BUCKET },
+  region: REGION
 })
 
 const UploadImageToS3WithNativeSdk = ({ fileUpload, handleChange }) => {
+  const [progress, setProgress] = useState(0)
 
-    const [progress , setProgress] = useState(0)
+  const handleFileInput = (e) => {
+    // setSelectedFile(e.target.files[0])
+    handleChange(e)
+  }
 
-    const handleFileInput = (e) => {
-        // setSelectedFile(e.target.files[0])
-        handleChange(e)
+  const uploadFile = (file) => {
+    const params = {
+      ACL: 'public-read',
+      Body: file,
+      Bucket: S3_BUCKET,
+      Key: file.name
     }
 
-    const uploadFile = (file) => {
-        console.log('Uploading file:', file)
+    myBucket
+      .putObject(params)
+      .on('httpUploadProgress', (evt) => {
+        setProgress(Math.round((evt.loaded / evt.total) * 100))
+      })
+      .send((err) => {
+        if (err) console.log(err)
+      })
+  }
 
-        const params = {
-            ACL: 'public-read',
-            Body: file,
-            Bucket: S3_BUCKET,
-            Key: file.name
-        }
-
-        myBucket.putObject(params)
-            .on('httpUploadProgress', (evt) => {
-                setProgress(Math.round((evt.loaded / evt.total) * 100))
-            })
-            .send((err) => {
-                if (err) console.log(err)
-            })
-    }
-
-    useEffect(() => {
+  useEffect(() => {
     fileUpload.current = uploadFile
-    }, [])
+  }, [])
 
-    function click() {
-        console.log('I was clicked')
-    }
+  function click() {}
 
-    return (
-        <label for="file-upload" className={styles.customFileUpload}>
-            <input className={styles.input} id="file-upload" type="file" onChange={handleFileInput}/>
-            <BasicButton className={styles.customButton} text="Choose a file" isFormInvalid={true} handleClick={click}/>
-        </label>
-    )
+  return (
+    <label for="file-upload" className={styles.customFileUpload}>
+      <input
+        className={styles.input}
+        id="file-upload"
+        type="file"
+        onChange={handleFileInput}
+      />
+      <BasicButton
+        className={styles.customButton}
+        text="Choose a file"
+        isFormInvalid={true}
+        handleClick={click}
+      />
+    </label>
+  )
 }
 
 export default UploadImageToS3WithNativeSdk

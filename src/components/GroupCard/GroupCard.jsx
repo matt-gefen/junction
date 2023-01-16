@@ -3,11 +3,10 @@ import { Link } from "react-router-dom";
 import styles from "./Card.module.css";
 
 // Components
-import GroupActions from "./GroupActions";
 import GroupHeader from "../GroupHeader/GroupHeader";
 
 const GroupCard = (props) => {
-  // console.log("GroupCardProps",props)
+
   return (
     <>
       <div className={styles.groupCard}>

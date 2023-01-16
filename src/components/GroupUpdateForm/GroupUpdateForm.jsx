@@ -1,106 +1,101 @@
-import { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import styles from "./GroupUpdateForm.module.css";
+import { useState, useEffect, useRef } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import styles from './GroupUpdateForm.module.css'
 
 // Services
-import { getGroupById, updateGroup } from "../../services/groupService";
+import { getGroupById, updateGroup } from '../../services/groupService'
 
 // Categories
-import GroupCategories from "../GroupCategories/GroupCategories";
-import LocationSearch from "../LocationSearch/LocationSearch";
-import ImageUploadNativeAWS from "../ImageUpload/ImageUploadNativeAWS";
-import BasicButton from "../MaterialUI/BasicButton";
-import TextField from "../MaterialUI/TextField";
+import GroupCategories from '../GroupCategories/GroupCategories'
+import LocationSearch from '../LocationSearch/LocationSearch'
+import ImageUploadNativeAWS from '../ImageUpload/ImageUploadNativeAWS'
+import BasicButton from '../MaterialUI/BasicButton'
+import TextField from '../MaterialUI/TextField'
 
 const GroupUpdateForm = (props) => {
-  const navigate = useNavigate();
-  const [group, setGroup] = useState();
-  const [location, setLocation] = useState("");
-  const [groupCategory, setGroupCategory] = useState("");
+  const navigate = useNavigate()
+  const [group, setGroup] = useState()
+  const [location, setLocation] = useState('')
+  const [groupCategory, setGroupCategory] = useState('')
   const [formData, setFormData] = useState({
-    title: "",
-    category: "",
-    avatar: "",
-    location: location,
-  });
-  const [file, setFile] = useState({});
+    title: '',
+    category: '',
+    avatar: '',
+    location: location
+  })
+  const [file, setFile] = useState({})
 
-  const fileUpload = useRef(null);
+  const fileUpload = useRef(null)
 
   useEffect(() => {
     const fetchGroup = async () => {
       try {
-        const groupData = await getGroupById(props.groupId);
-        setGroup(groupData);
-        setLocation(groupData.location);
+        const groupData = await getGroupById(props.groupId)
+        setGroup(groupData)
+        setLocation(groupData.location)
         setFormData({
           title: groupData.title,
           category: groupData.category,
           avatar: groupData.avatar,
-          location: location,
-        });
-        setGroupCategory(groupData.category);
-        console.log("update default image:", file);
-        setFile({ image: groupData.avatar });
+          location: location
+        })
+        setGroupCategory(groupData.category)
+        setFile({ image: groupData.avatar })
       } catch (error) {
-        throw error;
+        throw error
       }
-    };
-    fetchGroup();
-  }, [props.groupId]);
+    }
+    fetchGroup()
+  }, [props.groupId])
 
   const handleChange = (event) => {
-    props.updateMessage("");
+    props.updateMessage('')
     if (event.target.files) {
-      console.log("File name:", event.target.files[0].name);
-      let reader = new FileReader();
+      let reader = new FileReader()
       reader.onload = (e) => {
         setFile({
           fullFile: event.target.files[0],
           name: event.target.files[0].name,
-          image: e.target.result,
-        });
-      };
-      reader.readAsDataURL(event.target.files[0]);
+          image: e.target.result
+        })
+      }
+      reader.readAsDataURL(event.target.files[0])
       setFormData({
         ...formData,
         category: groupCategory,
         location: location,
-        avatar: `https://junction-image-storage.s3.us-east-2.amazonaws.com/${event.target.files[0].name}`,
-      });
+        avatar: `https://junction-image-storage.s3.us-east-2.amazonaws.com/${event.target.files[0].name}`
+      })
     } else {
       setFormData({
         ...formData,
         category: groupCategory,
         location: location,
-        [event.target.name]: event.target.value,
-      });
+        [event.target.name]: event.target.value
+      })
     }
-  };
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
-      console.log("File upload:", file);
-      fileUpload.current(file.fullFile);
+      fileUpload.current(file.fullFile)
       const updatedGroup = await updateGroup(props.groupId, {
         ...formData,
-        location: location,
-      });
-      setGroup(updatedGroup);
-      navigate(`/groups/${props.groupId}`);
+        location: location
+      })
+      setGroup(updatedGroup)
+      navigate(`/groups/${props.groupId}`)
     } catch (err) {
-      props.updateMessage(err.message);
+      props.updateMessage(err.message)
     }
-  };
+  }
 
-  const { title, category, avatar } = formData;
+  const { title, category, avatar } = formData
 
   const isFormInvalid = () => {
-    return !(title && category);
-  };
-
-  console.log(formData);
+    return !(title && category)
+  }
 
   return (
     <form
@@ -109,7 +104,12 @@ const GroupUpdateForm = (props) => {
       className={styles.container}
     >
       <div className={styles.inputContainer}>
-        <TextField value={title} editable={true} name="title" handleChange={handleChange}/>
+        <TextField
+          value={title}
+          editable={true}
+          name="title"
+          handleChange={handleChange}
+        />
       </div>
       <div className={styles.inputContainer}>
         <GroupCategories
@@ -127,10 +127,7 @@ const GroupUpdateForm = (props) => {
         <LocationSearch setLocation={setLocation} onChange={handleChange} />
       </div>
       <div className={styles.imageUploadContainer}>
-        <img 
-          src={file.image} 
-          alt="group avatar"
-        />
+        <img src={file.image} alt="group avatar" />
         <ImageUploadNativeAWS
           fileUpload={fileUpload}
           handleChange={handleChange}
@@ -138,14 +135,17 @@ const GroupUpdateForm = (props) => {
       </div>
       <div className={styles.submissionContainer}>
         <button className={styles.hiddenButton} disabled={isFormInvalid()}>
-          <BasicButton text={"Update Group"} isFormInvalid={isFormInvalid()} />
+          <BasicButton text={'Update Group'} isFormInvalid={isFormInvalid()} />
         </button>
-        <Link to={`/groups/${props.groupId}`} style={{ textDecoration: 'none' }}>
-          <BasicButton text={"Cancel"}/>
+        <Link
+          to={`/groups/${props.groupId}`}
+          style={{ textDecoration: 'none' }}
+        >
+          <BasicButton text={'Cancel'} />
         </Link>
       </div>
     </form>
-  );
-};
+  )
+}
 
-export default GroupUpdateForm;
+export default GroupUpdateForm

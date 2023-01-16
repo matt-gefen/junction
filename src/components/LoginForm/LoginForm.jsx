@@ -19,7 +19,6 @@ const LoginForm = props => {
 
   const handleChange = e => {
     props.updateMessage('')
-    console.log('event target', e)
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
