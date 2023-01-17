@@ -1,7 +1,7 @@
 import 'mapbox-gl/dist/mapbox-gl.css'
 import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css'
 import React, { useState, useRef, useCallback } from 'react'
-import MapGL, { GeolocateControl, Marker } from 'react-map-gl'
+import MapG, ReactMapGL, { GeolocateControl, Marker } from 'react-map-gl'
 import Geocoder from 'react-map-gl-geocoder'
 import MAP_STYLE from './MapStyle.json'
 import styles from './LocationSearch.module.css'
