@@ -1,13 +1,13 @@
 import 'mapbox-gl/dist/mapbox-gl.css'
 import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css'
 import React, { useState, useRef, useCallback } from 'react'
-import MapG, ReactMapGL, { GeolocateControl, Marker } from 'react-map-gl'
-import Geocoder from 'react-map-gl-geocoder'
+import MapG,  { ReactMapGL, GeolocateControl, Marker } from 'react-map-gl'
+// import Geocoder from 'react-map-gl-geocoder'
 import MAP_STYLE from './MapStyle.json'
 import styles from './LocationSearch.module.css'
+/* eslint-disable import/no-webpack-loader-syntax */
 import mapboxgl from 'mapbox-gl';
-
-// eslint-disable-next-line import/no-webpack-loader-syntax
+// @ts-ignore
 mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 
 // Ways to set Mapbox token: https://uber.github.io/react-map-gl/#/Documentation/getting-started/about-mapbox-tokens
