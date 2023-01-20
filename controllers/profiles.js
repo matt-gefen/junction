@@ -11,13 +11,11 @@ function index(req, res) {
 
 const update = async (req, res) => {
   try {
-    console.log('Update profile body:', req.body)
     const updatedProfile = await Profile.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true }
     );
-    console.log('Updated profile', updatedProfile)
     return res.status(200).json(updatedProfile);
   } catch (error) {
     return res.status(500).json(error);

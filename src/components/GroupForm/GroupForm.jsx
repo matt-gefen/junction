@@ -9,11 +9,10 @@ import { createGroup, getAllGroups } from '../../services/groupService'
 import GroupCategories from '../GroupCategories/GroupCategories'
 import ImageUploadNativeAWS from '../ImageUpload/ImageUploadNativeAWS'
 import LocationSearch from '../LocationSearch/LocationSearch'
-import BasicButton from "../MaterialUI/BasicButton"
-import TextField from "../MaterialUI/TextField"
+import BasicButton from '../MaterialUI/BasicButton'
+import TextField from '../MaterialUI/TextField'
 
-
-const GroupForm = props => {
+const GroupForm = (props) => {
   const navigate = useNavigate()
   const [groupCategory, setGroupCategory] = useState('Family')
   const [location, setLocation] = useState('')
@@ -24,16 +23,15 @@ const GroupForm = props => {
     title: '',
     category: 'Family',
     avatar: '',
-    location: '',
+    location: ''
   })
   const fileUpload = useRef(null)
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     props.updateMessage('')
     if (event.target.files) {
-      console.log('File name:', event.target.files[0].name)
       let reader = new FileReader()
-      reader.onload = e => {
+      reader.onload = (e) => {
         setFile({
           fullFile: event.target.files[0],
           name: event.target.files[0].name,
@@ -52,12 +50,12 @@ const GroupForm = props => {
         ...formData,
         category: groupCategory,
         location: location,
-        [event.target.name]: event.target.value,
+        [event.target.name]: event.target.value
       })
     }
   }
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     try {
       fileUpload.current(file.fullFile)
@@ -76,8 +74,6 @@ const GroupForm = props => {
     return !(title && category && avatar)
   }
 
-  console.log(formData)
-
   return (
     <form
       autoComplete="off"
@@ -85,26 +81,36 @@ const GroupForm = props => {
       className={styles.formContainer}
     >
       <div className={styles.inputContainer}>
-        <TextField value={title} editable={true} label={title ? "" : "Group Title"} name="title" handleChange={handleChange}/>
+        <TextField
+          value={title}
+          editable={true}
+          label={title ? '' : 'Group Title'}
+          name="title"
+          handleChange={handleChange}
+        />
       </div>
       <div className={styles.inputContainer}>
-        <GroupCategories 
-          setGroupCategory={setGroupCategory} 
-          groupCategory={groupCategory} 
+        <GroupCategories
+          setGroupCategory={setGroupCategory}
+          groupCategory={groupCategory}
           handleChange={handleChange}
         />
       </div>
       <div className={styles.locationContainer}>
-        <label htmlFor="location" className={styles.label}>Selected Location</label>
+        <label htmlFor="location" className={styles.label}>
+          Selected Location
+        </label>
         <p>{location}</p>
-        <LocationSearch fullWidth fullHeight setLocation={setLocation} onChange={handleChange} />
+        <LocationSearch
+          fullWidth
+          fullHeight
+          setLocation={setLocation}
+          onChange={handleChange}
+        />
       </div>
 
       <div className={styles.imageUploadContainer}>
-        <img 
-        src={file.image} 
-        alt="group avatar"
-        />
+        <img src={file.image} alt="group avatar" />
         <ImageUploadNativeAWS
           fileUpload={fileUpload}
           handleChange={handleChange}
@@ -112,12 +118,12 @@ const GroupForm = props => {
       </div>
       <div className={styles.submissionContainer}>
         <button className={styles.hiddenButton}>
-          <BasicButton text={"Create Group"} isFormInvalid={isFormInvalid()}/>
+          <BasicButton text={'Create Group'} isFormInvalid={isFormInvalid()} />
         </button>
         <Link to="/groups">
-        <button className={styles.hiddenButton}>
-          <BasicButton text={"Cancel"}/>
-        </button>
+          <button className={styles.hiddenButton}>
+            <BasicButton text={'Cancel'} />
+          </button>
         </Link>
       </div>
     </form>

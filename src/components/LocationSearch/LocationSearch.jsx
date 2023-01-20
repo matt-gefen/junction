@@ -1,20 +1,24 @@
 import 'mapbox-gl/dist/mapbox-gl.css'
 import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css'
 import React, { useState, useRef, useCallback } from 'react'
-import MapGL, {GeolocateControl, Marker} from 'react-map-gl'
+import MapGL,  { ReactMapGL, GeolocateControl, Marker } from 'react-map-gl'
 import Geocoder from 'react-map-gl-geocoder'
-import MAP_STYLE from './MapStyle.json';
+import MAP_STYLE from './MapStyle.json'
 import styles from './LocationSearch.module.css'
+/* eslint-disable import/no-webpack-loader-syntax */
+import mapboxgl from 'mapbox-gl';
+// @ts-ignore
+mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 
 // Ways to set Mapbox token: https://uber.github.io/react-map-gl/#/Documentation/getting-started/about-mapbox-tokens
-const MAPBOX_TOKEN = 'pk.eyJ1IjoibWdlZmVuIiwiYSI6ImNreGduZzBidjBoZzQydm1sNzducGJ2azgifQ.inJ-UIK78Vd7VGc91RiRug'
+const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_TOKEN
 
 const geolocateStyle = {
   top: 0,
   left: 0,
   margin: 10
-};
-const positionOptions = {enableHighAccuracy: true};
+}
+const positionOptions = { enableHighAccuracy: true }
 
 const LocationSearch = (props) => {
   // const [searchResult, setSearchResult] = useState()
@@ -25,28 +29,24 @@ const LocationSearch = (props) => {
     zoom: 3,
     bearing: 0,
     pitch: 0
-  });
-  const mapRef = useRef();
+  })
+  const mapRef = useRef()
   const handleViewportChange = useCallback(
     (newViewport) => setViewport(newViewport),
     []
-  );
+  )
 
   // if you are happy with Geocoder default settings, you can just use handleViewportChange directly
-  const handleGeocoderViewportChange = useCallback(
-    (newViewport) => {
-      const geocoderDefaultOverrides = { transitionDuration: 1000 };
+  const handleGeocoderViewportChange = useCallback((newViewport) => {
+    const geocoderDefaultOverrides = { transitionDuration: 1000 }
 
-      return handleViewportChange({
-        ...newViewport,
-        ...geocoderDefaultOverrides
-      });
-    },
-    []
-  );
+    return handleViewportChange({
+      ...newViewport,
+      ...geocoderDefaultOverrides
+    })
+  }, [])
 
   const onResult = (results) => {
-    console.log(results.result.place_name)
     props.setLocation(results.result.place_name)
     setResultLatLong(results.result.geometry.coordinates)
   }
@@ -71,7 +71,10 @@ const LocationSearch = (props) => {
         />
         <Geocoder
           mapRef={mapRef}
-          proximity={{longitude: viewport.longitude, latitude: viewport.latitude}}
+          proximity={{
+            longitude: viewport.longitude,
+            latitude: viewport.latitude
+          }}
           onViewportChange={handleGeocoderViewportChange}
           mapboxApiAccessToken={MAPBOX_TOKEN}
           position="top-left"
@@ -79,15 +82,12 @@ const LocationSearch = (props) => {
           onResult={onResult}
           marker={true}
         />
-        <Marker
-          latitude={viewport.latitude}
-          longitude={viewport.longitude}
-        >
-          <p style={{fontSize:"20px"}}>📌</p>
+        <Marker latitude={viewport.latitude} longitude={viewport.longitude}>
+          <p style={{ fontSize: '20px' }}>📌</p>
         </Marker>
       </MapGL>
     </div>
-  );
-};
+  )
+}
 
 export default LocationSearch

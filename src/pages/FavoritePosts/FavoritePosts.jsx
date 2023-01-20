@@ -25,8 +25,6 @@ const FavoritePosts = (props) => {
     fetchPosts();
   }, [props.user.profile, posts]);
 
-  console.log(props.user)
-
   return (
     <div className={styles.layout}>
         <h1>Favorite Posts</h1>

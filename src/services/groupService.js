@@ -2,13 +2,13 @@ import * as tokenService from '../services/tokenService'
 
 const BASE_URL = '/api/groups/'
 
-export const createGroup= async (group) => {
+export const createGroup = async (group) => {
   try {
     const res = await fetch(BASE_URL, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
-        'Authorization': `Bearer ${tokenService.getToken()}`
+        Authorization: `Bearer ${tokenService.getToken()}`
       },
       body: JSON.stringify(group)
     })
@@ -21,11 +21,11 @@ export const createGroup= async (group) => {
 
 export const getGroupById = async (groupId) => {
   try {
-    const res = await fetch(`${BASE_URL}${groupId}`,
-    {
+    const res = await fetch(`${BASE_URL}${groupId}`, {
       headers: {
-        'Authorization': `Bearer ${tokenService.getToken()}`
-    }})
+        Authorization: `Bearer ${tokenService.getToken()}`
+      }
+    })
     const data = await res.json()
     return data
   } catch (error) {
@@ -33,14 +33,13 @@ export const getGroupById = async (groupId) => {
   }
 }
 
-export const createPost= async (groupId, post) => {
+export const createPost = async (groupId, post) => {
   try {
-    console.log(groupId)
     const res = await fetch(`${BASE_URL}${groupId}/posts/`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
-        'Authorization': `Bearer ${tokenService.getToken()}`
+        Authorization: `Bearer ${tokenService.getToken()}`
       },
       body: JSON.stringify(post)
     })
@@ -67,7 +66,7 @@ export const updateGroup = async (groupId, group) => {
       method: 'PUT',
       headers: {
         'content-type': 'application/json',
-        'Authorization': `Bearer ${tokenService.getToken()}`
+        Authorization: `Bearer ${tokenService.getToken()}`
       },
       body: JSON.stringify(group)
     })
@@ -78,14 +77,13 @@ export const updateGroup = async (groupId, group) => {
   }
 }
 
-
 export const getPostById = async (groupId, postId) => {
   try {
-    const res = await fetch(`${BASE_URL}${groupId}/posts/${postId}`,
-    {
+    const res = await fetch(`${BASE_URL}${groupId}/posts/${postId}`, {
       headers: {
-        'Authorization': `Bearer ${tokenService.getToken()}`
-    }})
+        Authorization: `Bearer ${tokenService.getToken()}`
+      }
+    })
     const data = await res.json()
     return data
   } catch (error) {
@@ -93,13 +91,13 @@ export const getPostById = async (groupId, postId) => {
   }
 }
 
-export const createComment= async (groupId, postId, comment) => {
+export const createComment = async (groupId, postId, comment) => {
   try {
     const res = await fetch(`${BASE_URL}${groupId}/posts/${postId}/comments`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
-        'Authorization': `Bearer ${tokenService.getToken()}`
+        Authorization: `Bearer ${tokenService.getToken()}`
       },
       body: JSON.stringify(comment)
     })
@@ -114,7 +112,7 @@ export const deleteGroup = async (groupId) => {
   try {
     await fetch(`${BASE_URL}${groupId}`, {
       method: 'DELETE',
-      headers: { 'Authorization': 'Bearer ' + tokenService.getToken() }
+      headers: { Authorization: 'Bearer ' + tokenService.getToken() }
     })
   } catch (error) {
     throw error
@@ -127,7 +125,7 @@ export const updatePost = async (groupId, postId, post) => {
       method: 'PUT',
       headers: {
         'content-type': 'application/json',
-        'Authorization': `Bearer ${tokenService.getToken()}`
+        Authorization: `Bearer ${tokenService.getToken()}`
       },
       body: JSON.stringify(post)
     })
@@ -142,7 +140,7 @@ export const deletePost = async (groupId, postId) => {
   try {
     await fetch(`${BASE_URL}${groupId}/posts/${postId}`, {
       method: 'DELETE',
-      headers: { 'Authorization': 'Bearer ' + tokenService.getToken() }
+      headers: { Authorization: 'Bearer ' + tokenService.getToken() }
     })
   } catch (error) {
     throw error
@@ -151,14 +149,17 @@ export const deletePost = async (groupId, postId) => {
 
 export const updateComment = async (groupId, postId, commentId, comment) => {
   try {
-    const res = await fetch(`${BASE_URL}${groupId}/posts/${postId}/comments/${commentId}`, {
-      method: 'PUT',
-      headers: {
-        'content-type': 'application/json',
-        'Authorization': `Bearer ${tokenService.getToken()}`
-      },
-      body: JSON.stringify(comment)
-    })
+    const res = await fetch(
+      `${BASE_URL}${groupId}/posts/${postId}/comments/${commentId}`,
+      {
+        method: 'PUT',
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${tokenService.getToken()}`
+        },
+        body: JSON.stringify(comment)
+      }
+    )
     const data = await res.json()
     return data
   } catch (error) {
@@ -170,7 +171,7 @@ export const deleteComment = async (groupId, postId, commentId) => {
   try {
     await fetch(`${BASE_URL}${groupId}/posts/${postId}/comments/${commentId}`, {
       method: 'DELETE',
-      headers: { 'Authorization': 'Bearer ' + tokenService.getToken() }
+      headers: { Authorization: 'Bearer ' + tokenService.getToken() }
     })
   } catch (error) {
     throw error
